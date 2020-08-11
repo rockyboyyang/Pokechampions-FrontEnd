@@ -5,6 +5,8 @@ import Signup from "./components/views/Signup";
 import Home from "./components/views/Home";
 import Pokedex from "./components/views/Pokedex";
 import TrainerBio from "./components/views/TrainerBio";
+import Battle from "./components/views/Battle";
+import SelectTeam from "./components/views/SelectTeam";
 import { AppContext } from './context/AppContext'
 
 const App = props => {
@@ -21,6 +23,8 @@ const App = props => {
           <Route path="/home" component={Home} />
           <Route path="/pokedex" component={Pokedex} />
           <Route path="/trainers" component={TrainerBio} />
+          <Route path="/battle" component={Battle} />
+          <Route path="/selectteam" component={SelectTeam} />
         </Switch>
       </AppContext.Provider>
     </BrowserRouter>

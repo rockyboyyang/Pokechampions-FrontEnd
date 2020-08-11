@@ -31,6 +31,21 @@ body,
     margin: 0px 20px;
 }
 
+.home-left-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    border: solid 1px black;
+}
+
+.home-left-box > div {
+    border: solid 1px black;
+    width: 50%;
+    height: 15%;
+    margin: auto;
+    text-align: center;
+}
+
 .right-box {
     height: 90%;
     width: 30%;
