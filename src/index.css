@@ -1,1 +1,43 @@
 /* TODO Add site wide styles */
+html,
+body,
+#root,
+.view-body {
+    height: 100%;
+    margin: auto;
+}
+
+.view-body {
+    display: grid;
+    grid-template-rows: 50px 1fr 50px;
+}
+
+.navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    border: 1px solid black;
+}
+
+.center-body {
+    display: flex;
+    align-items: center;
+}
+
+.left-box {
+    height: 90%;
+    width: 60%;
+    border: solid 1px black;
+    margin: 0px 20px;
+}
+
+.right-box {
+    height: 90%;
+    width: 30%;
+    border: solid 1px black;
+    margin: 0px 20px;
+}
+
+.footer {
+    border: solid 1px black;
+}
