@@ -6,14 +6,17 @@ import Footer from '../Footer'
 
 const SelectTeam = () => {
     const { pokemonList, spritesList } = useContext(AppContext)
-
+    const history = useHistory();
+    const routeToPokemonBattleDetails = (e) => {
+        history.push(`/selectteam/${e.target.className}`)
+    }
     if(Object.keys(spritesList).length) {
         return (
             <div className="view-body">
                 <Navbar />
                 <div className="center-body">
                 <div className="left-box pokemon-list">{pokemonList.map((pokemon) => (
-                    <div><p>{pokemon.name}</p> <img src={spritesList[pokemon.name].front_default}></img></div>
+                    <div className={pokemon.name} onClick={routeToPokemonBattleDetails}><p>{pokemon.name}</p> <img src={spritesList[pokemon.name].front_default}></img></div>
                 ))}</div>
                     <div className="right-box"></div>
                 </div>
