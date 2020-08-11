@@ -25,11 +25,32 @@ body,
 }
 
 .left-box {
-    height: 90%;
+    height: 510px;
     width: 60%;
     border: solid 1px black;
     margin: 0px 20px;
 }
+
+.pokemon-list {
+    overflow-y: scroll;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.pokemon-list > div  {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    height: 100px;
+    text-align: center;
+    margin: 10px;
+}
+
+.pokemon-list img  {
+    height: 100%;
+}
+
 
 .home-left-box {
     display: grid;
