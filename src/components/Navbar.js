@@ -6,15 +6,15 @@ const Navbar = () => {
     let history = useHistory()
 
     const routeToHome = () => {
-        history.push('./home')
+        history.push('../home')
     }
 
     const routeToPokedex = () => {
-        history.push('./pokedex')
+        history.push('../pokedex')
     }
 
     const routeToTrainerBio = () => {
-        history.push('./trainers')
+        history.push('../trainers')
     }
 
     return (
