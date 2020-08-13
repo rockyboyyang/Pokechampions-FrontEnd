@@ -8,33 +8,70 @@ import TrainerBio from "./components/views/TrainerBio";
 import Battle from "./components/views/Battle";
 import SelectTeam from "./components/views/SelectTeam";
 import EditPokemonInfo from "./components/views/EditPokemonInfo";
+import EditExistingPokemonInfo from "./components/views/EditExistingPokemonInfo";
 import { AppContext } from './context/AppContext'
 
 const App = props => {
   const backendUrl = "http://localhost:5000"
   const [tokenState, setToken] = useState(localStorage.access_token);
-  const [user, setUser] = useState(localStorage.user)
+  const [user, setUser] = useState(JSON.parse(localStorage.user))
+  const [user_slot_1, setUser_slot_1] = useState(JSON.parse(user.slot_1))
+  const [user_slot_2, setUser_slot_2] = useState(JSON.parse(user.slot_2))
+  const [user_slot_3, setUser_slot_3] = useState(JSON.parse(user.slot_3))
+  const [user_slot_4, setUser_slot_4] = useState(JSON.parse(user.slot_4))
+  const [user_slot_5, setUser_slot_5] = useState(JSON.parse(user.slot_5))
+  const [user_slot_6, setUser_slot_6] = useState(JSON.parse(user.slot_6))
+  const [current_slot, setCurrentSlot] = useState('')
   const [pokemonList, setPokemonList] = useState([])
   const [shinySpritesApi, setShinySpritesList] = useState('https://play.pokemonshowdown.com/sprites/ani-shiny/')
   const [spritesApi, setSpritesList] = useState('https://play.pokemonshowdown.com/sprites/ani/')
   const [listOfPokemonDetails, setListOfPokemonDetails] = useState({})
+  const [selectedMove, setSelectedMove] = useState('')
 
   // Capitalize first letter of string
   const capFirstLetter = (word) => {
     let capLetter = word.slice(0, 1)
     return capLetter.toUpperCase() + word.slice(1)
   }
-
+  
   // Grabs a list of Pokemon
   const fetchPokemonNames = async () => {
     const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151&offset=0');
-
+    
     const { results } = await res.json();
     fetchPokemonSprites(results)
     // results[31].name = 'nidoranm'
     // results[28].name = 'nidoranf'
     // results[121].name = 'mrmime'
     setPokemonList(results)
+  }
+
+  // fix Effect Text
+  const fixEffectText = (text, chance) => {
+    let indexOfChar = text.indexOf('$')
+    let firstHalfStr = text.slice(0, indexOfChar)
+    let secondHalfStr = text.slice(text.indexOf('%'))
+    return firstHalfStr + JSON.stringify(chance) + secondHalfStr
+  }
+
+  // Grabs the information about move selected
+  const fetchMoveInfo = async (e) => {
+    console.log(e.target.id)
+    const res = await fetch(`https://pokeapi.co/api/v2/move/${e.target.id}/`);
+
+    const results = await res.json();
+    const moveDetails = {}
+    moveDetails.name = results.name
+    moveDetails.power = results.power
+    moveDetails.pp = results.pp
+    moveDetails.accuracy = results.accuracy
+    moveDetails.damage_class = results.damage_class.name
+    moveDetails.type = results.type.name
+    moveDetails.stat_changes = results.stat_changes
+    moveDetails.priority = results.priority
+    moveDetails.effect_chance = results.effect_chance
+    moveDetails.effect = fixEffectText(results.effect_entries[0].effect, results.effect_chance)
+    setSelectedMove(moveDetails)
   }
 
   const fetchPokemonSprites = async (pokemonList) => {
@@ -57,12 +94,38 @@ const App = props => {
   }
   
   useEffect(() => {
+    setSelectedMove('')
     fetchPokemonNames();
   }, [])
 
   return (
     <BrowserRouter>
-      <AppContext.Provider value={{ backendUrl, setToken, setUser, user, pokemonList, spritesApi, listOfPokemonDetails, capFirstLetter }}>
+      <AppContext.Provider value={{ backendUrl, 
+                                    setToken, 
+                                    setUser, 
+                                    user, 
+                                    pokemonList,
+                                    spritesApi, 
+                                    listOfPokemonDetails, 
+                                    capFirstLetter, 
+                                    fetchMoveInfo, 
+                                    selectedMove,
+                                    user_slot_1, 
+                                    user_slot_2, 
+                                    user_slot_3, 
+                                    user_slot_4, 
+                                    user_slot_5, 
+                                    user_slot_6, 
+                                    setUser_slot_2, 
+                                    setUser_slot_3, 
+                                    setUser_slot_4, 
+                                    setUser_slot_5, 
+                                    setUser_slot_6, 
+                                    setUser_slot_1,
+                                    setCurrentSlot,
+                                    current_slot,
+                                    setSelectedMove }
+                                    }>
         <Switch>
           <Route path="/signup" component={Signup}/>
           <Route path="/login" component={Login} />
@@ -72,6 +135,7 @@ const App = props => {
           <Route path="/battle" component={Battle} />
           <Route path="/selectteam" component={SelectTeam} />
           <Route path="/select/:pokemonName" render={(props) => <EditPokemonInfo  {...props} pokemonName={props.match.params.pokemonName} />} />
+          <Route path="/select-existing/:pokemonName" render={(props) => <EditExistingPokemonInfo  {...props} pokemonName={props.match.params.pokemonName} />} />
         </Switch>
       </AppContext.Provider>
     </BrowserRouter>

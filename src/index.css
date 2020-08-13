@@ -140,18 +140,51 @@ body,
 }
 
 .right-box {
-    height: 90%;
+    height: 510px;
     width: 30%;
     border: solid 1px black;
     margin: 0px 20px;
+}
+
+.pokemon-team {
+    display: grid;
+    grid-row: 1fr 9fr;
+}
+
+.description-button-container {
+    display: grid;
+    grid-template-rows: 4fr 2fr;
 }
 
 .moves-container {
     overflow-y: scroll;
     height: 300px;
     background-color: pink;
-    margin: 15px;
 }
+
+.move-description {
+    height: 100%;
+    font-size: 12px;
+    margin: auto;
+    overflow-y: scroll;
+    display: grid;
+}
+
 .footer {
     border: solid 1px black;
+}
+
+.pokemon-team-container {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    height: 84%;
+    margin: auto;
+    /* width: 54%; */
+}
+
+.pokemon-team-container > div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

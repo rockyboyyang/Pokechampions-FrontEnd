@@ -29,7 +29,7 @@ const Signup = () => {
         if (res.ok) {
             const { access_token, user } = await res.json();
             setToken({ access_token });
-            setUser({ user })
+            setUser(user)
             window.localStorage.access_token = access_token;
             window.localStorage.user = JSON.stringify(user);
             history.push("/home");

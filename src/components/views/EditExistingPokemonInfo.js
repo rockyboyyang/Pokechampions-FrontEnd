@@ -4,46 +4,55 @@ import { AppContext } from '../../context/AppContext'
 import Navbar from '../Navbar'
 import Footer from '../Footer'
 
-const EditPokemonInfo = ({ pokemonName }) => {
-    const { pokemonList, 
-            spritesApi, 
-            user, 
-            setUser, 
-            listOfPokemonDetails, 
-            capFirstLetter, 
-            fetchMoveInfo, 
-            selectedMove, 
-            backendUrl,
-            user_slot_1, 
-            user_slot_2, 
-            user_slot_3, 
-            user_slot_4, 
-            user_slot_5, 
-            user_slot_6,
-            setUser_slot_1,
-            setUser_slot_2,
-            setUser_slot_3,
-            setUser_slot_4,
-            setUser_slot_5,
-            setUser_slot_6,
-            setCurrentSlot,
-            setSelectedMove  
-        } = useContext(AppContext)
-        
+const EditExistingPokemonInfo = ({ pokemonName }) => {
+    const { pokemonList,
+        spritesApi,
+        user,
+        setUser,
+        listOfPokemonDetails,
+        capFirstLetter,
+        fetchMoveInfo,
+        selectedMove,
+        backendUrl,
+        user_slot_1,
+        user_slot_2,
+        user_slot_3,
+        user_slot_4,
+        user_slot_5,
+        user_slot_6,
+        setUser_slot_1,
+        setUser_slot_2,
+        setUser_slot_3,
+        setUser_slot_4,
+        setUser_slot_5,
+        setUser_slot_6,
+        current_slot,
+        setSelectedMove  
+    } = useContext(AppContext)
+
+    // check if there's a current_slot
+    
     const [slot_1, setSlot_1] = useState({ name: '-' })
     const [slot_2, setSlot_2] = useState({ name: '-' })
     const [slot_3, setSlot_3] = useState({ name: '-' })
     const [slot_4, setSlot_4] = useState({ name: '-' })
     // const [userSelectedPokemon, setUserSelectedPokemon] = useState({
-    //     pokemon: pokemonName,
-    //     pokemonType: listOfPokemonDetails[pokemonName].types,
-    //     pokemonStats: listOfPokemonDetails[pokemonName].stats,
-    //     moveSlot_1: slot_1,
-    //     moveSlot_2: slot_2,
-    //     moveSlot_3: slot_3,
-    //     moveSlot_4: slot_4,
-    // }) 
-    let history = useHistory({ forceRefresh:true })
+        //     pokemon: pokemonName,
+        //     pokemonType: listOfPokemonDetails[pokemonName].types,
+        //     pokemonStats: listOfPokemonDetails[pokemonName].stats,
+        //     moveSlot_1: slot_1,
+        //     moveSlot_2: slot_2,
+        //     moveSlot_3: slot_3,
+        //     moveSlot_4: slot_4,
+        // }) 
+
+    let history = useHistory({ forceRefresh: true })
+
+    useEffect(() => {
+        setSelectedMove('')
+        if(!current_slot) history.push('/home')
+    }, [])
+
     const slot_1Handler = (e) => {
         e.preventDefault()
         setSlot_1(selectedMove)
@@ -51,7 +60,7 @@ const EditPokemonInfo = ({ pokemonName }) => {
         if (slot_3.name === selectedMove.name) setSlot_3('-')
         if (slot_4.name === selectedMove.name) setSlot_4('-')
     }
-    
+
     const slot_2Handler = (e) => {
         e.preventDefault()
         setSlot_2(selectedMove)
@@ -73,10 +82,10 @@ const EditPokemonInfo = ({ pokemonName }) => {
         setSlot_4(selectedMove)
         if (slot_2.name === selectedMove.name) setSlot_2('-')
         if (slot_3.name === selectedMove.name) setSlot_3('-')
-        if (slot_1.name=== selectedMove.name) setSlot_1('-')
+        if (slot_1.name === selectedMove.name) setSlot_1('-')
     }
 
-    const fetchPostToUserSlot = async(e) => {
+    const fetchPostToUserSlot = async (e) => {
         e.preventDefault()
         setSelectedMove('')
         let pokemonInfo = {
@@ -99,7 +108,7 @@ const EditPokemonInfo = ({ pokemonName }) => {
             setUser(user)
             window.localStorage.user = JSON.stringify(user);
             console.log(user)
-            setUser_slot_1(JSON.parse(user.slot_1)) 
+            setUser_slot_1(JSON.parse(user.slot_1))
             setUser_slot_2(JSON.parse(user.slot_2))
             setUser_slot_3(JSON.parse(user.slot_3))
             setUser_slot_4(JSON.parse(user.slot_4))
@@ -109,44 +118,7 @@ const EditPokemonInfo = ({ pokemonName }) => {
         }
     }
 
-    const editingExistingMember = () => {
-        if(user_slot_1.pokemon === pokemonName) {
-            setCurrentSlot('slot_1')
-            history.push(`/select-existing/${pokemonName}`)
-        }
-
-        if (user_slot_2.pokemon === pokemonName) {
-            setCurrentSlot('slot_2')
-            history.push(`/select-existing/${pokemonName}`)
-        }
-
-        if (user_slot_3.pokemon === pokemonName) {
-            setCurrentSlot('slot_3')
-            history.push(`/select-existing/${pokemonName}`)
-        }
-
-        if (user_slot_4.pokemon === pokemonName) {
-            setCurrentSlot('slot_4')
-            history.push(`/select-existing/${pokemonName}`)
-        }
-
-        if (user_slot_5.pokemon === pokemonName) {
-            setCurrentSlot('slot_5')
-            history.push(`/select-existing/${pokemonName}`)
-        }
-
-        if (user_slot_6.pokemon === pokemonName) {
-            setCurrentSlot('slot_6')
-            history.push(`/select-existing/${pokemonName}`)
-        }
-    }
-
-     useEffect(() => {
-       editingExistingMember()
-    }, [])
-
-
-    if (Object.keys(listOfPokemonDetails).length) {
+    if (Object.keys(listOfPokemonDetails).length ) {
         return (
             <div className="view-body">
                 <Navbar />
@@ -170,20 +142,20 @@ const EditPokemonInfo = ({ pokemonName }) => {
                                         </div>
                                     </>
                                 ) : (
-                                    <>
-                                        <div className="pokemon-information-type1 pokemon-info-div">
-                                            <p>Type 1: </p>
-                                            <p>{capFirstLetter(listOfPokemonDetails[pokemonName].types[0].type.name)}</p>
-                                        </div>
-                                        <div className="pokemon-information-type1 pokemon-info-div">
-                                            <p>Type 2: </p>
-                                            <p>None</p>
-                                        </div>
-                                    </>
-                                )}
+                                        <>
+                                            <div className="pokemon-information-type1 pokemon-info-div">
+                                                <p>Type 1: </p>
+                                                <p>{capFirstLetter(listOfPokemonDetails[pokemonName].types[0].type.name)}</p>
+                                            </div>
+                                            <div className="pokemon-information-type1 pokemon-info-div">
+                                                <p>Type 2: </p>
+                                                <p>None</p>
+                                            </div>
+                                        </>
+                                    )}
                                 {/* <div className="pokemon-information-type2">{listOfPokemonDetails[pokemonName].types[1]}</div> */}
                                 <div className="pokemon-information-stats">
-                                    {listOfPokemonDetails[pokemonName].stats.map((stat) => 
+                                    {listOfPokemonDetails[pokemonName].stats.map((stat) =>
                                         <p>{stat.stat.name.toUpperCase()}: {stat.base_stat}</p>
                                     )}
                                 </div>
@@ -199,7 +171,7 @@ const EditPokemonInfo = ({ pokemonName }) => {
                     </div>
                     <div className="right-box description-button-container">
                         <div className="moves-container">
-                            {listOfPokemonDetails[pokemonName].moves.map((move) => 
+                            {listOfPokemonDetails[pokemonName].moves.map((move) =>
                                 <div className="move-selection" id={move.move.name} onClick={fetchMoveInfo}>{move.move.name}</div>
                             )}
                         </div>
@@ -215,16 +187,11 @@ const EditPokemonInfo = ({ pokemonName }) => {
                                     </div>
                                 </>
                             ) : (
-                                <div></div>
-                            )}
+                                    <div></div>
+                                )}
                         </div>
                         <div className="button-containers">
-                            <button className="add-button" id="slot_1" onClick={fetchPostToUserSlot}>Slot 1</button>
-                            <button className="add-button" id="slot_2" onClick={fetchPostToUserSlot}>Slot 2</button>
-                            <button className="add-button" id="slot_3" onClick={fetchPostToUserSlot}>Slot 3</button>
-                            <button className="add-button" id="slot_4" onClick={fetchPostToUserSlot}>Slot 4</button>
-                            <button className="add-button" id="slot_5" onClick={fetchPostToUserSlot}>Slot 5</button>
-                            <button className="add-button" id="slot_6" onClick={fetchPostToUserSlot}>Slot 6</button>
+                            <button className="add-button" id={current_slot} onClick={fetchPostToUserSlot}>Finish Editing</button>
                         </div>
                     </div>
                 </div>
@@ -237,4 +204,4 @@ const EditPokemonInfo = ({ pokemonName }) => {
     )
 }
 
-export default EditPokemonInfo;
+export default EditExistingPokemonInfo;
