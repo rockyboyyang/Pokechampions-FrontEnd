@@ -14,19 +14,35 @@ import { AppContext } from './context/AppContext'
 const App = props => {
   const backendUrl = "http://localhost:5000"
   const [tokenState, setToken] = useState(localStorage.access_token);
-  const [user, setUser] = useState(JSON.parse(localStorage.user))
-  const [user_slot_1, setUser_slot_1] = useState(JSON.parse(user.slot_1))
-  const [user_slot_2, setUser_slot_2] = useState(JSON.parse(user.slot_2))
-  const [user_slot_3, setUser_slot_3] = useState(JSON.parse(user.slot_3))
-  const [user_slot_4, setUser_slot_4] = useState(JSON.parse(user.slot_4))
-  const [user_slot_5, setUser_slot_5] = useState(JSON.parse(user.slot_5))
-  const [user_slot_6, setUser_slot_6] = useState(JSON.parse(user.slot_6))
+  const [user, setUser] = useState('')
+  const [user_slot_1, setUser_slot_1] = useState('')
+  const [user_slot_2, setUser_slot_2] = useState('')
+  const [user_slot_3, setUser_slot_3] = useState('')
+  const [user_slot_4, setUser_slot_4] = useState('')
+  const [user_slot_5, setUser_slot_5] = useState('')
+  const [user_slot_6, setUser_slot_6] = useState('')
   const [current_slot, setCurrentSlot] = useState('')
   const [pokemonList, setPokemonList] = useState([])
   const [shinySpritesApi, setShinySpritesList] = useState('https://play.pokemonshowdown.com/sprites/ani-shiny/')
   const [spritesApi, setSpritesList] = useState('https://play.pokemonshowdown.com/sprites/ani/')
   const [listOfPokemonDetails, setListOfPokemonDetails] = useState({})
   const [selectedMove, setSelectedMove] = useState('')
+
+  const checkUserExist = () => {
+    try{
+      console.log('asd')
+      setUser(JSON.parse(localStorage.user))
+      setUser_slot_1(JSON.parse(user.slot_1))
+      setUser_slot_2(JSON.parse(user.slot_2))
+      setUser_slot_3(JSON.parse(user.slot_3))
+      setUser_slot_4(JSON.parse(user.slot_4))
+      setUser_slot_5(JSON.parse(user.slot_5))
+      setUser_slot_6(JSON.parse(user.slot_6))
+    }
+    catch(e) {
+      console.log(e)
+    }
+  }
 
   // Capitalize first letter of string
   const capFirstLetter = (word) => {
@@ -96,8 +112,14 @@ const App = props => {
   useEffect(() => {
     setSelectedMove('')
     fetchPokemonNames();
+    if (tokenState) {
+      console.log('pass')
+      checkUserExist();
+    }
   }, [])
 
+  // if(!user) return <h1>Loading</h1>
+  
   return (
     <BrowserRouter>
       <AppContext.Provider value={{ backendUrl, 

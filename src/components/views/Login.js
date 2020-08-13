@@ -6,7 +6,7 @@ const Login = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     let history = useHistory()
-    const { backendUrl, setToken, setUser } = useContext(AppContext)
+    const { backendUrl, setToken, setUser, setUser_slot_1, setUser_slot_2, setUser_slot_3, setUser_slot_4, setUser_slot_5, setUser_slot_6 } = useContext(AppContext)
     const login = async (e) => {
         e.preventDefault()
         let body = {
@@ -26,6 +26,12 @@ const Login = () => {
             setUser(user)
             window.localStorage.access_token = access_token; 
             window.localStorage.user = JSON.stringify(user);
+            setUser_slot_1(JSON.parse(user.slot_1))
+            setUser_slot_2(JSON.parse(user.slot_2))
+            setUser_slot_3(JSON.parse(user.slot_3))
+            setUser_slot_4(JSON.parse(user.slot_4))
+            setUser_slot_5(JSON.parse(user.slot_5))
+            setUser_slot_6(JSON.parse(user.slot_6))
             history.push("/home");
         }
     }

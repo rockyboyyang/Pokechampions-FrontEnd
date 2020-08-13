@@ -110,32 +110,32 @@ const EditPokemonInfo = ({ pokemonName }) => {
     }
 
     const editingExistingMember = () => {
-        if(user_slot_1.pokemon === pokemonName) {
+        if (user_slot_1 !== null && user_slot_1.pokemon === pokemonName) {
             setCurrentSlot('slot_1')
             history.push(`/select-existing/${pokemonName}`)
         }
 
-        if (user_slot_2.pokemon === pokemonName) {
+        if (user_slot_2 !== null && user_slot_2.pokemon === pokemonName) {
             setCurrentSlot('slot_2')
             history.push(`/select-existing/${pokemonName}`)
         }
 
-        if (user_slot_3.pokemon === pokemonName) {
+        if (user_slot_3 !== null && user_slot_3.pokemon === pokemonName) {
             setCurrentSlot('slot_3')
             history.push(`/select-existing/${pokemonName}`)
         }
 
-        if (user_slot_4.pokemon === pokemonName) {
+        if (user_slot_4 !== null && user_slot_4.pokemon === pokemonName) {
             setCurrentSlot('slot_4')
             history.push(`/select-existing/${pokemonName}`)
         }
 
-        if (user_slot_5.pokemon === pokemonName) {
+        if (user_slot_5 !== null && user_slot_5.pokemon === pokemonName) {
             setCurrentSlot('slot_5')
             history.push(`/select-existing/${pokemonName}`)
         }
 
-        if (user_slot_6.pokemon === pokemonName) {
+        if (user_slot_6 !== null && user_slot_6.pokemon === pokemonName) {
             setCurrentSlot('slot_6')
             history.push(`/select-existing/${pokemonName}`)
         }

@@ -107,7 +107,6 @@ const EditExistingPokemonInfo = ({ pokemonName }) => {
             const { user } = await res.json();
             setUser(user)
             window.localStorage.user = JSON.stringify(user);
-            console.log(user)
             setUser_slot_1(JSON.parse(user.slot_1))
             setUser_slot_2(JSON.parse(user.slot_2))
             setUser_slot_3(JSON.parse(user.slot_3))
