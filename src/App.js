@@ -27,6 +27,7 @@ const App = props => {
   const [pokemonList, setPokemonList] = useState([])
   const [shinySpritesApi, setShinySpritesList] = useState('https://play.pokemonshowdown.com/sprites/ani-shiny/')
   const [spritesApi, setSpritesList] = useState('https://play.pokemonshowdown.com/sprites/ani/')
+  const [back_spritesApi, seBack_SpritesList] = useState('https://play.pokemonshowdown.com/sprites/ani-back/')
   const [listOfPokemonDetails, setListOfPokemonDetails] = useState({})
   const [selectedMove, setSelectedMove] = useState('')
   const [opponent, setOpponent] = useState('')
@@ -116,7 +117,6 @@ const App = props => {
     setSelectedMove('')
     fetchPokemonNames();
     if (tokenState) {
-      console.log('pass')
       checkUserExist();
     }
   }, [])
@@ -125,7 +125,8 @@ const App = props => {
   
   return (
     <BrowserRouter>
-      <AppContext.Provider value={{ backendUrl, 
+      <AppContext.Provider value={{ backendUrl,
+                                    capFirstLetter, 
                                     setToken, 
                                     setUser, 
                                     user, 
@@ -151,7 +152,8 @@ const App = props => {
                                     current_slot,
                                     setSelectedMove,
                                     setOpponent,
-                                    opponent }
+                                    opponent,
+                                    back_spritesApi }
                                     }>
         <Switch>
           <Route path="/signup" component={Signup}/>

@@ -31,7 +31,7 @@ const BattleSelectEliteFourView = ({ gymLeader }) => {
                 <div className="center-body">
                     <div className="left-box select-battle-view">
                         <div className="trainer-container elitefour-container">
-                            <div id="misty-select-button" className="select-trainer-icon">LORELEI</div>
+                            <div id="lorelei-select-button" className="select-trainer-icon">LORELEI</div>
                             <div id="bruno-select-button" className="select-trainer-icon">BRUNO</div>
                             <div id="agatha-select-button" className="select-trainer-icon">AGATHA</div>
                             <div id="lance-select-button" className="select-trainer-icon">LANCE</div>
