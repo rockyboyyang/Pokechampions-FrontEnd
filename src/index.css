@@ -31,6 +31,35 @@ body,
     margin: 0px 20px;
 }
 
+.select-battle-view {
+    display: grid;
+    grid-template-rows: 5fr 1fr;
+}
+
+.gym-leader-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.elitefour-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.select-trainer-icon {
+    height: 135px;
+    width: 135px;
+}
+
+.select-trainer-icon {
+    border: 1px solid black;
+}
+
 .pokemon-list {
     overflow-y: scroll;
     display: grid;
@@ -137,6 +166,30 @@ body,
     height: 15%;
     margin: auto;
     text-align: center;
+}
+
+.battle-box {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.move-slots-container-battle {
+    grid-row: 7 / span 3;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+}
+
+.battle-screen {
+    grid-row: 1 / span 6;
+    grid-column: 1 / span 2;
+    background-image: url(http://play.pokemonshowdown.com/sprites/gen6bgs/bg-elite4drake.jpg);
+    background-size: 500px;
+    background-position-x: center;
+    background-repeat: no-repeat;
 }
 
 .right-box {

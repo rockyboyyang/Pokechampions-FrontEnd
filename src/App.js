@@ -5,7 +5,9 @@ import Signup from "./components/views/Signup";
 import Home from "./components/views/Home";
 import Pokedex from "./components/views/Pokedex";
 import TrainerBio from "./components/views/TrainerBio";
-import Battle from "./components/views/Battle";
+import BattleSelectView from "./components/views/BattleSelectView";
+import BattleSelectEliteFourView from "./components/views/BattleSelectEliteFourView";
+import BattleTrainerView from "./components/views/BattleTrainerView";
 import SelectTeam from "./components/views/SelectTeam";
 import EditPokemonInfo from "./components/views/EditPokemonInfo";
 import EditExistingPokemonInfo from "./components/views/EditExistingPokemonInfo";
@@ -27,6 +29,7 @@ const App = props => {
   const [spritesApi, setSpritesList] = useState('https://play.pokemonshowdown.com/sprites/ani/')
   const [listOfPokemonDetails, setListOfPokemonDetails] = useState({})
   const [selectedMove, setSelectedMove] = useState('')
+  const [opponent, setOpponent] = useState('')
 
   const checkUserExist = () => {
     try{
@@ -146,7 +149,9 @@ const App = props => {
                                     setUser_slot_1,
                                     setCurrentSlot,
                                     current_slot,
-                                    setSelectedMove }
+                                    setSelectedMove,
+                                    setOpponent,
+                                    opponent }
                                     }>
         <Switch>
           <Route path="/signup" component={Signup}/>
@@ -154,7 +159,9 @@ const App = props => {
           <Route path="/home" component={Home} />
           <Route path="/pokedex" component={Pokedex} />
           <Route path="/trainers" component={TrainerBio} />
-          <Route path="/battle" component={Battle} />
+          <Route path="/battle/gymleaders" component={BattleSelectView} />
+          <Route path="/battle/elitefour" component={BattleSelectEliteFourView} />
+          <Route path="/challenge/:trainer" render={(props) => <BattleTrainerView {...props} trainer={props.match.params.trainer} />} />
           <Route path="/selectteam" component={SelectTeam} />
           <Route path="/select/:pokemonName" render={(props) => <EditPokemonInfo  {...props} pokemonName={props.match.params.pokemonName} />} />
           <Route path="/select-existing/:pokemonName" render={(props) => <EditExistingPokemonInfo  {...props} pokemonName={props.match.params.pokemonName} />} />

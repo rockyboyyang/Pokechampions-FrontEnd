@@ -4,7 +4,7 @@ import { AppContext } from '../../context/AppContext'
 import Navbar from '../Navbar'
 import Footer from '../Footer'
 
-const Home = () => {
+const BattleTrainerView = () => {
     const { setSelectedMove } = useContext(AppContext)
     let history = useHistory()
 
@@ -24,9 +24,14 @@ const Home = () => {
         <div className="view-body">
             <Navbar />
             <div className="center-body">
-                <div className="left-box home-left-box">
-                    <div id="battle-select-button" onClick={routeToBattleSelectScreen}>Battle</div>
-                    <div id="team-select-button" onClick={routeToTeamSelectScreen}>Edit Pokemon Team</div>
+                <div className="left-box battle-box">
+                    <div className="battle-screen"></div>
+                    <div className="move-slots-container">
+                        <button className="move-slot slot-1">SLOT 1</button>
+                        <button className="move-slot slot-2">SLOT 2</button>
+                        <button className="move-slot slot-3">SLOT 3</button>
+                        <button className="move-slot slot-4">SLOT 4</button>
+                    </div>
                 </div>
                 <div className="right-box"></div>
             </div>
@@ -35,4 +40,4 @@ const Home = () => {
     )
 }
 
-export default Home;
+export default BattleTrainerView;
