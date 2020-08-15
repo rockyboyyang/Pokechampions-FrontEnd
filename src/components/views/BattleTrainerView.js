@@ -71,19 +71,36 @@ const BattleTrainerView = () => {
 
     const attack = async (e) => {
         e.preventDefault()
-        let moveSelectedType;
-        if (e.target.id === 'slot_1') moveSelectedType = userCurrentPokemon.moveSlot_1.type;
-        if (e.target.id === 'slot_2') moveSelectedType = userCurrentPokemon.moveSlot_2.type;
-        if (e.target.id === 'slot_3') moveSelectedType = userCurrentPokemon.moveSlot_3.type;
-        if (e.target.id === 'slot_4') moveSelectedType = userCurrentPokemon.moveSlot_4.type;
+
+        // TODO: Have to swap userCurrentPokemon and OpponentCurrentPokemon with
+        // attacking pokemon and defending pokemon
+
+        let moveSelected;
+        if (e.target.id === 'slot_1') moveSelected = userCurrentPokemon.moveSlot_1;
+        if (e.target.id === 'slot_2') moveSelected = userCurrentPokemon.moveSlot_2;
+        if (e.target.id === 'slot_3') moveSelected = userCurrentPokemon.moveSlot_3;
+        if (e.target.id === 'slot_4') moveSelected = userCurrentPokemon.moveSlot_4;
         
         // grab selectedMove info
-        const res = await fetch(`https://pokeapi.co/api/v2/type/${moveSelectedType}`)
+        const res = await fetch(`https://pokeapi.co/api/v2/type/${moveSelected.type}`)
         let result = await res.json()
+
+        let level = 50;
+        let attack;  // attacking pokemon's attack
+        let defense; // defending pokemon's defense
+        let power = moveSelected.power
+
+        // checks to see which type of move it was
+        if (moveSelected.damage_class === "physical") attack = userCurrentPokemon.pokemonStats[1].base_stat + 5;
+        if (moveSelected.damage_class === "special") attack = userCurrentPokemon.pokemonStats[3].base_stat + 5;
+        if (moveSelected.damage_class === "physical") defense = opponentCurrentPokemon.pokemonStats[2].base_stat + 5;
+        if (moveSelected.damage_class === "special") defense = opponentCurrentPokemon.pokemonStats[4].base_stat + 5;
+
         let doubleDamageTo = result.damage_relations.double_damage_to
         let halfDamageTo = result.damage_relations.half_damage_to
         let noDamageTo = result.damage_relations.no_damage_to
         let opponentCurrentPokemonType = opponentCurrentPokemon.pokemonType
+
         // weather
         let stab = 1
         let targetType1 = 1
@@ -94,7 +111,7 @@ const BattleTrainerView = () => {
 
         // checks for stab
         for(let i = 0; i < userCurrentPokemon.pokemonType.length; i++) {
-            if(userCurrentPokemon.pokemonType[i].type.name === moveSelectedType) stab = 1.5
+            if(userCurrentPokemon.pokemonType[i].type.name === moveSelected.type) stab = 1.5
         }
 
         // checks to see if move is super effective
@@ -112,29 +129,37 @@ const BattleTrainerView = () => {
                 if (halfDamageTo[i].name === opponentCurrentPokemonType[1].type.name) targetType2 = 0.5
             }
         }  
-
         // checks to see if move has no effect
-        // if(noDamageTo) {
-        //     if (noDamageTo[0].name === opponentCurrentPokemonType[0].type.name) targetType1 = 0
-        //     if (userCurrentPokemon.pokemonType.length = 2) {
-        //         if (noDamageTo[0].name === opponentCurrentPokemonType[1].type.name) targetType2 = 0
-        //     }
-        // }
+        if(noDamageTo.length > 0) {
+            if (noDamageTo[0].name === opponentCurrentPokemonType[0].type.name) targetType1 = 0
+            if (userCurrentPokemon.pokemonType.length = 2) {
+                if (noDamageTo[0].name === opponentCurrentPokemonType[1].type.name) targetType2 = 0
+            }
+        }
 
         // checks if burn
 
         // checks if weather condition
 
-
-        console.log(result)
-        console.log({
-            'stab': stab,
-            'type1': targetType1,
-            'type2':targetType2
-        })
         // include weather later
         let modifier = critical * random * stab * burn * targetType1 * targetType2
-        console.log(modifier)
+        let damage = (((((2 * level) / 5) + 2) * power * (attack / defense)) / 50) + 2
+        let totalDamage = Math.floor(damage * modifier)
+        
+        let effective = 'Normal Damage';
+
+        if(targetType1 + targetType2 > 2) effective = 'Super Effective'
+        else if(targetType1 + targetType1 < 2) effective = 'Not-Very Effective'
+        if(targetType1 * targetType2 === 0) effective = 'No Effect'
+
+        console.log({
+            'critical': critical,
+            'stab': stab,
+            'type1': targetType1,
+            'type2':targetType2,
+            'effective': effective,
+            'damage': totalDamage,
+        })
     }
     if(readyForBattle) {
         return (
