@@ -41,7 +41,7 @@ const BattleTrainerView = () => {
     const fetchTypeEffectiveness = async (type) => {
         const res = await fetch(`https://pokeapi.co/api/v2/type/${type}`)
         let result = await res.json()
-        console.log(result)
+        return result
     }
 
     // const attack = () => {
@@ -69,21 +69,72 @@ const BattleTrainerView = () => {
         setSelectedMove('')
     }, [])
 
-    const attack = (e) => {
+    const attack = async (e) => {
         e.preventDefault()
-        let moveSelected;
-        if (e.target.id === 'slot_1') moveSelected = userCurrentPokemon.moveSlot_1.type;
-        if (e.target.id === 'slot_2') moveSelected = userCurrentPokemon.moveSlot_2.type;
-        if (e.target.id === 'slot_3') moveSelected = userCurrentPokemon.moveSlot_3.type;
-        if (e.target.id === 'slot_4') moveSelected = userCurrentPokemon.moveSlot_4.type;
-        console.log(fetchTypeEffectiveness(moveSelected))
+        let moveSelectedType;
+        if (e.target.id === 'slot_1') moveSelectedType = userCurrentPokemon.moveSlot_1.type;
+        if (e.target.id === 'slot_2') moveSelectedType = userCurrentPokemon.moveSlot_2.type;
+        if (e.target.id === 'slot_3') moveSelectedType = userCurrentPokemon.moveSlot_3.type;
+        if (e.target.id === 'slot_4') moveSelectedType = userCurrentPokemon.moveSlot_4.type;
+        
+        // grab selectedMove info
+        const res = await fetch(`https://pokeapi.co/api/v2/type/${moveSelectedType}`)
+        let result = await res.json()
+        let doubleDamageTo = result.damage_relations.double_damage_to
+        let halfDamageTo = result.damage_relations.half_damage_to
+        let noDamageTo = result.damage_relations.no_damage_to
+        let opponentCurrentPokemonType = opponentCurrentPokemon.pokemonType
         // weather
-        // let stab;
-        // let targetType;
-        // let targetType2;
-        // let burn;
-        // let critical = isCritical()
-        // let random = getRandomFloat(0.85, 1)
+        let stab = 1
+        let targetType1 = 1
+        let targetType2 = 1
+        let burn = 1
+        let critical = isCritical()
+        let random = getRandomFloat(0.85, 1)
+
+        // checks for stab
+        for(let i = 0; i < userCurrentPokemon.pokemonType.length; i++) {
+            if(userCurrentPokemon.pokemonType[i].type.name === moveSelectedType) stab = 1.5
+        }
+
+        // checks to see if move is super effective
+        for(let i = 0; i < doubleDamageTo.length; i++) {
+            if (doubleDamageTo[i].name === opponentCurrentPokemonType[0].type.name) targetType1 = 2
+            if (opponentCurrentPokemonType[1]) {
+                if (doubleDamageTo[i].name === opponentCurrentPokemonType[1].type.name) targetType2 = 2
+            }
+        }
+
+        // checks to see if move is not very effective
+        for (let i = 0; i < halfDamageTo.length; i++) {
+            if (halfDamageTo[i].name === opponentCurrentPokemonType[0].type.name) targetType1 = 0.5
+            if (opponentCurrentPokemonType[1]) {
+                if (halfDamageTo[i].name === opponentCurrentPokemonType[1].type.name) targetType2 = 0.5
+            }
+        }  
+
+        // checks to see if move has no effect
+        // if(noDamageTo) {
+        //     if (noDamageTo[0].name === opponentCurrentPokemonType[0].type.name) targetType1 = 0
+        //     if (userCurrentPokemon.pokemonType.length = 2) {
+        //         if (noDamageTo[0].name === opponentCurrentPokemonType[1].type.name) targetType2 = 0
+        //     }
+        // }
+
+        // checks if burn
+
+        // checks if weather condition
+
+
+        console.log(result)
+        console.log({
+            'stab': stab,
+            'type1': targetType1,
+            'type2':targetType2
+        })
+        // include weather later
+        let modifier = critical * random * stab * burn * targetType1 * targetType2
+        console.log(modifier)
     }
     if(readyForBattle) {
         return (
