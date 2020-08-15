@@ -87,10 +87,12 @@ const App = props => {
     moveDetails.accuracy = results.accuracy
     moveDetails.damage_class = results.damage_class.name
     moveDetails.type = results.type.name
+    moveDetails.typeURL = results.type.url
     moveDetails.stat_changes = results.stat_changes
     moveDetails.priority = results.priority
     moveDetails.effect_chance = results.effect_chance
     moveDetails.effect = fixEffectText(results.effect_entries[0].effect, results.effect_chance)
+    console.log(results)
     setSelectedMove(moveDetails)
   }
 

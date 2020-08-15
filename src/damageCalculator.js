@@ -23,7 +23,8 @@ const damageOutput = (level, power, attack, defense, weather, stab, burn, target
     let modifier = weather * critical * random * stab * burn * targetType * targetType2
     let damage = (((((2 * level) / 5) + 2) * power * (attack / defense)) / 50) + 2
     let totalDamage = Math.floor(damage * modifier)
-    return totalDamage
+    
+    
 }
 
 console.log(damageOutput(50, 110, 114, 70, weather, 1.5, 1, 0.5, 0.5))

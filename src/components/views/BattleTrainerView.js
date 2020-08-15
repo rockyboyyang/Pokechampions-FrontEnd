@@ -38,6 +38,22 @@ const BattleTrainerView = () => {
         return Math.floor(Math.random() * (max - min + 1) + min);
     }
 
+    const fetchTypeEffectiveness = async (type) => {
+        const res = await fetch(`https://pokeapi.co/api/v2/type/${type}`)
+        let result = await res.json()
+        console.log(result)
+    }
+
+    // const attack = () => {
+    //     let random = getRandomFloat(0.85, 1)
+    //     let critical = isCritical();
+    //     let weather = 1;
+    //     let stab = 1;
+    //     let burn = 1;
+    //     let targetType1;
+    //     let targetType2;
+    // }
+
     const isCritical = () => {
         if (randomIntFromInterval(1, 24) === 12) return 1.5
         else return 1
@@ -53,14 +69,21 @@ const BattleTrainerView = () => {
         setSelectedMove('')
     }, [])
 
-    const attack = () => {
+    const attack = (e) => {
+        e.preventDefault()
+        let moveSelected;
+        if (e.target.id === 'slot_1') moveSelected = userCurrentPokemon.moveSlot_1.type;
+        if (e.target.id === 'slot_2') moveSelected = userCurrentPokemon.moveSlot_2.type;
+        if (e.target.id === 'slot_3') moveSelected = userCurrentPokemon.moveSlot_3.type;
+        if (e.target.id === 'slot_4') moveSelected = userCurrentPokemon.moveSlot_4.type;
+        console.log(fetchTypeEffectiveness(moveSelected))
         // weather
-        let stab;
-        let targetType;
-        let targetType2;
-        let burn;
-        let critical = isCritical()
-        let random = getRandomFloat(0.85, 1)
+        // let stab;
+        // let targetType;
+        // let targetType2;
+        // let burn;
+        // let critical = isCritical()
+        // let random = getRandomFloat(0.85, 1)
     }
     if(readyForBattle) {
         return (
@@ -95,10 +118,10 @@ const BattleTrainerView = () => {
                             </div>
                         </div>
                         <div className="move-slots-container-battle">
-                            <button className="move-slot slot-1" onClick={attack}>{userCurrentPokemon.moveSlot_1.name}</button>
-                            <button className="move-slot slot-2" onClick={attack}>{userCurrentPokemon.moveSlot_2.name}</button>
-                            <button className="move-slot slot-3" onClick={attack}>{userCurrentPokemon.moveSlot_3.name}</button>
-                            <button className="move-slot slot-4" onClick={attack}>{userCurrentPokemon.moveSlot_4.name}</button>
+                            <button className="move-slot" id="slot_1" onClick={attack}>{userCurrentPokemon.moveSlot_1.name}</button>
+                            <button className="move-slot" id="slot_2" onClick={attack}>{userCurrentPokemon.moveSlot_2.name}</button>
+                            <button className="move-slot" id="slot_3" onClick={attack}>{userCurrentPokemon.moveSlot_3.name}</button>
+                            <button className="move-slot" id="slot_4" onClick={attack}>{userCurrentPokemon.moveSlot_4.name}</button>
                         </div>
                     </div>
                     <div className="right-box"></div>
