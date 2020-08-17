@@ -110,8 +110,9 @@ const BattleTrainerView = () => {
         let random = getRandomFloat(0.85, 1)
 
         // checks for stab
-        for(let i = 0; i < userCurrentPokemon.pokemonType.length; i++) {
-            if(userCurrentPokemon.pokemonType[i].type.name === moveSelected.type) stab = 1.5
+        if(userCurrentPokemon.pokemonType[0].type.name === moveSelected.type) stab = 1.5
+        if(userCurrentPokemon.pokemonType[1]) {
+            if(userCurrentPokemon.pokemonType[1].type.name === moveSelected.type) stab = 1.5
         }
 
         // checks to see if move is super effective
@@ -132,7 +133,7 @@ const BattleTrainerView = () => {
         // checks to see if move has no effect
         if(noDamageTo.length > 0) {
             if (noDamageTo[0].name === opponentCurrentPokemonType[0].type.name) targetType1 = 0
-            if (userCurrentPokemon.pokemonType.length = 2) {
+            if (opponentCurrentPokemonType[1]) {
                 if (noDamageTo[0].name === opponentCurrentPokemonType[1].type.name) targetType2 = 0
             }
         }
@@ -161,6 +162,11 @@ const BattleTrainerView = () => {
             'damage': totalDamage,
         })
     }
+
+    const beginBattleSequence = () => {
+
+    }
+
     if(readyForBattle) {
         return (
             <div className="view-body">
