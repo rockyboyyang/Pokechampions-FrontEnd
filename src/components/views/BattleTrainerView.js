@@ -164,7 +164,11 @@ const BattleTrainerView = () => {
     }
 
     const beginBattleSequence = () => {
-
+        let dialogue = document.getElementById('typewriter-text')
+        dialogue.removeAttribute('id')
+        dialogue.setAttribute('id', 'typewriter-text')
+        console.log(dialogue)
+        dialogue.innerText = 'howdy'
     }
 
     if(readyForBattle) {
@@ -202,8 +206,11 @@ const BattleTrainerView = () => {
                         <div className="move-slots-container-battle">
                             <button className="move-slot" id="slot_1" onClick={attack}>{userCurrentPokemon.moveSlot_1.name}</button>
                             <button className="move-slot" id="slot_2" onClick={attack}>{userCurrentPokemon.moveSlot_2.name}</button>
-                            <button className="move-slot" id="slot_3" onClick={attack}>{userCurrentPokemon.moveSlot_3.name}</button>
-                            <button className="move-slot" id="slot_4" onClick={attack}>{userCurrentPokemon.moveSlot_4.name}</button>
+                            <button className="move-slot" id="slot_3" onClick={beginBattleSequence}>{userCurrentPokemon.moveSlot_3.name}</button>
+                            {/* <button className="move-slot" id="slot_4" onClick={attack}>{userCurrentPokemon.moveSlot_4.name}</button> */}
+                            <div className="typewriter"><h1>><span className='text_1'>Pikachu used Thunder-Punch</span>
+                                                        <span className='text_2'>That's super effective</span></h1>
+                            </div>
                         </div>
                     </div>
                     <div className="right-box"></div>
