@@ -21,6 +21,8 @@ const BattleTrainerView = () => {
     const [opponentSlot_4Pokemon, setOpponentSlot_4CurrentPokemon] = useState('')
     const [opponentSlot_5Pokemon, setOpponentSlot_5CurrentPokemon] = useState('')
     const [opponentSlot_6Pokemon, setOpponentSlot_6CurrentPokemon] = useState('')
+    const [battleSequence, setBattleSequence] = useState(false)
+    const [moveUsed, setMoveUsed] = useState('')
 
     const routeToBattleSelectScreen = () => {
         history.push('./battle/gymleaders')
@@ -69,17 +71,17 @@ const BattleTrainerView = () => {
         setSelectedMove('')
     }, [])
 
-    const attack = async (e) => {
-        e.preventDefault()
+    const attack = async (slot) => {
+        // e.preventDefault()
 
         // TODO: Have to swap userCurrentPokemon and OpponentCurrentPokemon with
         // attacking pokemon and defending pokemon
 
         let moveSelected;
-        if (e.target.id === 'slot_1') moveSelected = userCurrentPokemon.moveSlot_1;
-        if (e.target.id === 'slot_2') moveSelected = userCurrentPokemon.moveSlot_2;
-        if (e.target.id === 'slot_3') moveSelected = userCurrentPokemon.moveSlot_3;
-        if (e.target.id === 'slot_4') moveSelected = userCurrentPokemon.moveSlot_4;
+        if (slot === 'slot_1') moveSelected = userCurrentPokemon.moveSlot_1;
+        if (slot === 'slot_2') moveSelected = userCurrentPokemon.moveSlot_2;
+        if (slot === 'slot_3') moveSelected = userCurrentPokemon.moveSlot_3;
+        if (slot === 'slot_4') moveSelected = userCurrentPokemon.moveSlot_4;
         
         // grab selectedMove info
         const res = await fetch(`https://pokeapi.co/api/v2/type/${moveSelected.type}`)
@@ -161,14 +163,18 @@ const BattleTrainerView = () => {
             'effective': effective,
             'damage': totalDamage,
         })
+        console.log(moveSelected.name)
+        return moveSelected.name
     }
 
-    const beginBattleSequence = () => {
-        let dialogue = document.getElementById('typewriter-text')
-        dialogue.removeAttribute('id')
-        dialogue.setAttribute('id', 'typewriter-text')
-        console.log(dialogue)
-        dialogue.innerText = 'howdy'
+    const beginBattleSequence = async (e) => {
+        e.preventDefault()
+        setMoveUsed(await attack(e.target.id).then((res) => res))
+        setBattleSequence(true)
+        // setMoveUsed(attack(e.target.id))
+        // let first = document.getElementById('typewriter-text')
+        // dialogue.innerHTML = "<span className='text_1'>Pikachu used Thunder-Punch</span><span className='text_2'>That was super effective</span>"
+        // console.log(dialogue)
     }
 
     if(readyForBattle) {
@@ -203,15 +209,22 @@ const BattleTrainerView = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="move-slots-container-battle">
-                            <button className="move-slot" id="slot_1" onClick={attack}>{userCurrentPokemon.moveSlot_1.name}</button>
-                            <button className="move-slot" id="slot_2" onClick={attack}>{userCurrentPokemon.moveSlot_2.name}</button>
-                            <button className="move-slot" id="slot_3" onClick={beginBattleSequence}>{userCurrentPokemon.moveSlot_3.name}</button>
-                            {/* <button className="move-slot" id="slot_4" onClick={attack}>{userCurrentPokemon.moveSlot_4.name}</button> */}
-                            <div className="typewriter"><h1>><span className='text_1'>Pikachu used Thunder-Punch</span>
-                                                        <span className='text_2'>That's super effective</span></h1>
+                        {!battleSequence ? (
+                            <div className="move-slots-container-battle">
+                                <button className="move-slot" id="slot_1" onClick={beginBattleSequence}>{userCurrentPokemon.moveSlot_1.name}</button>
+                                <button className="move-slot" id="slot_2" onClick={beginBattleSequence}>{userCurrentPokemon.moveSlot_2.name}</button>
+                                <button className="move-slot" id="slot_3" onClick={beginBattleSequence}>{userCurrentPokemon.moveSlot_3.name}</button>
+                                <button className="move-slot" id="slot_4" onClick={beginBattleSequence}>{userCurrentPokemon.moveSlot_4.name}</button>
                             </div>
-                        </div>
+                            ) : (
+                                <div className="typewriter">
+                                    <h1 id='typewriter-text'>
+                                        <span id="text_1">{userCurrentPokemon.pokemon} used {moveUsed}</span>
+                                        <span id="text_2">it was super effective</span>
+                                    </h1>
+                                </div>
+                            )
+                        }
                     </div>
                     <div className="right-box"></div>
                 </div>

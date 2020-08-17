@@ -329,7 +329,7 @@ body,
   }
   
   60%, 90% {
-    width: 21.2em;
+    width: 13.2em;
   }
 }
 @keyframes text1 {
@@ -337,27 +337,27 @@ body,
     width: 0;
   }
   10%, 40% {
-    width: 17em;
+    width: 13em;
   }
 }
 
-.text_1 {
+#text_1 {
   animation: text1;
 }
-.text_2 {
+#text_2 {
   animation: text2;
 }
-.text_1, .text_2 {
+#text_1, #text_2 {
   overflow: hidden;
   white-space: nowrap;
   display: inline-block;
   position: relative;
-  animation-duration: 20s;
-  animation-timing-function: steps(25, end);
+  animation-duration: 5s;
+  animation-timing-function: steps(30, end);
   animation-iteration-count: infinite;
 }
-.text_1::after, .text_2::after {
-  content: "|";
+#text_1::after, #text_2::after {
+  /* content: "|"; */
   position: absolute;
   right: 0;
   animation: caret infinite;
