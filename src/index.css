@@ -318,50 +318,25 @@ body,
 
 
 /* TYPEWRITER CODE START */
-
-.typewriter {
-    background-color: white;
+.typewriter h1 {
+  overflow: hidden; /* Ensures the content is not revealed until the animation */
+  /* border-right: .15em solid orange; The typwriter cursor */
+  white-space: nowrap; /* Keeps the content on a single line */
+  margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+  /* letter-spacing: .15em; Adjust as needed */
+  background-color: white;
+  animation: typing 1s steps(40, end)
 }
 
-@keyframes text2 {
-  0%, 50%, 100% {
-    width: 0;
-  }
-  
-  60%, 90% {
-    width: 13.2em;
-  }
-}
-@keyframes text1 {
-  0%, 50%, 100% {
-    width: 0;
-  }
-  10%, 40% {
-    width: 13em;
-  }
+/* The typing effect */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
 }
 
-#text_1 {
-  animation: text1;
-}
-#text_2 {
-  animation: text2;
-}
-#text_1, #text_2 {
-  overflow: hidden;
-  white-space: nowrap;
-  display: inline-block;
-  position: relative;
-  animation-duration: 5s;
-  animation-timing-function: steps(30, end);
-  animation-iteration-count: infinite;
-}
-#text_1::after, #text_2::after {
-  /* content: "|"; */
-  position: absolute;
-  right: 0;
-  animation: caret infinite;
-  animation-duration: 1s;
-  animation-timing-function: steps(1, end);
-}
+/* The typewriter cursor effect */
+/* @keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: orange; }
+} */
 /* TYPEWRITER CODE END */

@@ -23,6 +23,13 @@ const BattleTrainerView = () => {
     const [opponentSlot_6Pokemon, setOpponentSlot_6CurrentPokemon] = useState('')
     const [battleSequence, setBattleSequence] = useState(false)
     const [moveUsed, setMoveUsed] = useState('')
+    const [userPokemonStats, setUserPokemonStats] = useState({})
+    const [opponentPokemonStats, setOpponentPokemonStats] = useState({})
+    const [effective, setEffective] = useState('')
+    const [critical, setCritical] = useState('')
+    const [statChange, setStatChange] = useState('')
+    const [ohko, setOhko] = useState('')
+
 
     const routeToBattleSelectScreen = () => {
         history.push('./battle/gymleaders')
@@ -46,16 +53,6 @@ const BattleTrainerView = () => {
         return result
     }
 
-    // const attack = () => {
-    //     let random = getRandomFloat(0.85, 1)
-    //     let critical = isCritical();
-    //     let weather = 1;
-    //     let stab = 1;
-    //     let burn = 1;
-    //     let targetType1;
-    //     let targetType2;
-    // }
-
     const isCritical = () => {
         if (randomIntFromInterval(1, 24) === 12) return 1.5
         else return 1
@@ -63,8 +60,26 @@ const BattleTrainerView = () => {
 
     const clickToBattle = (e) => {
         e.preventDefault()
-        setUserCurrentPokemon(JSON.parse(user.slot_1))
-        setOpponentCurrentPokemon(JSON.parse(opponent.slot_1))
+        let userPokemon = JSON.parse(user.slot_1)
+        let opponentPokemon = JSON.parse(opponent.slot_1)
+        setUserCurrentPokemon(userPokemon)
+        setOpponentCurrentPokemon(opponentPokemon)
+        setUserPokemonStats({
+            'hp': userPokemon.pokemonStats[0].base_stat + 60,
+            'attack': userPokemon.pokemonStats[1].base_stat + 5,
+            'defense': userPokemon.pokemonStats[2].base_stat + 5,
+            'special-attack': userPokemon.pokemonStats[3].base_stat + 5,
+            'special-defense': userPokemon.pokemonStats[4].base_stat + 5,
+            'speed': userPokemon.pokemonStats[5].base_stat + 5,
+        })
+        setOpponentPokemonStats({
+            'hp': opponentPokemon.pokemonStats[0].base_stat + 60,
+            'attack': opponentPokemon.pokemonStats[1].base_stat + 5,
+            'defense': opponentPokemon.pokemonStats[2].base_stat + 5,
+            'special_attack': opponentPokemon.pokemonStats[3].base_stat + 5,
+            'special_defense': opponentPokemon.pokemonStats[4].base_stat + 5,
+            'speed': opponentPokemon.pokemonStats[5].base_stat + 5,
+        })
         setReadyForBattle(true)
     }
     useEffect(() => {
@@ -93,11 +108,11 @@ const BattleTrainerView = () => {
         let power = moveSelected.power
 
         // checks to see which type of move it was
-        if (moveSelected.damage_class === "physical") attack = userCurrentPokemon.pokemonStats[1].base_stat + 5;
-        if (moveSelected.damage_class === "special") attack = userCurrentPokemon.pokemonStats[3].base_stat + 5;
-        if (moveSelected.damage_class === "physical") defense = opponentCurrentPokemon.pokemonStats[2].base_stat + 5;
-        if (moveSelected.damage_class === "special") defense = opponentCurrentPokemon.pokemonStats[4].base_stat + 5;
-
+        if (moveSelected.damage_class === "physical") attack = userPokemonStats.attack;
+        if (moveSelected.damage_class === "special") attack = userPokemonStats.special_attack;
+        if (moveSelected.damage_class === "physical") defense = opponentPokemonStats.attack;
+        if (moveSelected.damage_class === "special") defense = opponentPokemonStats.special_attack
+        // if (moveSelected.damage_class === )
         let doubleDamageTo = result.damage_relations.double_damage_to
         let halfDamageTo = result.damage_relations.half_damage_to
         let noDamageTo = result.damage_relations.no_damage_to
@@ -149,7 +164,7 @@ const BattleTrainerView = () => {
         let damage = (((((2 * level) / 5) + 2) * power * (attack / defense)) / 50) + 2
         let totalDamage = Math.floor(damage * modifier)
         
-        let effective = 'Normal Damage';
+        let effective = null;
 
         if(targetType1 + targetType2 > 2) effective = 'Super Effective'
         else if(targetType1 + targetType1 < 2) effective = 'Not-Very Effective'
@@ -164,12 +179,21 @@ const BattleTrainerView = () => {
             'damage': totalDamage,
         })
         console.log(moveSelected.name)
-        return moveSelected.name
+        return {
+            'move':moveSelected.name,
+            'critical': critical,
+            'effective': effective,
+            'damage': totalDamage,
+        }
     }
 
     const beginBattleSequence = async (e) => {
         e.preventDefault()
-        setMoveUsed(await attack(e.target.id).then((res) => res))
+        let moveUsed = await attack(e.target.id).then((res) => res)
+        console.log(moveUsed)
+        setMoveUsed(moveUsed.move)
+        setEffective(moveUsed.effective)
+        setCritical(moveUsed.critical)
         setBattleSequence(true)
         // setMoveUsed(attack(e.target.id))
         // let first = document.getElementById('typewriter-text')
@@ -220,7 +244,6 @@ const BattleTrainerView = () => {
                                 <div className="typewriter">
                                     <h1 id='typewriter-text'>
                                         <span id="text_1">{userCurrentPokemon.pokemon} used {moveUsed}</span>
-                                        <span id="text_2">it was super effective</span>
                                     </h1>
                                 </div>
                             )
