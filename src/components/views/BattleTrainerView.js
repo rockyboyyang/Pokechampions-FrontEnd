@@ -15,7 +15,6 @@ const BattleTrainerView = () => {
     const [userSlot_5Pokemon, setUserSlot_5CurrentPokemon] = useState('')
     const [userSlot_6Pokemon, setUserSlot_6CurrentPokemon] = useState('')
     const [opponentCurrentPokemon, setOpponentCurrentPokemon] = useState('')
-    const [opponentSlot_1Pokemon, setOpponentSlot_1CurrentPokemon] = useState('')
     const [opponentSlot_2Pokemon, setOpponentSlot_2CurrentPokemon] = useState('')
     const [opponentSlot_3Pokemon, setOpponentSlot_3CurrentPokemon] = useState('')
     const [opponentSlot_4Pokemon, setOpponentSlot_4CurrentPokemon] = useState('')
@@ -64,8 +63,20 @@ const BattleTrainerView = () => {
         let opponentPokemon = JSON.parse(opponent.slot_1)
         setUserCurrentPokemon(userPokemon)
         setOpponentCurrentPokemon(opponentPokemon)
+        setUserSlot_2CurrentPokemon(JSON.parse(user.slot_2))
+        setUserSlot_3CurrentPokemon(JSON.parse(user.slot_3))
+        setUserSlot_4CurrentPokemon(JSON.parse(user.slot_4))
+        setUserSlot_5CurrentPokemon(JSON.parse(user.slot_5))
+        setUserSlot_6CurrentPokemon(JSON.parse(user.slot_6))
+        setOpponentSlot_2CurrentPokemon(JSON.parse(opponent.slot_2))
+        setOpponentSlot_3CurrentPokemon(JSON.parse(opponent.slot_3))
+        setOpponentSlot_4CurrentPokemon(JSON.parse(opponent.slot_4))
+        setOpponentSlot_5CurrentPokemon(JSON.parse(opponent.slot_5))
+        setOpponentSlot_6CurrentPokemon(JSON.parse(opponent.slot_6))
+
         setUserPokemonStats({
-            'hp': userPokemon.pokemonStats[0].base_stat + 60,
+            'maxhp': userPokemon.pokemonStats[0].base_stat + 60,
+            'remaininghp': userPokemon.pokemonStats[0].base_stat + 60,
             'attack': userPokemon.pokemonStats[1].base_stat + 5,
             'defense': userPokemon.pokemonStats[2].base_stat + 5,
             'special-attack': userPokemon.pokemonStats[3].base_stat + 5,
@@ -73,7 +84,8 @@ const BattleTrainerView = () => {
             'speed': userPokemon.pokemonStats[5].base_stat + 5,
         })
         setOpponentPokemonStats({
-            'hp': opponentPokemon.pokemonStats[0].base_stat + 60,
+            'maxhp': opponentPokemon.pokemonStats[0].base_stat + 60,
+            'remaininghp': userPokemon.pokemonStats[0].base_stat + 60,
             'attack': opponentPokemon.pokemonStats[1].base_stat + 5,
             'defense': opponentPokemon.pokemonStats[2].base_stat + 5,
             'special_attack': opponentPokemon.pokemonStats[3].base_stat + 5,
@@ -178,7 +190,7 @@ const BattleTrainerView = () => {
             'effective': effective,
             'damage': totalDamage,
         })
-        console.log(moveSelected.name)
+
         return {
             'move':moveSelected.name,
             'critical': critical,
@@ -194,10 +206,14 @@ const BattleTrainerView = () => {
         setMoveUsed(moveUsed.move)
         setEffective(moveUsed.effective)
         setCritical(moveUsed.critical)
+        let tempOppPokemon = opponentPokemonStats
+        // console.log(tempOppPokemon)
+        tempOppPokemon.remaininghp -= moveUsed.damage
+        setOpponentPokemonStats(tempOppPokemon)
         setBattleSequence(true)
         // setMoveUsed(attack(e.target.id))
         // let first = document.getElementById('typewriter-text')
-        // dialogue.innerHTML = "<span className='text_1'>Pikachu used Thunder-Punch</span><span className='text_2'>That was super effective</span>"
+        // dialogue.innerHTML = "<p className='text_1'>Pikachu used Thunder-Punch</p><p className='text_2'>That was super effective</p>"
         // console.log(dialogue)
     }
 
@@ -243,7 +259,19 @@ const BattleTrainerView = () => {
                             ) : (
                                 <div className="typewriter">
                                     <h1 id='typewriter-text'>
-                                        <span id="text_1">{userCurrentPokemon.pokemon} used {moveUsed}</span>
+                                        <p id="text_1">{userCurrentPokemon.pokemon} used {moveUsed}</p>
+                                        {effective ? (
+                                            <p id="text_1">It's {effective}!</p>
+                                        ) : (
+                                            <>
+                                            </>
+                                        )}
+                                        {critical > 1 ? (
+                                            <p id="text_1">It's a critical hit!</p>
+                                        ) : (
+                                            <>
+                                            </>
+                                        )}
                                     </h1>
                                 </div>
                             )
