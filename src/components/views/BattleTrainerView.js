@@ -21,11 +21,18 @@ const BattleTrainerView = () => {
     const [opponentSlot_5Pokemon, setOpponentSlot_5CurrentPokemon] = useState('')
     const [opponentSlot_6Pokemon, setOpponentSlot_6CurrentPokemon] = useState('')
     const [battleSequence, setBattleSequence] = useState(false)
-    const [moveUsed, setMoveUsed] = useState('')
+    const [userSequence, setUserSequence] = useState(false)
+    const [opponentSequence, setOpponentSequence] = useState(false)
+    const [defensivePokemon, setDefensivePokemon] = useState('')
+    const [offensivePokemon, setOffensivePokemon] = useState('')
+    const [userMoveUsed, setUserMoveUsed] = useState('')
+    const [opponentMoveUsed, setOpponentMoveUsed] = useState('')
     const [userPokemonStats, setUserPokemonStats] = useState({})
     const [opponentPokemonStats, setOpponentPokemonStats] = useState({})
-    const [effective, setEffective] = useState('')
-    const [critical, setCritical] = useState('')
+    const [userEffective, setUserEffective] = useState('')
+    const [opponentEffective, setOpponentEffective] = useState('')
+    const [userCritical, setUserCritical] = useState('')
+    const [opponentCritical, setOpponentCritical] = useState('')
     const [statChange, setStatChange] = useState('')
     const [ohko, setOhko] = useState('')
 
@@ -98,17 +105,16 @@ const BattleTrainerView = () => {
         setSelectedMove('')
     }, [])
 
-    const attack = async (slot) => {
+    const attack = async (slot, attackingPokemon, target) => {
         // e.preventDefault()
 
         // TODO: Have to swap userCurrentPokemon and OpponentCurrentPokemon with
         // attacking pokemon and defending pokemon
-
         let moveSelected;
-        if (slot === 'slot_1') moveSelected = userCurrentPokemon.moveSlot_1;
-        if (slot === 'slot_2') moveSelected = userCurrentPokemon.moveSlot_2;
-        if (slot === 'slot_3') moveSelected = userCurrentPokemon.moveSlot_3;
-        if (slot === 'slot_4') moveSelected = userCurrentPokemon.moveSlot_4;
+        if (slot === 'slot_1') moveSelected = attackingPokemon.moveSlot_1;
+        if (slot === 'slot_2') moveSelected = attackingPokemon.moveSlot_2;
+        if (slot === 'slot_3') moveSelected = attackingPokemon.moveSlot_3;
+        if (slot === 'slot_4') moveSelected = attackingPokemon.moveSlot_4;
         
         // grab selectedMove info
         const res = await fetch(`https://pokeapi.co/api/v2/type/${moveSelected.type}`)
@@ -120,15 +126,15 @@ const BattleTrainerView = () => {
         let power = moveSelected.power
 
         // checks to see which type of move it was
-        if (moveSelected.damage_class === "physical") attack = userPokemonStats.attack;
-        if (moveSelected.damage_class === "special") attack = userPokemonStats.special_attack;
-        if (moveSelected.damage_class === "physical") defense = opponentPokemonStats.attack;
-        if (moveSelected.damage_class === "special") defense = opponentPokemonStats.special_attack
+        if (moveSelected.damage_class === "physical") attack = attackingPokemon.pokemonStats[1].base_stat + 5;
+        if (moveSelected.damage_class === "special") attack = attackingPokemon.pokemonStats[3].base_stat + 5;
+        if (moveSelected.damage_class === "physical") defense = target.pokemonStats[2].base_stat + 5
+        if (moveSelected.damage_class === "special") defense = target.pokemonStats[4].base_stat + 5
         // if (moveSelected.damage_class === )
         let doubleDamageTo = result.damage_relations.double_damage_to
         let halfDamageTo = result.damage_relations.half_damage_to
         let noDamageTo = result.damage_relations.no_damage_to
-        let opponentCurrentPokemonType = opponentCurrentPokemon.pokemonType
+        let targetPokemonType = target.pokemonType
 
         // weather
         let stab = 1
@@ -139,31 +145,31 @@ const BattleTrainerView = () => {
         let random = getRandomFloat(0.85, 1)
 
         // checks for stab
-        if(userCurrentPokemon.pokemonType[0].type.name === moveSelected.type) stab = 1.5
-        if(userCurrentPokemon.pokemonType[1]) {
-            if(userCurrentPokemon.pokemonType[1].type.name === moveSelected.type) stab = 1.5
+        if(attackingPokemon.pokemonType[0].type.name === moveSelected.type) stab = 1.5
+        if (attackingPokemon.pokemonType[1]) {
+            if (attackingPokemon.pokemonType[1].type.name === moveSelected.type) stab = 1.5
         }
 
         // checks to see if move is super effective
         for(let i = 0; i < doubleDamageTo.length; i++) {
-            if (doubleDamageTo[i].name === opponentCurrentPokemonType[0].type.name) targetType1 = 2
-            if (opponentCurrentPokemonType[1]) {
-                if (doubleDamageTo[i].name === opponentCurrentPokemonType[1].type.name) targetType2 = 2
+            if (doubleDamageTo[i].name === targetPokemonType[0].type.name) targetType1 = 2
+            if (targetPokemonType[1]) {
+                if (doubleDamageTo[i].name === targetPokemonType[1].type.name) targetType2 = 2
             }
         }
 
         // checks to see if move is not very effective
         for (let i = 0; i < halfDamageTo.length; i++) {
-            if (halfDamageTo[i].name === opponentCurrentPokemonType[0].type.name) targetType1 = 0.5
-            if (opponentCurrentPokemonType[1]) {
-                if (halfDamageTo[i].name === opponentCurrentPokemonType[1].type.name) targetType2 = 0.5
+            if (halfDamageTo[i].name === targetPokemonType[0].type.name) targetType1 = 0.5
+            if (targetPokemonType[1]) {
+                if (halfDamageTo[i].name === targetPokemonType[1].type.name) targetType2 = 0.5
             }
         }  
         // checks to see if move has no effect
         if(noDamageTo.length > 0) {
-            if (noDamageTo[0].name === opponentCurrentPokemonType[0].type.name) targetType1 = 0
-            if (opponentCurrentPokemonType[1]) {
-                if (noDamageTo[0].name === opponentCurrentPokemonType[1].type.name) targetType2 = 0
+            if (noDamageTo[0].name === targetPokemonType[0].type.name) targetType1 = 0
+            if (targetPokemonType[1]) {
+                if (noDamageTo[0].name === targetPokemonType[1].type.name) targetType2 = 0
             }
         }
 
@@ -190,7 +196,7 @@ const BattleTrainerView = () => {
             'effective': effective,
             'damage': totalDamage,
         })
-
+        console.log(`${attackingPokemon.pokemon} used ${moveSelected.name}`)
         return {
             'move':moveSelected.name,
             'critical': critical,
@@ -211,19 +217,56 @@ const BattleTrainerView = () => {
         if (slot === 3) opponentMove = 'slot_3'
         if (slot === 4) opponentMove = 'slot_4'
         
-        if(userPokemonStats.speed > opponentPokemonStats.speed) {
-            let moveUsed = await attack(userMove).then((res) => res)
+        let speedTieBreaker = randomIntFromInterval(1,2)
+
+        if(userPokemonStats.speed > opponentPokemonStats.speed || (userPokemonStats.speed === opponentPokemonStats.speed && speedTieBreaker === 1)) {
+            setUserSequence(true)
+            let userMoveUsed = await attack(userMove, userCurrentPokemon, opponentCurrentPokemon).then((res) => res)
             let tempOppPokemon = opponentPokemonStats
-            tempOppPokemon.remaininghp -= moveUsed.damage
-            setEffective(moveUsed.effective)
-            setCritical(moveUsed.critical)
-            setOpponentPokemonStats(tempOppPokemon)
-            let opponentMoveUsed = await attack(opponentMove).then((res) => res)
-            let tempUserPokemon = userPokemonStats
-            tempUserPokemon.remaininghp -= opponentMoveUsed.damage
-            setUserPokemonStats(tempUserPokemon)
+            tempOppPokemon.remaininghp -= userMoveUsed.damage
+            setUserMoveUsed(userMoveUsed.move)
+            setUserEffective(userMoveUsed.effective)
+            setUserCritical(userMoveUsed.critical)
+            
+            setTimeout(async () => {
+                setUserSequence(false)
+                setOpponentSequence(true)
+                setOpponentPokemonStats(tempOppPokemon)
+                let opponentMoveUsed = await attack(opponentMove, opponentCurrentPokemon, userCurrentPokemon).then((res) => res)
+                let tempUserPokemon = userPokemonStats
+                tempUserPokemon.remaininghp -= opponentMoveUsed.damage
+                setOpponentMoveUsed(opponentMoveUsed.move)
+                setOpponentEffective(opponentMoveUsed.effective)
+                setOpponentCritical(opponentMoveUsed.critical)
+                setUserPokemonStats(tempUserPokemon)
+            }, 3000)
+        } else {
+                setOpponentSequence(true)
+                let opponentMoveUsed = await attack(opponentMove, opponentCurrentPokemon, userCurrentPokemon).then((res) => res)
+                let tempUserPokemon = userPokemonStats
+                tempUserPokemon.remaininghp -= opponentMoveUsed.damage
+                setOpponentMoveUsed(opponentMoveUsed.move)
+                setOpponentEffective(opponentMoveUsed.effective)
+                setOpponentCritical(opponentMoveUsed.critical)
+
+                setTimeout(async () => {
+                    setOpponentSequence(false)
+                    setUserSequence(true)
+                    setUserPokemonStats(tempUserPokemon)
+                    let userMoveUsed = await attack(userMove, userCurrentPokemon, opponentCurrentPokemon).then((res) => res)
+                    let tempOppPokemon = opponentPokemonStats
+                    tempOppPokemon.remaininghp -= userMoveUsed.damage
+                    setUserMoveUsed(userMoveUsed.move)
+                    setUserEffective(userMoveUsed.effective)
+                    setUserCritical(userMoveUsed.critical)
+                    setOpponentPokemonStats(tempOppPokemon)
+                }, 3000)
         }
         setBattleSequence(true)
+        setTimeout(() => {
+            setOpponentSequence(false)
+            setBattleSequence(false)
+        }, 6000)
         // setMoveUsed(attack(e.target.id))
         // let first = document.getElementById('typewriter-text')
         // dialogue.innerHTML = "<p className='text_1'>Pikachu used Thunder-Punch</p><p className='text_2'>That was super effective</p>"
@@ -246,7 +289,7 @@ const BattleTrainerView = () => {
                                         <div className="user-hpbar-container hpbar-container">
                                             <div className="user-hpbar hpbar"></div>
                                         </div>
-                                        <p className="userhp-percentage hp-percentage">100%</p>
+                                        <p className="userhp-percentage hp-percentage">{userPokemonStats.remaininghp}/{userPokemonStats.maxhp}</p>
                                     </div>
                                     <div className="status-info-effect"></div>
                                 </div>
@@ -256,7 +299,7 @@ const BattleTrainerView = () => {
                                         <div className="opponent-hpbar-container hpbar-container">
                                             <div className="opponent-hpbar hpbar"></div>
                                         </div>
-                                        <p className="opponenthp-percentage hp-percentage">100%</p>
+                                        <p className="opponenthp-percentage hp-percentage">{opponentPokemonStats.remaininghp}/{opponentPokemonStats.maxhp}</p>
                                     </div>
                                     <div className="status-info-effect"></div>
                                 </div>
@@ -271,21 +314,46 @@ const BattleTrainerView = () => {
                             </div>
                             ) : (
                                 <div className="typewriter">
-                                    <h1 id='typewriter-text'>
-                                        <p id="text_1">{userCurrentPokemon.pokemon} used {moveUsed}</p>
-                                        {effective ? (
-                                            <p id="text_1">It's {effective}!</p>
-                                        ) : (
-                                            <>
-                                            </>
-                                        )}
-                                        {critical > 1 ? (
-                                            <p id="text_1">It's a critical hit!</p>
-                                        ) : (
-                                            <>
-                                            </>
-                                        )}
-                                    </h1>
+                                    {userSequence ? (
+                                        <h1 id='typewriter-text'>
+                                            <p id="text_1">{userCurrentPokemon.pokemon} used {userMoveUsed}</p>
+                                            {userEffective ? (
+                                                <p id="text_1">It's {userEffective}!</p>
+                                            ) : (
+                                                <>
+                                                </>
+                                            )}
+                                            {userCritical > 1 ? (
+                                                <p id="text_1">It's a critical hit!</p>
+                                            ) : (
+                                                <>
+                                                </>
+                                            )}
+                                        </h1>
+                                    ) : (
+                                        <>
+                                        </>
+                                    )}
+                                    {opponentSequence ? (
+                                        <h1 id='typewriter-text'>
+                                            <p id="text_1">{opponentCurrentPokemon.pokemon} used {opponentMoveUsed}</p>
+                                            {opponentEffective ? (
+                                                <p id="text_1">It's {opponentEffective}!</p>
+                                            ) : (
+                                                <>
+                                                </>
+                                            )}
+                                            {opponentCritical > 1 ? (
+                                                <p id="text_1">It's a critical hit!</p>
+                                            ) : (
+                                                <>
+                                                </>
+                                            )}
+                                        </h1>
+                                    ) : (
+                                        <>
+                                        </>
+                                    )}
                                 </div>
                             )
                         }
