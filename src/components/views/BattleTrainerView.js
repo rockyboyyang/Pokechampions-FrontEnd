@@ -56,7 +56,7 @@ const BattleTrainerView = () => {
         if (randomIntFromInterval(1, 24) === 12) return 1.5
         else return 1
     }
-
+    
     const clickToBattle = (e) => {
         e.preventDefault()
         let userPokemon = JSON.parse(user.slot_1)
@@ -201,15 +201,28 @@ const BattleTrainerView = () => {
 
     const beginBattleSequence = async (e) => {
         e.preventDefault()
-        let moveUsed = await attack(e.target.id).then((res) => res)
-        console.log(moveUsed)
-        setMoveUsed(moveUsed.move)
-        setEffective(moveUsed.effective)
-        setCritical(moveUsed.critical)
-        let tempOppPokemon = opponentPokemonStats
-        // console.log(tempOppPokemon)
-        tempOppPokemon.remaininghp -= moveUsed.damage
-        setOpponentPokemonStats(tempOppPokemon)
+        let userMove = e.target.id
+        let opponentMove;
+        // determine opponent move
+        // TODO: For now opponent will do random moves
+        let slot = randomIntFromInterval(1, 4);
+        if (slot === 1) opponentMove = 'slot_1'
+        if (slot === 2) opponentMove = 'slot_2'
+        if (slot === 3) opponentMove = 'slot_3'
+        if (slot === 4) opponentMove = 'slot_4'
+        
+        if(userPokemonStats.speed > opponentPokemonStats.speed) {
+            let moveUsed = await attack(userMove).then((res) => res)
+            let tempOppPokemon = opponentPokemonStats
+            tempOppPokemon.remaininghp -= moveUsed.damage
+            setEffective(moveUsed.effective)
+            setCritical(moveUsed.critical)
+            setOpponentPokemonStats(tempOppPokemon)
+            let opponentMoveUsed = await attack(opponentMove).then((res) => res)
+            let tempUserPokemon = userPokemonStats
+            tempUserPokemon.remaininghp -= opponentMoveUsed.damage
+            setUserPokemonStats(tempUserPokemon)
+        }
         setBattleSequence(true)
         // setMoveUsed(attack(e.target.id))
         // let first = document.getElementById('typewriter-text')
