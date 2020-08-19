@@ -264,7 +264,6 @@ const BattleTrainerView = () => {
         }
 
         if(userPokemonStats.speed > opponentPokemonStats.speed || (userPokemonStats.speed === opponentPokemonStats.speed && speedTieBreaker === 1)) {
-            setUserSequence(true)
             let userMoveUsed = await attack(userMove, userCurrentPokemon, opponentCurrentPokemon).then((res) => res)
             let tempOppPokemon = opponentPokemonStats
             tempOppPokemon.remaininghp = hpLoss(tempOppPokemon.remaininghp, userMoveUsed.damage)
@@ -274,11 +273,9 @@ const BattleTrainerView = () => {
             setUserMoveUsed(userMoveUsed.move)
             setUserEffective(userMoveUsed.effective)
             setUserCritical(userMoveUsed.critical)
+            setUserSequence(true)
             
             setTimeout(async () => {
-                setUserSequence(false)
-                setOpponentSequence(true)
-                setOpponentPokemonStats(tempOppPokemon)
                 let opponentMoveUsed = await attack(opponentMove, opponentCurrentPokemon, userCurrentPokemon).then((res) => res)
                 let tempUserPokemon = userPokemonStats
                 tempUserPokemon.remaininghp = hpLoss(tempUserPokemon.remaininghp, opponentMoveUsed.damage)
@@ -289,34 +286,37 @@ const BattleTrainerView = () => {
                 setOpponentEffective(opponentMoveUsed.effective)
                 setOpponentCritical(opponentMoveUsed.critical)
                 setUserPokemonStats(tempUserPokemon)
+                setUserSequence(false)
+                setOpponentSequence(true)
+                setOpponentPokemonStats(tempOppPokemon)
             }, 3000)
         } else {
-                setOpponentSequence(true)
-                let opponentMoveUsed = await attack(opponentMove, opponentCurrentPokemon, userCurrentPokemon).then((res) => res)
-                let tempUserPokemon = userPokemonStats
-                tempUserPokemon.remaininghp = hpLoss(tempUserPokemon.remaininghp, opponentMoveUsed.damage)
-                let remainingPercentage = Math.floor((tempUserPokemon.remaininghp / userPokemonStats.maxhp) * 100)
-                let userHpbar = document.getElementById('user-hpbar')
-                userHpbar.style.width = `${remainingPercentage}%`
-                setOpponentMoveUsed(opponentMoveUsed.move)
-                setOpponentEffective(opponentMoveUsed.effective)
-                setOpponentCritical(opponentMoveUsed.critical)
+            let opponentMoveUsed = await attack(opponentMove, opponentCurrentPokemon, userCurrentPokemon).then((res) => res)
+            let tempUserPokemon = userPokemonStats
+            tempUserPokemon.remaininghp = hpLoss(tempUserPokemon.remaininghp, opponentMoveUsed.damage)
+            let remainingPercentage = Math.floor((tempUserPokemon.remaininghp / userPokemonStats.maxhp) * 100)
+            let userHpbar = document.getElementById('user-hpbar')
+            userHpbar.style.width = `${remainingPercentage}%`
+            setOpponentMoveUsed(opponentMoveUsed.move)
+            setOpponentEffective(opponentMoveUsed.effective)
+            setOpponentCritical(opponentMoveUsed.critical)
+            setOpponentSequence(true)
 
-                setTimeout(async () => {
-                    setOpponentSequence(false)
-                    setUserSequence(true)
-                    setUserPokemonStats(tempUserPokemon)
-                    let userMoveUsed = await attack(userMove, userCurrentPokemon, opponentCurrentPokemon).then((res) => res)
-                    let tempOppPokemon = opponentPokemonStats
-                    tempOppPokemon.remaininghp = hpLoss(tempOppPokemon.remaininghp, userMoveUsed.damage)
-                    let remainingPercentage = Math.floor((tempOppPokemon.remaininghp / opponentPokemonStats.maxhp) * 100)
-                    let oppHpbar = document.getElementById('opponent-hpbar')
-                    oppHpbar.style.width = `${remainingPercentage}%`
-                    setUserMoveUsed(userMoveUsed.move)
-                    setUserEffective(userMoveUsed.effective)
-                    setUserCritical(userMoveUsed.critical)
-                    setOpponentPokemonStats(tempOppPokemon)
-                }, 3000)
+            setTimeout(async () => {
+                let userMoveUsed = await attack(userMove, userCurrentPokemon, opponentCurrentPokemon).then((res) => res)
+                let tempOppPokemon = opponentPokemonStats
+                tempOppPokemon.remaininghp = hpLoss(tempOppPokemon.remaininghp, userMoveUsed.damage)
+                let remainingPercentage = Math.floor((tempOppPokemon.remaininghp / opponentPokemonStats.maxhp) * 100)
+                let oppHpbar = document.getElementById('opponent-hpbar')
+                oppHpbar.style.width = `${remainingPercentage}%`
+                setUserMoveUsed(userMoveUsed.move)
+                setUserEffective(userMoveUsed.effective)
+                setUserCritical(userMoveUsed.critical)
+                setOpponentPokemonStats(tempOppPokemon)
+                setOpponentSequence(false)
+                setUserSequence(true)
+                setUserPokemonStats(tempUserPokemon)
+            }, 3000)
         }
         setBattleSequence(true)
         setTimeout(() => {
@@ -365,7 +365,7 @@ const BattleTrainerView = () => {
         if (userSlot_6Pokemon) {
             if (userSlot_6Pokemon.pokemon === tempUser.pokemon) setUserSlot_6CurrentPokemon(tempUser)
         }
-        
+
         setUserCurrentPokemon(switchPokemon)
         setUserPokemonStats({
             'maxhp': switchPokemon.pokemonStats[0].base_stat + 60,
