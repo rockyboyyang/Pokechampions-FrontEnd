@@ -251,11 +251,17 @@ body,
 
 .hpbar-container {
     height: 70%;
-    width: 135px;
+    width: 150px;
     border: black 1px solid;
 }
 
-.hpbar {
+#user-hpbar {
+    background-color: green;
+    height: 100%;
+    width: 100%;
+}
+
+#opponent-hpbar {
     background-color: green;
     height: 100%;
     width: 100%;

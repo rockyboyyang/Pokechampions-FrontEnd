@@ -92,7 +92,7 @@ const BattleTrainerView = () => {
         })
         setOpponentPokemonStats({
             'maxhp': opponentPokemon.pokemonStats[0].base_stat + 60,
-            'remaininghp': userPokemon.pokemonStats[0].base_stat + 60,
+            'remaininghp': opponentPokemon.pokemonStats[0].base_stat + 60,
             'attack': opponentPokemon.pokemonStats[1].base_stat + 5,
             'defense': opponentPokemon.pokemonStats[2].base_stat + 5,
             'special_attack': opponentPokemon.pokemonStats[3].base_stat + 5,
@@ -218,12 +218,25 @@ const BattleTrainerView = () => {
         if (slot === 4) opponentMove = 'slot_4'
         
         let speedTieBreaker = randomIntFromInterval(1,2)
+        
+        const hpLoss = (hp, damage) => {
+            let remaininghp;
+            if (hp - damage <= 0) {
+                remaininghp = 0;
+            } else {
+                remaininghp = hp - damage;
+            }
+            return remaininghp
+        }
 
         if(userPokemonStats.speed > opponentPokemonStats.speed || (userPokemonStats.speed === opponentPokemonStats.speed && speedTieBreaker === 1)) {
             setUserSequence(true)
             let userMoveUsed = await attack(userMove, userCurrentPokemon, opponentCurrentPokemon).then((res) => res)
             let tempOppPokemon = opponentPokemonStats
-            tempOppPokemon.remaininghp -= userMoveUsed.damage
+            tempOppPokemon.remaininghp = hpLoss(tempOppPokemon.remaininghp, userMoveUsed.damage)
+            let remainingPercentage = Math.floor((tempOppPokemon.remaininghp / opponentPokemonStats.maxhp) * 100)
+            let oppHpbar = document.getElementById('opponent-hpbar')
+            oppHpbar.style.width = `${remainingPercentage}%`
             setUserMoveUsed(userMoveUsed.move)
             setUserEffective(userMoveUsed.effective)
             setUserCritical(userMoveUsed.critical)
@@ -234,7 +247,10 @@ const BattleTrainerView = () => {
                 setOpponentPokemonStats(tempOppPokemon)
                 let opponentMoveUsed = await attack(opponentMove, opponentCurrentPokemon, userCurrentPokemon).then((res) => res)
                 let tempUserPokemon = userPokemonStats
-                tempUserPokemon.remaininghp -= opponentMoveUsed.damage
+                tempUserPokemon.remaininghp = hpLoss(tempUserPokemon.remaininghp, opponentMoveUsed.damage)
+                let remainingPercentage = Math.floor((tempUserPokemon.remaininghp / userPokemonStats.maxhp) * 100)
+                let userHpbar = document.getElementById('user-hpbar')
+                userHpbar.style.width = `${remainingPercentage}%`
                 setOpponentMoveUsed(opponentMoveUsed.move)
                 setOpponentEffective(opponentMoveUsed.effective)
                 setOpponentCritical(opponentMoveUsed.critical)
@@ -244,7 +260,10 @@ const BattleTrainerView = () => {
                 setOpponentSequence(true)
                 let opponentMoveUsed = await attack(opponentMove, opponentCurrentPokemon, userCurrentPokemon).then((res) => res)
                 let tempUserPokemon = userPokemonStats
-                tempUserPokemon.remaininghp -= opponentMoveUsed.damage
+                tempUserPokemon.remaininghp = hpLoss(tempUserPokemon.remaininghp, opponentMoveUsed.damage)
+                let remainingPercentage = Math.floor((tempUserPokemon.remaininghp / userPokemonStats.maxhp) * 100)
+                let userHpbar = document.getElementById('user-hpbar')
+                userHpbar.style.width = `${remainingPercentage}%`
                 setOpponentMoveUsed(opponentMoveUsed.move)
                 setOpponentEffective(opponentMoveUsed.effective)
                 setOpponentCritical(opponentMoveUsed.critical)
@@ -255,7 +274,10 @@ const BattleTrainerView = () => {
                     setUserPokemonStats(tempUserPokemon)
                     let userMoveUsed = await attack(userMove, userCurrentPokemon, opponentCurrentPokemon).then((res) => res)
                     let tempOppPokemon = opponentPokemonStats
-                    tempOppPokemon.remaininghp -= userMoveUsed.damage
+                    tempOppPokemon.remaininghp = hpLoss(tempOppPokemon.remaininghp, userMoveUsed.damage)
+                    let remainingPercentage = Math.floor((tempOppPokemon.remaininghp / opponentPokemonStats.maxhp) * 100)
+                    let oppHpbar = document.getElementById('opponent-hpbar')
+                    oppHpbar.style.width = `${remainingPercentage}%`
                     setUserMoveUsed(userMoveUsed.move)
                     setUserEffective(userMoveUsed.effective)
                     setUserCritical(userMoveUsed.critical)
@@ -267,10 +289,6 @@ const BattleTrainerView = () => {
             setOpponentSequence(false)
             setBattleSequence(false)
         }, 6000)
-        // setMoveUsed(attack(e.target.id))
-        // let first = document.getElementById('typewriter-text')
-        // dialogue.innerHTML = "<p className='text_1'>Pikachu used Thunder-Punch</p><p className='text_2'>That was super effective</p>"
-        // console.log(dialogue)
     }
 
     if(readyForBattle) {
@@ -287,7 +305,7 @@ const BattleTrainerView = () => {
                                     <div className="status-info-name"><p>{capFirstLetter(userCurrentPokemon.pokemon)}  Lv50</p></div>
                                     <div className="status-info-hpbar">
                                         <div className="user-hpbar-container hpbar-container">
-                                            <div className="user-hpbar hpbar"></div>
+                                            <div className="hpbar" id="user-hpbar"></div>
                                         </div>
                                         <p className="userhp-percentage hp-percentage">{userPokemonStats.remaininghp}/{userPokemonStats.maxhp}</p>
                                     </div>
@@ -297,7 +315,7 @@ const BattleTrainerView = () => {
                                     <div className="status-info-name"><p>{capFirstLetter(opponentCurrentPokemon.pokemon)}  Lv50</p></div>
                                     <div className="status-info-hpbar">
                                         <div className="opponent-hpbar-container hpbar-container">
-                                            <div className="opponent-hpbar hpbar"></div>
+                                            <div className="hpbar" id="opponent-hpbar"></div>
                                         </div>
                                         <p className="opponenthp-percentage hp-percentage">{opponentPokemonStats.remaininghp}/{opponentPokemonStats.maxhp}</p>
                                     </div>
