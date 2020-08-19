@@ -9,12 +9,14 @@ const BattleTrainerView = () => {
     let history = useHistory()
     const [readyForBattle, setReadyForBattle] = useState(false)
     const [userCurrentPokemon, setUserCurrentPokemon] = useState(user)
+    const [userSlot_1Pokemon, setUserSlot_1CurrentPokemon] = useState('')
     const [userSlot_2Pokemon, setUserSlot_2CurrentPokemon] = useState('')
     const [userSlot_3Pokemon, setUserSlot_3CurrentPokemon] = useState('')
     const [userSlot_4Pokemon, setUserSlot_4CurrentPokemon] = useState('')
     const [userSlot_5Pokemon, setUserSlot_5CurrentPokemon] = useState('')
     const [userSlot_6Pokemon, setUserSlot_6CurrentPokemon] = useState('')
     const [opponentCurrentPokemon, setOpponentCurrentPokemon] = useState('')
+    const [opponentSlot_1Pokemon, setOpponentSlot_1CurrentPokemon] = useState('')
     const [opponentSlot_2Pokemon, setOpponentSlot_2CurrentPokemon] = useState('')
     const [opponentSlot_3Pokemon, setOpponentSlot_3CurrentPokemon] = useState('')
     const [opponentSlot_4Pokemon, setOpponentSlot_4CurrentPokemon] = useState('')
@@ -66,15 +68,47 @@ const BattleTrainerView = () => {
     
     const clickToBattle = (e) => {
         e.preventDefault()
-        let userPokemon = JSON.parse(user.slot_1)
         let opponentPokemon = JSON.parse(opponent.slot_1)
-        setUserCurrentPokemon(userPokemon)
+        let userSlot_1 = JSON.parse(user.slot_1)
+        let userSlot_2 = JSON.parse(user.slot_2)
+        let userSlot_3 = JSON.parse(user.slot_3)
+        let userSlot_4 = JSON.parse(user.slot_4)
+        let userSlot_5 = JSON.parse(user.slot_5)
+        let userSlot_6 = JSON.parse(user.slot_6)
+
+        if(user.slot_1) {
+            userSlot_1.remaininghp = userSlot_1.pokemonStats[0].base_stat + 60
+        }
+        
+        if (user.slot_2) {
+            userSlot_2.remaininghp = userSlot_2.pokemonStats[0].base_stat + 60
+        }
+        
+        if (user.slot_3) {
+            userSlot_3.remaininghp = userSlot_3.pokemonStats[0].base_stat + 60
+        }
+
+        if (user.slot_4) {
+            userSlot_4.remaininghp = userSlot_4.pokemonStats[0].base_stat + 60
+        }
+
+        if (user.slot_5) {
+            userSlot_5.remaininghp = userSlot_5.pokemonStats[0].base_stat + 60
+        }
+
+        if (user.slot_6) {
+            userSlot_6.remaininghp = userSlot_6.pokemonStats[0].base_stat + 60
+        }
+
+        setUserCurrentPokemon(userSlot_1)
         setOpponentCurrentPokemon(opponentPokemon)
-        setUserSlot_2CurrentPokemon(JSON.parse(user.slot_2))
-        setUserSlot_3CurrentPokemon(JSON.parse(user.slot_3))
-        setUserSlot_4CurrentPokemon(JSON.parse(user.slot_4))
-        setUserSlot_5CurrentPokemon(JSON.parse(user.slot_5))
-        setUserSlot_6CurrentPokemon(JSON.parse(user.slot_6))
+        setUserSlot_1CurrentPokemon(userSlot_1)
+        setUserSlot_2CurrentPokemon(userSlot_2)
+        setUserSlot_3CurrentPokemon(userSlot_3)
+        setUserSlot_4CurrentPokemon(userSlot_4)
+        setUserSlot_5CurrentPokemon(userSlot_5)
+        setUserSlot_6CurrentPokemon(userSlot_6)
+        setOpponentSlot_1CurrentPokemon(opponentPokemon)
         setOpponentSlot_2CurrentPokemon(JSON.parse(opponent.slot_2))
         setOpponentSlot_3CurrentPokemon(JSON.parse(opponent.slot_3))
         setOpponentSlot_4CurrentPokemon(JSON.parse(opponent.slot_4))
@@ -82,13 +116,13 @@ const BattleTrainerView = () => {
         setOpponentSlot_6CurrentPokemon(JSON.parse(opponent.slot_6))
 
         setUserPokemonStats({
-            'maxhp': userPokemon.pokemonStats[0].base_stat + 60,
-            'remaininghp': userPokemon.pokemonStats[0].base_stat + 60,
-            'attack': userPokemon.pokemonStats[1].base_stat + 5,
-            'defense': userPokemon.pokemonStats[2].base_stat + 5,
-            'special-attack': userPokemon.pokemonStats[3].base_stat + 5,
-            'special-defense': userPokemon.pokemonStats[4].base_stat + 5,
-            'speed': userPokemon.pokemonStats[5].base_stat + 5,
+            'maxhp': userSlot_1.pokemonStats[0].base_stat + 60,
+            'remaininghp': userSlot_1.pokemonStats[0].base_stat + 60,
+            'attack': userSlot_1.pokemonStats[1].base_stat + 5,
+            'defense': userSlot_1.pokemonStats[2].base_stat + 5,
+            'special-attack': userSlot_1.pokemonStats[3].base_stat + 5,
+            'special-defense': userSlot_1.pokemonStats[4].base_stat + 5,
+            'speed': userSlot_1.pokemonStats[5].base_stat + 5,
         })
         setOpponentPokemonStats({
             'maxhp': opponentPokemon.pokemonStats[0].base_stat + 60,
@@ -286,9 +320,35 @@ const BattleTrainerView = () => {
         }
         setBattleSequence(true)
         setTimeout(() => {
+            setUserSequence(false)
             setOpponentSequence(false)
             setBattleSequence(false)
         }, 6000)
+    }
+
+    const switchOut = (e) => {
+        e.stopPropagation()
+
+        if(battleSequence) return;
+
+        let slot = e.target.className.slice(13)
+        let switchPokemon;
+        if (slot === 'slot_1') switchPokemon = userSlot_1Pokemon
+        if (slot === 'slot_2') switchPokemon = userSlot_2Pokemon
+        if (slot === 'slot_3') switchPokemon = userSlot_3Pokemon
+        if (slot === 'slot_4') switchPokemon = userSlot_4Pokemon
+        if (slot === 'slot_5') switchPokemon = userSlot_5Pokemon
+        if (slot === 'slot_6') switchPokemon = userSlot_6Pokemon
+        setUserCurrentPokemon(switchPokemon)
+        setUserPokemonStats({
+            'maxhp': switchPokemon.pokemonStats[0].base_stat + 60,
+            'remaininghp': switchPokemon.pokemonStats[0].base_stat + 60,
+            'attack': switchPokemon.pokemonStats[1].base_stat + 5,
+            'defense': switchPokemon.pokemonStats[2].base_stat + 5,
+            'special-attack': switchPokemon.pokemonStats[3].base_stat + 5,
+            'special-defense': switchPokemon.pokemonStats[4].base_stat + 5,
+            'speed': switchPokemon.pokemonStats[5].base_stat + 5,
+        })
     }
 
     if(readyForBattle) {
@@ -376,7 +436,41 @@ const BattleTrainerView = () => {
                             )
                         }
                     </div>
-                    <div className="right-box"></div>
+                    <div className="right-box team-box">
+                        <h1>Pokemon Team</h1>
+                        <div className="pokemon-team-container">
+                            {user.slot_1 !== null ? (
+                                <div className="user-pokemon-slot_1" id={userSlot_1Pokemon.pokemon} onClick={switchOut}><img className="user-pokemon-slot_1" src={spritesApi + `${JSON.parse(user.slot_1).pokemon}.gif`} /></div>
+                            ) : (
+                                    <div className="user-pokemon-slot_1"></div>
+                                )}
+                            {user.slot_2 !== null ? (
+                                <div className="user-pokemon-slot_2" id={userSlot_2Pokemon.pokemon} onClick={switchOut}><img className="user-pokemon-slot_2" src={spritesApi + `${JSON.parse(user.slot_2).pokemon}.gif`} /></div>
+                            ) : (
+                                    <div className="user-pokemon-slot_2"></div>
+                                )}
+                            {user.slot_3 !== null ? (
+                                <div className="user-pokemon-slot_3" id={userSlot_3Pokemon.pokemon} onClick={switchOut}><img className="user-pokemon-slot_3" src={spritesApi + `${JSON.parse(user.slot_3).pokemon}.gif`} /></div>
+                            ) : (
+                                    <div className="user-pokemon-slot_3"></div>
+                                )}
+                            {user.slot_4 !== null ? (
+                                <div className="user-pokemon-slot_4" id={userSlot_4Pokemon.pokemon} onClick={switchOut}><img className="user-pokemon-slot_4" src={spritesApi + `${JSON.parse(user.slot_4).pokemon}.gif`} /></div>
+                            ) : (
+                                    <div className="user-pokemon-slot_4"></div>
+                                )}
+                            {user.slot_5 !== null ? (
+                                <div className="user-pokemon-slot_5" id={userSlot_5Pokemon.pokemon} onClick={switchOut}><img className="user-pokemon-slot_5" src={spritesApi + `${JSON.parse(user.slot_5).pokemon}.gif`} /></div>
+                            ) : (
+                                    <div className="user-pokemon-slot_5"></div>
+                                )}
+                            {user.slot_6 !== null ? (
+                                <div className={`user-pokemon-slot_6`} id={userSlot_6Pokemon.pokemon} onClick={switchOut}><img className="user-pokemon-slot_6" src={spritesApi + `${JSON.parse(user.slot_6).pokemon}.gif`} /></div>
+                            ) : (
+                                    <div className="user-pokemon-slot_6"></div>
+                                )}
+                        </div>
+                    </div>
                 </div>
                 <Footer />
             </div>
