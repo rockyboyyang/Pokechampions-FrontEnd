@@ -330,6 +330,8 @@ const BattleTrainerView = () => {
         e.stopPropagation()
 
         if(battleSequence) return;
+        let tempUser = userCurrentPokemon;
+        tempUser.remaininghp = userPokemonStats.remaininghp
 
         let slot = e.target.className.slice(13)
         let switchPokemon;
@@ -339,16 +341,42 @@ const BattleTrainerView = () => {
         if (slot === 'slot_4') switchPokemon = userSlot_4Pokemon
         if (slot === 'slot_5') switchPokemon = userSlot_5Pokemon
         if (slot === 'slot_6') switchPokemon = userSlot_6Pokemon
+
+        if(userSlot_1Pokemon) {
+            if (userSlot_1Pokemon.pokemon === tempUser.pokemon) setUserSlot_1CurrentPokemon(tempUser)
+        }
+
+        if (userSlot_2Pokemon) {
+            if (userSlot_2Pokemon.pokemon === tempUser.pokemon) setUserSlot_2CurrentPokemon(tempUser)
+        }
+
+        if (userSlot_3Pokemon) {
+            if (userSlot_3Pokemon.pokemon === tempUser.pokemon) setUserSlot_3CurrentPokemon(tempUser)
+        }
+
+        if (userSlot_4Pokemon) {
+            if (userSlot_4Pokemon.pokemon === tempUser.pokemon) setUserSlot_4CurrentPokemon(tempUser)
+        }
+
+        if (userSlot_5Pokemon) {
+            if (userSlot_5Pokemon.pokemon === tempUser.pokemon) setUserSlot_5CurrentPokemon(tempUser)
+        }
+
+        if (userSlot_6Pokemon) {
+            if (userSlot_6Pokemon.pokemon === tempUser.pokemon) setUserSlot_6CurrentPokemon(tempUser)
+        }
+        
         setUserCurrentPokemon(switchPokemon)
         setUserPokemonStats({
             'maxhp': switchPokemon.pokemonStats[0].base_stat + 60,
-            'remaininghp': switchPokemon.pokemonStats[0].base_stat + 60,
+            'remaininghp': switchPokemon.remaininghp,
             'attack': switchPokemon.pokemonStats[1].base_stat + 5,
             'defense': switchPokemon.pokemonStats[2].base_stat + 5,
             'special-attack': switchPokemon.pokemonStats[3].base_stat + 5,
             'special-defense': switchPokemon.pokemonStats[4].base_stat + 5,
             'speed': switchPokemon.pokemonStats[5].base_stat + 5,
         })
+        console.log(switchPokemon)
     }
 
     if(readyForBattle) {
