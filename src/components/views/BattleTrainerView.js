@@ -23,6 +23,7 @@ const BattleTrainerView = () => {
     const [opponentSlot_5Pokemon, setOpponentSlot_5CurrentPokemon] = useState('')
     const [opponentSlot_6Pokemon, setOpponentSlot_6CurrentPokemon] = useState('')
     const [opponentPokemonFaint, setOpponentPokemonFaint] = useState(false)
+    const [opponentSentOutPokemon, setOpponentSentOutPokemon] = useState(false)
     const [opponentPokemonKOCount, setOpponentPokemonKOCount] = useState(0)
     const [battleSequence, setBattleSequence] = useState(false)
     const [userSequence, setUserSequence] = useState(false)
@@ -163,7 +164,7 @@ const BattleTrainerView = () => {
             'defense': opponentSlot_1.pokemonStats[2].base_stat + 5,
             'special_attack': opponentSlot_1.pokemonStats[3].base_stat + 5,
             'special_defense': opponentSlot_1.pokemonStats[4].base_stat + 5,
-            'speed': opponentSlot_1.pokemonStats[5].base_stat + 5,
+            'speed': opponentSlot_4.pokemonStats[5].base_stat + 5,
         })
         setReadyForBattle(true)
     }
@@ -292,6 +293,7 @@ const BattleTrainerView = () => {
     }
 
     const ifFainted = (remaininghp, oppHpbar) => {
+        console.log(battleSequence)
         if(remaininghp === 0) {
             let currentKOCount = opponentPokemonKOCount;
             currentKOCount += 1;
@@ -303,6 +305,13 @@ const BattleTrainerView = () => {
             if (currentKOCount === 5) nextOpponent = opponentSlot_6Pokemon;
 
             setOpponentPokemonKOCount(currentKOCount)
+
+            setTimeout(() => {
+                setUserSequence(false)
+                console.log('dead')
+                setOpponentPokemonFaint(true)
+            }, 3000)
+
             setTimeout(() => {
                 setOpponentCurrentPokemon(nextOpponent)
                 setOpponentPokemonStats({
@@ -314,10 +323,15 @@ const BattleTrainerView = () => {
                     'special_defense': nextOpponent.pokemonStats[4].base_stat + 5,
                     'speed': nextOpponent.pokemonStats[5].base_stat + 5,
                 })
-                setUserSequence(false)
-                setBattleSequence(false)
+                setOpponentPokemonFaint(false)
+                setOpponentSentOutPokemon(true)
                 oppHpbar.style.width = `100%`
-            }, 3000)
+            }, 6000)
+
+            setTimeout(() => {
+                setOpponentSentOutPokemon(false)
+                setBattleSequence(false)
+            }, 9000)
             return true;
         }
         return false;
@@ -375,26 +389,27 @@ const BattleTrainerView = () => {
             setOpponentCritical(opponentMoveUsed.critical)
             setOpponentSequence(true)
 
-            setTimeout(async () => {
-                let userMoveUsed = await attack(userMove, userCurrentPokemon, opponentCurrentPokemon).then((res) => res)
-                let tempOppPokemon = opponentPokemonStats
-                tempOppPokemon.remaininghp = hpLoss(tempOppPokemon.remaininghp, userMoveUsed.damage)
-                let remainingPercentage = Math.floor((tempOppPokemon.remaininghp / opponentPokemonStats.maxhp) * 100)
-                let oppHpbar = document.getElementById('opponent-hpbar')
-                oppHpbar.style.width = `${remainingPercentage}%`
-                setUserMoveUsed(userMoveUsed.move)
-                setUserEffective(userMoveUsed.effective)
-                setUserCritical(userMoveUsed.critical)
-                setOpponentPokemonStats(tempOppPokemon)
+            let userMoveUsed = await attack(userMove, userCurrentPokemon, opponentCurrentPokemon).then((res) => res)
+            let tempOppPokemon = opponentPokemonStats
+            tempOppPokemon.remaininghp = hpLoss(tempOppPokemon.remaininghp, userMoveUsed.damage)
+            remainingPercentage = Math.floor((tempOppPokemon.remaininghp / opponentPokemonStats.maxhp) * 100)
+            let oppHpbar = document.getElementById('opponent-hpbar')
+            oppHpbar.style.width = `${remainingPercentage}%`
+            setUserMoveUsed(userMoveUsed.move)
+            setUserEffective(userMoveUsed.effective)
+            setUserCritical(userMoveUsed.critical)
+            setOpponentPokemonStats(tempOppPokemon)
+            if (ifFainted(remainingPercentage, oppHpbar)) return;
+            setTimeout(() => {
                 setOpponentSequence(false)
                 setUserSequence(true)
-                if (ifFainted(remainingPercentage, oppHpbar)) return;
                 setUserPokemonStats(tempUserPokemon)
             }, 3000)
         }
         // setBattleSequence(true)
-        setTimeout(() => {
+        setTimeout(async() => {
             setUserSequence(false)
+            console.log('got here')
             setOpponentSequence(false)
             setBattleSequence(false)
         }, 6000)
@@ -571,6 +586,22 @@ const BattleTrainerView = () => {
                                     ) : (
                                         <>
                                         </>
+                                    )}
+                                    {opponentPokemonFaint ? (
+                                        <h1 id='typewriter-text'>
+                                            <p id="text_1">{opponent.name}'s {opponentCurrentPokemon.pokemon} fainted!</p>
+                                        </h1>
+                                    ) : (
+                                            <>
+                                            </>
+                                    )}
+                                    {opponentSentOutPokemon ? (
+                                        <h1 id='typewriter-text'>
+                                            <p id="text_1">{opponent.name} sent out {opponentCurrentPokemon.pokemon}!</p>
+                                        </h1>
+                                    ) : (
+                                            <>
+                                            </>
                                     )}
                                 </div>
                             )
