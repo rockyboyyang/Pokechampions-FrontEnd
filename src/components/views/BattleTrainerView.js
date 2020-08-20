@@ -23,6 +23,7 @@ const BattleTrainerView = () => {
     const [opponentSlot_5Pokemon, setOpponentSlot_5CurrentPokemon] = useState('')
     const [opponentSlot_6Pokemon, setOpponentSlot_6CurrentPokemon] = useState('')
     const [opponentPokemonFaint, setOpponentPokemonFaint] = useState(false)
+    const [opponentPokemonKOCount, setOpponentPokemonKOCount] = useState(0)
     const [battleSequence, setBattleSequence] = useState(false)
     const [userSequence, setUserSequence] = useState(false)
     const [opponentSequence, setOpponentSequence] = useState(false)
@@ -290,8 +291,35 @@ const BattleTrainerView = () => {
         return opponentMove
     }
 
-    const ifFainted = (remaininghp) => {
-        if(remaininghp === 0) return true;
+    const ifFainted = (remaininghp, oppHpbar) => {
+        if(remaininghp === 0) {
+            let currentKOCount = opponentPokemonKOCount;
+            currentKOCount += 1;
+            let nextOpponent;
+            if (currentKOCount === 1) nextOpponent = opponentSlot_2Pokemon;
+            if (currentKOCount === 2) nextOpponent = opponentSlot_3Pokemon;
+            if (currentKOCount === 3) nextOpponent = opponentSlot_4Pokemon;
+            if (currentKOCount === 4) nextOpponent = opponentSlot_5Pokemon;
+            if (currentKOCount === 5) nextOpponent = opponentSlot_6Pokemon;
+
+            setOpponentPokemonKOCount(currentKOCount)
+            setTimeout(() => {
+                setOpponentCurrentPokemon(nextOpponent)
+                setOpponentPokemonStats({
+                    'maxhp': nextOpponent.pokemonStats[0].base_stat + 60,
+                    'remaininghp': nextOpponent.pokemonStats[0].base_stat + 60,
+                    'attack': nextOpponent.pokemonStats[1].base_stat + 5,
+                    'defense': nextOpponent.pokemonStats[2].base_stat + 5,
+                    'special_attack': nextOpponent.pokemonStats[3].base_stat + 5,
+                    'special_defense': nextOpponent.pokemonStats[4].base_stat + 5,
+                    'speed': nextOpponent.pokemonStats[5].base_stat + 5,
+                })
+                setUserSequence(false)
+                setBattleSequence(false)
+                oppHpbar.style.width = `100%`
+            }, 3000)
+            return true;
+        }
         return false;
     }
 
@@ -317,26 +345,8 @@ const BattleTrainerView = () => {
             setUserCritical(userMoveUsed.critical)
             setUserSequence(true)
 
-            if(ifFainted(remainingPercentage)) {
-                setUserSequence(false)
-                setBattleSequence(false)
-                // setOpponentPokemonFaint(true)
-                let nextOpponent = opponentSlot_2Pokemon;
-                setTimeout(() => {
-                    setOpponentCurrentPokemon(nextOpponent)
-                    setOpponentPokemonStats({
-                        'maxhp': nextOpponent.pokemonStats[0].base_stat + 60,
-                        'remaininghp': nextOpponent.pokemonStats[0].base_stat + 60,
-                        'attack': nextOpponent.pokemonStats[1].base_stat + 5,
-                        'defense': nextOpponent.pokemonStats[2].base_stat + 5,
-                        'special_attack': nextOpponent.pokemonStats[3].base_stat + 5,
-                        'special_defense': nextOpponent.pokemonStats[4].base_stat + 5,
-                        'speed': nextOpponent.pokemonStats[5].base_stat + 5,
-                    })
-                    oppHpbar.style.width = `100%`
-                }, 3000)
-                return;
-            }
+            if(ifFainted(remainingPercentage, oppHpbar)) return;
+            
 
             setTimeout(async () => {
                 let opponentMoveUsed = await attack(opponentMove, opponentCurrentPokemon, userCurrentPokemon).then((res) => res)
@@ -378,6 +388,7 @@ const BattleTrainerView = () => {
                 setOpponentPokemonStats(tempOppPokemon)
                 setOpponentSequence(false)
                 setUserSequence(true)
+                if (ifFainted(remainingPercentage, oppHpbar)) return;
                 setUserPokemonStats(tempUserPokemon)
             }, 3000)
         }
