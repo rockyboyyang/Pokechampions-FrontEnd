@@ -22,12 +22,11 @@ const BattleTrainerView = () => {
     const [opponentSlot_4Pokemon, setOpponentSlot_4CurrentPokemon] = useState('')
     const [opponentSlot_5Pokemon, setOpponentSlot_5CurrentPokemon] = useState('')
     const [opponentSlot_6Pokemon, setOpponentSlot_6CurrentPokemon] = useState('')
+    const [opponentPokemonFaint, setOpponentPokemonFaint] = useState(false)
     const [battleSequence, setBattleSequence] = useState(false)
     const [userSequence, setUserSequence] = useState(false)
     const [opponentSequence, setOpponentSequence] = useState(false)
     const [switchSequence, setSwitchSequence] = useState(false)
-    const [defensivePokemon, setDefensivePokemon] = useState('')
-    const [offensivePokemon, setOffensivePokemon] = useState('')
     const [userMoveUsed, setUserMoveUsed] = useState('')
     const [opponentMoveUsed, setOpponentMoveUsed] = useState('')
     const [userPokemonStats, setUserPokemonStats] = useState({})
@@ -69,7 +68,7 @@ const BattleTrainerView = () => {
     
     const clickToBattle = (e) => {
         e.preventDefault()
-        let opponentPokemon = JSON.parse(opponent.slot_1)
+        // let opponentSlot_1 = JSON.parse(opponent.slot_1)
         let userSlot_1 = JSON.parse(user.slot_1)
         let userSlot_2 = JSON.parse(user.slot_2)
         let userSlot_3 = JSON.parse(user.slot_3)
@@ -101,20 +100,51 @@ const BattleTrainerView = () => {
             userSlot_6.remaininghp = userSlot_6.pokemonStats[0].base_stat + 60
         }
 
+        let opponentSlot_1 = JSON.parse(opponent.slot_1)
+        let opponentSlot_2 = JSON.parse(opponent.slot_2)
+        let opponentSlot_3 = JSON.parse(opponent.slot_3)
+        let opponentSlot_4 = JSON.parse(opponent.slot_4)
+        let opponentSlot_5 = JSON.parse(opponent.slot_5)
+        let opponentSlot_6 = JSON.parse(opponent.slot_6)
+
+        if (opponent.slot_1) {
+            opponentSlot_1.remaininghp = opponentSlot_1.pokemonStats[0].base_stat + 60
+        }
+
+        if (opponent.slot_2) {
+            opponentSlot_2.remaininghp = opponentSlot_2.pokemonStats[0].base_stat + 60
+        }
+
+        if (opponent.slot_3) {
+            opponentSlot_3.remaininghp = opponentSlot_3.pokemonStats[0].base_stat + 60
+        }
+
+        if (opponent.slot_4) {
+            opponentSlot_4.remaininghp = opponentSlot_4.pokemonStats[0].base_stat + 60
+        }
+
+        if (opponent.slot_5) {
+            opponentSlot_5.remaininghp = opponentSlot_5.pokemonStats[0].base_stat + 60
+        }
+
+        if (opponent.slot_6) {
+            opponentSlot_6.remaininghp = opponentSlot_6.pokemonStats[0].base_stat + 60
+        }
+
         setUserCurrentPokemon(userSlot_1)
-        setOpponentCurrentPokemon(opponentPokemon)
+        setOpponentCurrentPokemon(opponentSlot_1)
         setUserSlot_1CurrentPokemon(userSlot_1)
         setUserSlot_2CurrentPokemon(userSlot_2)
         setUserSlot_3CurrentPokemon(userSlot_3)
         setUserSlot_4CurrentPokemon(userSlot_4)
         setUserSlot_5CurrentPokemon(userSlot_5)
         setUserSlot_6CurrentPokemon(userSlot_6)
-        setOpponentSlot_1CurrentPokemon(opponentPokemon)
-        setOpponentSlot_2CurrentPokemon(JSON.parse(opponent.slot_2))
-        setOpponentSlot_3CurrentPokemon(JSON.parse(opponent.slot_3))
-        setOpponentSlot_4CurrentPokemon(JSON.parse(opponent.slot_4))
-        setOpponentSlot_5CurrentPokemon(JSON.parse(opponent.slot_5))
-        setOpponentSlot_6CurrentPokemon(JSON.parse(opponent.slot_6))
+        setOpponentSlot_1CurrentPokemon(opponentSlot_1)
+        setOpponentSlot_2CurrentPokemon(opponentSlot_2)
+        setOpponentSlot_3CurrentPokemon(opponentSlot_3)
+        setOpponentSlot_4CurrentPokemon(opponentSlot_4)
+        setOpponentSlot_5CurrentPokemon(opponentSlot_5)
+        setOpponentSlot_6CurrentPokemon(opponentSlot_6)
 
         setUserPokemonStats({
             'maxhp': userSlot_1.pokemonStats[0].base_stat + 60,
@@ -126,13 +156,13 @@ const BattleTrainerView = () => {
             'speed': userSlot_1.pokemonStats[5].base_stat + 5,
         })
         setOpponentPokemonStats({
-            'maxhp': opponentPokemon.pokemonStats[0].base_stat + 60,
-            'remaininghp': opponentPokemon.pokemonStats[0].base_stat + 60,
-            'attack': opponentPokemon.pokemonStats[1].base_stat + 5,
-            'defense': opponentPokemon.pokemonStats[2].base_stat + 5,
-            'special_attack': opponentPokemon.pokemonStats[3].base_stat + 5,
-            'special_defense': opponentPokemon.pokemonStats[4].base_stat + 5,
-            'speed': opponentPokemon.pokemonStats[5].base_stat + 5,
+            'maxhp': opponentSlot_1.pokemonStats[0].base_stat + 60,
+            'remaininghp': opponentSlot_1.pokemonStats[0].base_stat + 60,
+            'attack': opponentSlot_1.pokemonStats[1].base_stat + 5,
+            'defense': opponentSlot_1.pokemonStats[2].base_stat + 5,
+            'special_attack': opponentSlot_1.pokemonStats[3].base_stat + 5,
+            'special_defense': opponentSlot_1.pokemonStats[4].base_stat + 5,
+            'speed': opponentSlot_1.pokemonStats[5].base_stat + 5,
         })
         setReadyForBattle(true)
     }
@@ -219,7 +249,7 @@ const BattleTrainerView = () => {
         
         let effective = null;
 
-        if(targetType1 + targetType2 > 2) effective = 'Super Effective'
+        if(targetType1 + targetType2 >= 3) effective = 'Super Effective'
         else if(targetType1 + targetType1 < 2) effective = 'Not-Very Effective'
         if(targetType1 * targetType2 === 0) effective = 'No Effect'
 
@@ -261,9 +291,8 @@ const BattleTrainerView = () => {
     }
 
     const ifFainted = (remaininghp) => {
-        if(remaininghp === 0) {
-            
-        }
+        if(remaininghp === 0) return true;
+        return false;
     }
 
     const beginBattleSequence = async (e) => {
@@ -275,7 +304,7 @@ const BattleTrainerView = () => {
         
         let speedTieBreaker = randomIntFromInterval(1,2)
         
-
+        setBattleSequence(true)
         if(userPokemonStats.speed > opponentPokemonStats.speed || (userPokemonStats.speed === opponentPokemonStats.speed && speedTieBreaker === 1)) {
             let userMoveUsed = await attack(userMove, userCurrentPokemon, opponentCurrentPokemon).then((res) => res)
             let tempOppPokemon = opponentPokemonStats
@@ -287,7 +316,28 @@ const BattleTrainerView = () => {
             setUserEffective(userMoveUsed.effective)
             setUserCritical(userMoveUsed.critical)
             setUserSequence(true)
-            
+
+            if(ifFainted(remainingPercentage)) {
+                setUserSequence(false)
+                setBattleSequence(false)
+                // setOpponentPokemonFaint(true)
+                let nextOpponent = opponentSlot_2Pokemon;
+                setTimeout(() => {
+                    setOpponentCurrentPokemon(nextOpponent)
+                    setOpponentPokemonStats({
+                        'maxhp': nextOpponent.pokemonStats[0].base_stat + 60,
+                        'remaininghp': nextOpponent.pokemonStats[0].base_stat + 60,
+                        'attack': nextOpponent.pokemonStats[1].base_stat + 5,
+                        'defense': nextOpponent.pokemonStats[2].base_stat + 5,
+                        'special_attack': nextOpponent.pokemonStats[3].base_stat + 5,
+                        'special_defense': nextOpponent.pokemonStats[4].base_stat + 5,
+                        'speed': nextOpponent.pokemonStats[5].base_stat + 5,
+                    })
+                    oppHpbar.style.width = `100%`
+                }, 3000)
+                return;
+            }
+
             setTimeout(async () => {
                 let opponentMoveUsed = await attack(opponentMove, opponentCurrentPokemon, userCurrentPokemon).then((res) => res)
                 let tempUserPokemon = userPokemonStats
@@ -331,7 +381,7 @@ const BattleTrainerView = () => {
                 setUserPokemonStats(tempUserPokemon)
             }, 3000)
         }
-        setBattleSequence(true)
+        // setBattleSequence(true)
         setTimeout(() => {
             setUserSequence(false)
             setOpponentSequence(false)
@@ -389,6 +439,7 @@ const BattleTrainerView = () => {
             'special-defense': switchPokemon.pokemonStats[4].base_stat + 5,
             'speed': switchPokemon.pokemonStats[5].base_stat + 5,
         }
+
         setUserPokemonStats(switchingMonStats)
 
         let remainingPercentage = Math.floor((switchPokemon.remaininghp / (switchPokemon.pokemonStats[0].base_stat + 60)) * 100)
