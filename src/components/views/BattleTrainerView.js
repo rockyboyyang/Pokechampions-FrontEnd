@@ -25,6 +25,7 @@ const BattleTrainerView = () => {
     const [battleSequence, setBattleSequence] = useState(false)
     const [userSequence, setUserSequence] = useState(false)
     const [opponentSequence, setOpponentSequence] = useState(false)
+    const [switchSequence, setSwitchSequence] = useState(false)
     const [defensivePokemon, setDefensivePokemon] = useState('')
     const [offensivePokemon, setOffensivePokemon] = useState('')
     const [userMoveUsed, setUserMoveUsed] = useState('')
@@ -238,30 +239,42 @@ const BattleTrainerView = () => {
             'damage': totalDamage,
         }
     }
-
-    const beginBattleSequence = async (e) => {
-        e.preventDefault()
-        let userMove = e.target.id
+    
+    const hpLoss = (hp, damage) => {
+        let remaininghp;
+        if (hp - damage <= 0) {
+            remaininghp = 0;
+        } else {
+            remaininghp = hp - damage;
+        }
+        return remaininghp
+    }
+    
+    const opponentMoveRandomizer = () => {
         let opponentMove;
-        // determine opponent move
-        // TODO: For now opponent will do random moves
         let slot = randomIntFromInterval(1, 4);
         if (slot === 1) opponentMove = 'slot_1'
         if (slot === 2) opponentMove = 'slot_2'
         if (slot === 3) opponentMove = 'slot_3'
         if (slot === 4) opponentMove = 'slot_4'
+        return opponentMove
+    }
+
+    const ifFainted = (remaininghp) => {
+        if(remaininghp === 0) {
+            
+        }
+    }
+
+    const beginBattleSequence = async (e) => {
+        e.preventDefault()
+        let userMove = e.target.id
+        let opponentMove = opponentMoveRandomizer()
+        // determine opponent move
+        // TODO: For now opponent will do random moves
         
         let speedTieBreaker = randomIntFromInterval(1,2)
         
-        const hpLoss = (hp, damage) => {
-            let remaininghp;
-            if (hp - damage <= 0) {
-                remaininghp = 0;
-            } else {
-                remaininghp = hp - damage;
-            }
-            return remaininghp
-        }
 
         if(userPokemonStats.speed > opponentPokemonStats.speed || (userPokemonStats.speed === opponentPokemonStats.speed && speedTieBreaker === 1)) {
             let userMoveUsed = await attack(userMove, userCurrentPokemon, opponentCurrentPokemon).then((res) => res)
@@ -367,7 +380,7 @@ const BattleTrainerView = () => {
         }
 
         setUserCurrentPokemon(switchPokemon)
-        setUserPokemonStats({
+        let switchingMonStats = {
             'maxhp': switchPokemon.pokemonStats[0].base_stat + 60,
             'remaininghp': switchPokemon.remaininghp,
             'attack': switchPokemon.pokemonStats[1].base_stat + 5,
@@ -375,8 +388,37 @@ const BattleTrainerView = () => {
             'special-attack': switchPokemon.pokemonStats[3].base_stat + 5,
             'special-defense': switchPokemon.pokemonStats[4].base_stat + 5,
             'speed': switchPokemon.pokemonStats[5].base_stat + 5,
-        })
-        console.log(switchPokemon)
+        }
+        setUserPokemonStats(switchingMonStats)
+
+        let remainingPercentage = Math.floor((switchPokemon.remaininghp / (switchPokemon.pokemonStats[0].base_stat + 60)) * 100)
+        console.log(switchPokemon.remaininghp / (switchPokemon.pokemonStats[0].base_stat + 60))
+        let userHpbar = document.getElementById('user-hpbar')
+        userHpbar.style.width = `${remainingPercentage}%`
+        // console.log(switchPokemon)
+
+        setBattleSequence(true)
+        setSwitchSequence(true)
+        setTimeout(async () => {
+            setSwitchSequence(false)
+            let opponentMove = opponentMoveRandomizer()
+            let opponentMoveUsed = await attack(opponentMove, opponentCurrentPokemon, switchPokemon).then((res) => res)
+            let tempUserPokemon = switchingMonStats
+            tempUserPokemon.remaininghp = hpLoss(tempUserPokemon.remaininghp, opponentMoveUsed.damage)
+            let remainingPercentage = Math.floor((tempUserPokemon.remaininghp / switchingMonStats.maxhp) * 100)
+            // let userHpbar = document.getElementById('user-hpbar')
+            userHpbar.style.width = `${remainingPercentage}%`
+            setOpponentMoveUsed(opponentMoveUsed.move)
+            setOpponentEffective(opponentMoveUsed.effective)
+            setOpponentCritical(opponentMoveUsed.critical)
+            setUserPokemonStats(tempUserPokemon)
+            setOpponentSequence(true)
+        }, 3000)
+        setTimeout(() => {
+            setSwitchSequence(false)
+            setOpponentSequence(false)
+            setBattleSequence(false)
+        }, 6000)
     }
 
     if(readyForBattle) {
@@ -455,6 +497,14 @@ const BattleTrainerView = () => {
                                                 <>
                                                 </>
                                             )}
+                                        </h1>
+                                    ) : (
+                                        <>
+                                        </>
+                                    )}
+                                    {switchSequence ? (
+                                        <h1 id='typewriter-text'>
+                                            <p id="text_1">{user.username} sent out {userCurrentPokemon.pokemon}</p>
                                         </h1>
                                     ) : (
                                         <>
