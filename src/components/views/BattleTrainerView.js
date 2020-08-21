@@ -184,92 +184,87 @@ const BattleTrainerView = () => {
         if (slot === 'slot_3') moveSelected = attackingPokemon.moveSlot_3;
         if (slot === 'slot_4') moveSelected = attackingPokemon.moveSlot_4;
         
-        // grab selectedMove info
-        const res = await fetch(`https://pokeapi.co/api/v2/type/${moveSelected.type}`)
-        let result = await res.json()
-
-        let level = 50;
-        let attack;  // attacking pokemon's attack
-        let defense; // defending pokemon's defense
-        let power = moveSelected.power
-
-        // checks to see which type of move it was
-        if (moveSelected.damage_class === "physical") attack = attackingPokemon.pokemonStats[1].base_stat + 5;
-        if (moveSelected.damage_class === "special") attack = attackingPokemon.pokemonStats[3].base_stat + 5;
-        if (moveSelected.damage_class === "physical") defense = target.pokemonStats[2].base_stat + 5
-        if (moveSelected.damage_class === "special") defense = target.pokemonStats[4].base_stat + 5
-        // if (moveSelected.damage_class === )
-        let doubleDamageTo = result.damage_relations.double_damage_to
-        let halfDamageTo = result.damage_relations.half_damage_to
-        let noDamageTo = result.damage_relations.no_damage_to
-        let targetPokemonType = target.pokemonType
-
-        // weather
-        let stab = 1
-        let targetType1 = 1
-        let targetType2 = 1
-        let burn = 1
-        let critical = isCritical()
-        let random = getRandomFloat(0.85, 1)
-
-        // checks for stab
-        if(attackingPokemon.pokemonType[0].type.name === moveSelected.type) stab = 1.5
-        if (attackingPokemon.pokemonType[1]) {
-            if (attackingPokemon.pokemonType[1].type.name === moveSelected.type) stab = 1.5
-        }
-
-        // checks to see if move is super effective
-        for(let i = 0; i < doubleDamageTo.length; i++) {
-            if (doubleDamageTo[i].name === targetPokemonType[0].type.name) targetType1 = 2
-            if (targetPokemonType[1]) {
-                if (doubleDamageTo[i].name === targetPokemonType[1].type.name) targetType2 = 2
+        // calculate only if it is an attacking move
+        if(moveSelected.damage_class === "physical" || moveSelected.damage_class === "special"){
+            const res = await fetch(`https://pokeapi.co/api/v2/type/${moveSelected.type}`)
+            let result = await res.json()
+    
+            let level = 50;
+            let attack;  // attacking pokemon's attack
+            let defense; // defending pokemon's defense
+            let power = moveSelected.power
+    
+            // checks to see which type of move it was
+            if (moveSelected.damage_class === "physical") attack = attackingPokemon.pokemonStats[1].base_stat + 5;
+            if (moveSelected.damage_class === "special") attack = attackingPokemon.pokemonStats[3].base_stat + 5;
+            if (moveSelected.damage_class === "physical") defense = target.pokemonStats[2].base_stat + 5
+            if (moveSelected.damage_class === "special") defense = target.pokemonStats[4].base_stat + 5
+            // if (moveSelected.damage_class === )
+            let doubleDamageTo = result.damage_relations.double_damage_to
+            let halfDamageTo = result.damage_relations.half_damage_to
+            let noDamageTo = result.damage_relations.no_damage_to
+            let targetPokemonType = target.pokemonType
+    
+            // weather
+            let stab = 1
+            let targetType1 = 1
+            let targetType2 = 1
+            let burn = 1
+            let critical = isCritical()
+            let random = getRandomFloat(0.85, 1)
+    
+            // checks for stab
+            if(attackingPokemon.pokemonType[0].type.name === moveSelected.type) stab = 1.5
+            if (attackingPokemon.pokemonType[1]) {
+                if (attackingPokemon.pokemonType[1].type.name === moveSelected.type) stab = 1.5
             }
-        }
-
-        // checks to see if move is not very effective
-        for (let i = 0; i < halfDamageTo.length; i++) {
-            if (halfDamageTo[i].name === targetPokemonType[0].type.name) targetType1 = 0.5
-            if (targetPokemonType[1]) {
-                if (halfDamageTo[i].name === targetPokemonType[1].type.name) targetType2 = 0.5
+    
+            // checks to see if move is super effective
+            for(let i = 0; i < doubleDamageTo.length; i++) {
+                if (doubleDamageTo[i].name === targetPokemonType[0].type.name) targetType1 = 2
+                if (targetPokemonType[1]) {
+                    if (doubleDamageTo[i].name === targetPokemonType[1].type.name) targetType2 = 2
+                }
             }
-        }  
-        // checks to see if move has no effect
-        if(noDamageTo.length > 0) {
-            if (noDamageTo[0].name === targetPokemonType[0].type.name) targetType1 = 0
-            if (targetPokemonType[1]) {
-                if (noDamageTo[0].name === targetPokemonType[1].type.name) targetType2 = 0
+    
+            // checks to see if move is not very effective
+            for (let i = 0; i < halfDamageTo.length; i++) {
+                if (halfDamageTo[i].name === targetPokemonType[0].type.name) targetType1 = 0.5
+                if (targetPokemonType[1]) {
+                    if (halfDamageTo[i].name === targetPokemonType[1].type.name) targetType2 = 0.5
+                }
+            }  
+            // checks to see if move has no effect
+            if(noDamageTo.length > 0) {
+                if (noDamageTo[0].name === targetPokemonType[0].type.name) targetType1 = 0
+                if (targetPokemonType[1]) {
+                    if (noDamageTo[0].name === targetPokemonType[1].type.name) targetType2 = 0
+                }
             }
-        }
-
-        // checks if burn
-
-        // checks if weather condition
-
-        // include weather later
-        let modifier = critical * random * stab * burn * targetType1 * targetType2
-        let damage = (((((2 * level) / 5) + 2) * power * (attack / defense)) / 50) + 2
-        let totalDamage = Math.floor(damage * modifier)
-        
-        let effective = null;
-
-        if(targetType1 + targetType2 >= 3) effective = 'Super Effective'
-        else if(targetType1 + targetType1 < 2) effective = 'Not-Very Effective'
-        if(targetType1 * targetType2 === 0) effective = 'No Effect'
-
-        console.log({
-            'critical': critical,
-            'stab': stab,
-            'type1': targetType1,
-            'type2':targetType2,
-            'effective': effective,
-            'damage': totalDamage,
-        })
-        console.log(`${attackingPokemon.pokemon} used ${moveSelected.name}`)
-        return {
-            'move':moveSelected.name,
-            'critical': critical,
-            'effective': effective,
-            'damage': totalDamage,
+    
+            // checks if burn
+    
+            // checks if weather condition
+    
+            // include weather later
+            let modifier = critical * random * stab * burn * targetType1 * targetType2
+            let damage = (((((2 * level) / 5) + 2) * power * (attack / defense)) / 50) + 2
+            let totalDamage = Math.floor(damage * modifier)
+            
+            let effective = null;
+    
+            if(targetType1 + targetType2 >= 3) effective = 'Super Effective'
+            else if(targetType1 + targetType1 < 2) effective = 'Not-Very Effective'
+            if(targetType1 * targetType2 === 0) effective = 'No Effect'
+    
+            return {
+                'move':moveSelected.name,
+                'critical': critical,
+                'effective': effective,
+                'damage': totalDamage,
+            }
+        } else if (moveSelected.damage_class === "status") {
+            
         }
     }
     

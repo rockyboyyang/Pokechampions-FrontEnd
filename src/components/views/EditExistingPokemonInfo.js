@@ -55,6 +55,10 @@ const EditExistingPokemonInfo = ({ pokemonName }) => {
 
     const slot_1Handler = (e) => {
         e.preventDefault()
+        if (selectedMove.damage_class === 'status') {
+            alert('Status moves has not yet been programmed into this application!')
+            return
+        }
         setSlot_1(selectedMove)
         if (slot_2.name === selectedMove.name) setSlot_2('-')
         if (slot_3.name === selectedMove.name) setSlot_3('-')
@@ -63,6 +67,10 @@ const EditExistingPokemonInfo = ({ pokemonName }) => {
 
     const slot_2Handler = (e) => {
         e.preventDefault()
+        if (selectedMove.damage_class === 'status') {
+            alert('Status moves has not yet been programmed into this application!')
+            return
+        }
         setSlot_2(selectedMove)
         if (slot_1.name === selectedMove.name) setSlot_1('-')
         if (slot_3.name === selectedMove.name) setSlot_3('-')
@@ -71,6 +79,10 @@ const EditExistingPokemonInfo = ({ pokemonName }) => {
 
     const slot_3Handler = (e) => {
         e.preventDefault()
+        if (selectedMove.damage_class === 'status') {
+            alert('Status moves has not yet been programmed into this application!')
+            return
+        }
         setSlot_3(selectedMove)
         if (slot_2.name === selectedMove.name) setSlot_2('-')
         if (slot_1.name === selectedMove.name) setSlot_1('-')
@@ -79,6 +91,10 @@ const EditExistingPokemonInfo = ({ pokemonName }) => {
 
     const slot_4Handler = (e) => {
         e.preventDefault()
+        if(selectedMove.damage_class === 'status') {
+            alert('Status moves has not yet been programmed into this application!')
+            return
+        }
         setSlot_4(selectedMove)
         if (slot_2.name === selectedMove.name) setSlot_2('-')
         if (slot_3.name === selectedMove.name) setSlot_3('-')
