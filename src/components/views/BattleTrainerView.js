@@ -9,6 +9,7 @@ const BattleTrainerView = () => {
     let history = useHistory()
     const [readyForBattle, setReadyForBattle] = useState(false)
     const [userCurrentPokemon, setUserCurrentPokemon] = useState(user)
+    const [userPokemonFaint, setUserPokemonFaint] = useState(false)
     const [userSlot_1Pokemon, setUserSlot_1CurrentPokemon] = useState('')
     const [userSlot_2Pokemon, setUserSlot_2CurrentPokemon] = useState('')
     const [userSlot_3Pokemon, setUserSlot_3CurrentPokemon] = useState('')
@@ -292,9 +293,9 @@ const BattleTrainerView = () => {
         return opponentMove
     }
 
-    const ifOpponentPokemonFainted = (remaininghp, oppHpbar) => {
-        console.log(battleSequence)
-        if(remaininghp === 0) {
+    const ifFainted = (remaininghp, oppHpbar, trainer) => {
+
+        if(remaininghp === 0 && trainer === 'opponent') {
             let currentKOCount = opponentPokemonKOCount;
             currentKOCount += 1;
             let nextOpponent;
@@ -334,6 +335,13 @@ const BattleTrainerView = () => {
                 setBattleSequence(false)
             }, 9000)
             return true;
+        } else if (remaininghp === 0 && trainer === 'user') {
+            setTimeout(() => {
+                setOpponentSequence(false)
+                setBattleSequence(false)
+                setUserPokemonFaint(true)
+            }, 2000)
+            return true;
         }
         return false;
     }
@@ -360,7 +368,7 @@ const BattleTrainerView = () => {
             setUserCritical(userMoveUsed.critical)
             setUserSequence(true)
 
-            if(ifOpponentPokemonFainted(remainingPercentage, oppHpbar)) return;
+            if(ifFainted(remainingPercentage, oppHpbar, 'opponent')) return;
             
 
             setTimeout(async () => {
@@ -376,6 +384,7 @@ const BattleTrainerView = () => {
                 setUserPokemonStats(tempUserPokemon)
                 setUserSequence(false)
                 setOpponentSequence(true)
+                if (ifFainted(remainingPercentage, userHpbar, 'user')) return;
                 setOpponentPokemonStats(tempOppPokemon)
             }, 3000)
         } else {
@@ -389,6 +398,7 @@ const BattleTrainerView = () => {
             setOpponentEffective(opponentMoveUsed.effective)
             setOpponentCritical(opponentMoveUsed.critical)
             setOpponentSequence(true)
+            if (ifFainted(remainingPercentage, userHpbar, 'user')) return;
 
             setTimeout(async () => {
                 let userMoveUsed = await attack(userMove, userCurrentPokemon, opponentCurrentPokemon).then((res) => res)
@@ -403,7 +413,7 @@ const BattleTrainerView = () => {
                 setOpponentPokemonStats(tempOppPokemon)
                 setOpponentSequence(false)
                 setUserSequence(true)
-                if (ifOpponentPokemonFainted(remainingPercentage, oppHpbar)) return;
+                if (ifFainted(remainingPercentage, oppHpbar, 'opponent')) return;
                 setUserPokemonStats(tempUserPokemon)
             }, 3000)
         }
@@ -419,7 +429,7 @@ const BattleTrainerView = () => {
     const switchOut = (e) => {
         e.stopPropagation()
 
-        if(battleSequence) return;
+        if(battleSequence || opponentPokemonFaint || opponentSentOutPokemon) return;
         let tempUser = userCurrentPokemon;
         tempUser.remaininghp = userPokemonStats.remaininghp
 
@@ -474,7 +484,16 @@ const BattleTrainerView = () => {
         let userHpbar = document.getElementById('user-hpbar')
         userHpbar.style.width = `${remainingPercentage}%`
         // console.log(switchPokemon)
-
+        if(userPokemonFaint) {
+            setBattleSequence(true)
+            setSwitchSequence(true)
+            setTimeout(() => {
+                setUserPokemonFaint(false)
+                setSwitchSequence(false)
+                setBattleSequence(false)
+            }, 6000)
+            return
+        }
         setBattleSequence(true)
         setSwitchSequence(true)
         setTimeout(async () => {
@@ -533,7 +552,7 @@ const BattleTrainerView = () => {
                         </div>
                         {!battleSequence ? (
                             <div className="move-slots-container-battle">
-                                {opponentSentOutPokemon || opponentPokemonFaint ? (
+                                {opponentSentOutPokemon || opponentPokemonFaint || userPokemonFaint ? (
                                     <>
                                         {opponentPokemonFaint ? (
                                             <h1 id='typewriter-text'>
@@ -546,6 +565,15 @@ const BattleTrainerView = () => {
                                         {opponentSentOutPokemon ? (
                                             <h1 id='typewriter-text'>
                                                 <p id="text_1">{opponent.name} sent out {opponentCurrentPokemon.pokemon}!</p>
+                                            </h1>
+                                        ) : (
+                                                <>
+                                                </>
+                                        )}
+                                        {userPokemonFaint ? (
+                                            <h1 id='typewriter-text'>
+                                                <p id="text_1">{user.username}'s' {userCurrentPokemon.pokemon} fainted!</p>
+                                                <p id="text_1">Please switch out your pokemon!</p>
                                             </h1>
                                         ) : (
                                                 <>
