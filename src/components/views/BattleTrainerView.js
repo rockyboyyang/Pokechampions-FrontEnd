@@ -164,7 +164,7 @@ const BattleTrainerView = () => {
             'defense': opponentSlot_1.pokemonStats[2].base_stat + 5,
             'special_attack': opponentSlot_1.pokemonStats[3].base_stat + 5,
             'special_defense': opponentSlot_1.pokemonStats[4].base_stat + 5,
-            'speed': opponentSlot_4.pokemonStats[5].base_stat + 5,
+            'speed': opponentSlot_1.pokemonStats[5].base_stat + 5,
         })
         setReadyForBattle(true)
     }
@@ -292,7 +292,7 @@ const BattleTrainerView = () => {
         return opponentMove
     }
 
-    const ifFainted = (remaininghp, oppHpbar) => {
+    const ifOpponentPokemonFainted = (remaininghp, oppHpbar) => {
         console.log(battleSequence)
         if(remaininghp === 0) {
             let currentKOCount = opponentPokemonKOCount;
@@ -310,7 +310,8 @@ const BattleTrainerView = () => {
                 setUserSequence(false)
                 console.log('dead')
                 setOpponentPokemonFaint(true)
-            }, 3000)
+                setBattleSequence(false)
+            }, 2000)
 
             setTimeout(() => {
                 setOpponentCurrentPokemon(nextOpponent)
@@ -359,7 +360,7 @@ const BattleTrainerView = () => {
             setUserCritical(userMoveUsed.critical)
             setUserSequence(true)
 
-            if(ifFainted(remainingPercentage, oppHpbar)) return;
+            if(ifOpponentPokemonFainted(remainingPercentage, oppHpbar)) return;
             
 
             setTimeout(async () => {
@@ -389,25 +390,25 @@ const BattleTrainerView = () => {
             setOpponentCritical(opponentMoveUsed.critical)
             setOpponentSequence(true)
 
-            let userMoveUsed = await attack(userMove, userCurrentPokemon, opponentCurrentPokemon).then((res) => res)
-            let tempOppPokemon = opponentPokemonStats
-            tempOppPokemon.remaininghp = hpLoss(tempOppPokemon.remaininghp, userMoveUsed.damage)
-            remainingPercentage = Math.floor((tempOppPokemon.remaininghp / opponentPokemonStats.maxhp) * 100)
-            let oppHpbar = document.getElementById('opponent-hpbar')
-            oppHpbar.style.width = `${remainingPercentage}%`
-            setUserMoveUsed(userMoveUsed.move)
-            setUserEffective(userMoveUsed.effective)
-            setUserCritical(userMoveUsed.critical)
-            setOpponentPokemonStats(tempOppPokemon)
-            if (ifFainted(remainingPercentage, oppHpbar)) return;
-            setTimeout(() => {
+            setTimeout(async () => {
+                let userMoveUsed = await attack(userMove, userCurrentPokemon, opponentCurrentPokemon).then((res) => res)
+                let tempOppPokemon = opponentPokemonStats
+                tempOppPokemon.remaininghp = hpLoss(tempOppPokemon.remaininghp, userMoveUsed.damage)
+                let remainingPercentage = Math.floor((tempOppPokemon.remaininghp / opponentPokemonStats.maxhp) * 100)
+                let oppHpbar = document.getElementById('opponent-hpbar')
+                oppHpbar.style.width = `${remainingPercentage}%`
+                setUserMoveUsed(userMoveUsed.move)
+                setUserEffective(userMoveUsed.effective)
+                setUserCritical(userMoveUsed.critical)
+                setOpponentPokemonStats(tempOppPokemon)
                 setOpponentSequence(false)
                 setUserSequence(true)
+                if (ifOpponentPokemonFainted(remainingPercentage, oppHpbar)) return;
                 setUserPokemonStats(tempUserPokemon)
             }, 3000)
         }
         // setBattleSequence(true)
-        setTimeout(async() => {
+        setTimeout(() => {
             setUserSequence(false)
             console.log('got here')
             setOpponentSequence(false)
@@ -532,10 +533,33 @@ const BattleTrainerView = () => {
                         </div>
                         {!battleSequence ? (
                             <div className="move-slots-container-battle">
-                                <button className="move-slot" id="slot_1" onClick={beginBattleSequence}>{userCurrentPokemon.moveSlot_1.name}</button>
-                                <button className="move-slot" id="slot_2" onClick={beginBattleSequence}>{userCurrentPokemon.moveSlot_2.name}</button>
-                                <button className="move-slot" id="slot_3" onClick={beginBattleSequence}>{userCurrentPokemon.moveSlot_3.name}</button>
-                                <button className="move-slot" id="slot_4" onClick={beginBattleSequence}>{userCurrentPokemon.moveSlot_4.name}</button>
+                                {opponentSentOutPokemon || opponentPokemonFaint ? (
+                                    <>
+                                        {opponentPokemonFaint ? (
+                                            <h1 id='typewriter-text'>
+                                                <p id="text_1">{opponent.name}'s {opponentCurrentPokemon.pokemon} fainted!</p>
+                                            </h1>
+                                        ) : (
+                                                <>
+                                                </>
+                                        )}
+                                        {opponentSentOutPokemon ? (
+                                            <h1 id='typewriter-text'>
+                                                <p id="text_1">{opponent.name} sent out {opponentCurrentPokemon.pokemon}!</p>
+                                            </h1>
+                                        ) : (
+                                                <>
+                                                </>
+                                        )}
+                                    </>
+                                ) : (
+                                    <>
+                                        <button className="move-slot" id="slot_1" onClick={beginBattleSequence}>{userCurrentPokemon.moveSlot_1.name}</button>
+                                        <button className="move-slot" id="slot_2" onClick={beginBattleSequence}>{userCurrentPokemon.moveSlot_2.name}</button>
+                                        <button className="move-slot" id="slot_3" onClick={beginBattleSequence}>{userCurrentPokemon.moveSlot_3.name}</button>
+                                        <button className="move-slot" id="slot_4" onClick={beginBattleSequence}>{userCurrentPokemon.moveSlot_4.name}</button>
+                                    </>
+                                )}
                             </div>
                             ) : (
                                 <div className="typewriter">
@@ -586,22 +610,6 @@ const BattleTrainerView = () => {
                                     ) : (
                                         <>
                                         </>
-                                    )}
-                                    {opponentPokemonFaint ? (
-                                        <h1 id='typewriter-text'>
-                                            <p id="text_1">{opponent.name}'s {opponentCurrentPokemon.pokemon} fainted!</p>
-                                        </h1>
-                                    ) : (
-                                            <>
-                                            </>
-                                    )}
-                                    {opponentSentOutPokemon ? (
-                                        <h1 id='typewriter-text'>
-                                            <p id="text_1">{opponent.name} sent out {opponentCurrentPokemon.pokemon}!</p>
-                                        </h1>
-                                    ) : (
-                                            <>
-                                            </>
                                     )}
                                 </div>
                             )
