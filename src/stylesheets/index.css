@@ -1,10 +1,12 @@
 /* TODO Add site wide styles */
+@import 'signup.css';
 html,
 body,
 #root,
 .view-body {
     height: 100%;
     margin: auto;
+    background: -webkit-gradient(linear,left top,left bottom,from(#C2FFD8),to(#465EFB));
 }
 
 .view-body {
@@ -204,7 +206,7 @@ body,
 .battle-screen {
     height: 100%;
     width: 70%;
-    background-image: url("./assets/battle-background.png");
+    background-image: url("../assets/images/battle-background.png");
     background-size: 600px;
     background-position-x: center;
     background-position-y: center;

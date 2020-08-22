@@ -1,6 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom";
 import { AppContext } from '../../context/AppContext'
+import ProfessorOak from '../../assets/images/professoroak2.png'
+import OpeningTheme from '../../assets/music/pokemonopening.mp3'
 
 const Signup = () => {
     const [username, setUsername] = useState('')
@@ -56,14 +58,31 @@ const Signup = () => {
 
     return (
         <div className="login-form">
-            <form>
-                <div className="entry-fields">
-                    <input type="text" placeholder="Create Username" value={username} onChange={handleUsernameChange}></input>
-                    <input type="password" placeholder="Enter Password" value={password} onChange={handlePasswordChange}></input>
-                    <input type="password" placeholder="Confirm Password" value={confirmPassword} onChange={handleConfirmPasswordChange}></input>
+            <div className="logo">
+                <div className="oak-dialogue-box">
+                    <div className="oak-image">
+                        <img src={ProfessorOak}></img>
+                    </div>
+                    <div className="dialogue-box">
+                        <audio autoplay='true'>
+                            <source src={OpeningTheme} type='audio/mpeg'/>
+                        </audio>
+                        <p id='oak-signup-typewriter'>
+                           <h1>Welcome to the world of Pokemon.  I am Professor Oak.  If you are new to the Pokemon challenge, please sign up and register for the Pokemon League.</h1>
+                        </p>
+                    </div>
                 </div>
-                <button onClick={signup}>Sign Up</button>
-            </form>
+            </div>
+            <div className="form-container">
+                <form>
+                    <div className="entry-fields">
+                        <input type="text" placeholder="Create Username" value={username} onChange={handleUsernameChange}></input>
+                        <input type="password" placeholder="Enter Password" value={password} onChange={handlePasswordChange}></input>
+                        <input type="password" placeholder="Confirm Password" value={confirmPassword} onChange={handleConfirmPasswordChange}></input>
+                    </div>
+                    <button onClick={signup}>Sign Up</button>
+                </form>
+            </div>
         </div>
     )
 }

@@ -1,0 +1,69 @@
+.login-form {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+}
+
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.form-container > form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 75%;
+    width: 85%;
+    border: 1px solid black;
+    background-color: #e1e8e8;
+}
+
+.entry-fields {
+    display: flex;
+    flex-direction: column;
+}
+
+.entry-fields > input {
+    height: 25px;
+    padding: 10px;
+    margin: 15px;
+}
+
+.oak-dialogue-box {
+    height: 50%;
+    width: 80%;
+    border: 1px solid black;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+}
+
+.oak-image {
+    height: 100%;
+    width:100%;
+}
+.oak-image > img {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.dialogue-box {
+    background-color: white;
+    margin-top: 30px;
+    margin-left: 90px;
+    height: 60%;
+    width: 80%;
+}
+.logo {
+    background-image: url("../assets/images/pokechampions.png");
+    background-repeat: no-repeat;
+    background-position-x: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
