@@ -82,11 +82,11 @@ const EditPokemonInfo = ({ pokemonName }) => {
 
     const slot_4Handler = (e) => {
         e.preventDefault()
-        setSlot_4(selectedMove)
         if (selectedMove.damage_class === 'status') {
             alert('Status moves has not yet been programmed into this application!')
             return
         }
+        setSlot_4(selectedMove)
         if (slot_2.name === selectedMove.name) setSlot_2('-')
         if (slot_3.name === selectedMove.name) setSlot_3('-')
         if (slot_1.name=== selectedMove.name) setSlot_1('-')
