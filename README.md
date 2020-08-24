@@ -3,7 +3,7 @@ An application that allows you to take on the Kanto League in the beautiful worl
 Gym Leaders, Elite Four, and the Pokemon Champion.
 
 # Live Link
-Unavailable
+<a href="https://pokechampions.herokuapp.com/">LIVE LINK</a>
 
 # Repo to BackEnd
 <a href="https://github.com/rockyboyyang/PokeBattle-BackEnd">LINK TO BACKEND</a>
