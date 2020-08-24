@@ -116,52 +116,6 @@ body,
     grid-row: 1 / span 2;
 }
 
-.user-pokemon-status-info {
-    grid-column-start: 2;
-    grid-row-start: 3;
-}
-
-.status-info-container {
-    background-color: white;
-    border: 1px solid black;
-    margin: 15px;
-    height: 70px;
-    display: grid;
-    grid-template-rows: 1fr 1fr 1fr;
-}
-
-.status-info-container p {
-    margin: 0;
-}
-
-.status-info-hpbar {
-    display: flex;
-    flex-direction: row;
-}
-
-.hpbar-container {
-    height: 70%;
-    width: 150px;
-    border: black 1px solid;
-}
-
-#user-hpbar {
-    background-color: green;
-    height: 100%;
-    width: 100%;
-}
-
-#opponent-hpbar {
-    background-color: green;
-    height: 100%;
-    width: 100%;
-}
-
-.opponent-pokemon-status-info {
-    grid-column-start: 1;
-    grid-row-start: 1;
-}
-
 .right-box {
     height: 510px;
     width: 30%;

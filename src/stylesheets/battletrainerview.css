@@ -56,3 +56,70 @@
     align-self: center;
     justify-self: center;
 }
+
+.status-info-hpbar {
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+}
+
+.status-info-name {
+    padding-left: 20px;
+}
+
+.user-pokemon-status-info {
+    grid-column-start: 2;
+    grid-row-start: 3;
+}
+
+.status-info-container {
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 30px;
+    margin: 15px;
+    height: 70px;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+}
+
+.status-info-container p {
+    margin: 0;
+}
+
+.status-info-name {
+    display: flex;
+    align-items: center;
+}
+
+.status-info-hpbar {
+    display: flex;
+    flex-direction: row;
+}
+
+.hpbar-container {
+    height: 50%;
+    width: 150px;
+    border: black 2px solid;
+}
+
+#user-hpbar {
+    background-color: green;
+    height: 100%;
+    width: 100%;
+}
+
+#opponent-hpbar {
+    background-color: green;
+    height: 100%;
+    width: 100%;
+}
+
+/* .hpbar-container,
+.hpbar {
+    border-radius: 20px;
+} */
+
+.opponent-pokemon-status-info {
+    grid-column-start: 1;
+    grid-row-start: 1;
+}
