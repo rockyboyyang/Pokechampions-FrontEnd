@@ -3,6 +3,19 @@ import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom";
 import { AppContext } from '../../context/AppContext'
 import Navbar from '../Navbar'
 import Footer from '../Footer'
+import brockFullbody from '../../assets/images/brock-fullbody.png'
+import mistyFullbody from '../../assets/images/misty-fullbody.png'
+import ltsurgeFullbody from '../../assets/images/ltsurge-fullbody.png'
+import erikaFullbody from '../../assets/images/erika-fullbody.png'
+import kogaFullbody from '../../assets/images/koga-fullbody.png'
+import sabrinaFullbody from '../../assets/images/sabrina-fullbody.png'
+import blaineFullbody from '../../assets/images/blaine-fullbody.png'
+import giovanniFullbody from '../../assets/images/giovanni-fullbody.png'
+import loreleiFullbody from '../../assets/images/lorelei-fullbody.png'
+import brunoFullbody from '../../assets/images/bruno-fullbody.png'
+import agathaFullbody from '../../assets/images/agatha-fullbody.png'
+import lanceFullbody from '../../assets/images/lance-fullbody.png'
+
 
 const BattleTrainerView = () => {
     const { setSelectedMove, spritesApi, back_spritesApi, user, opponent, capFirstLetter } = useContext(AppContext)
@@ -169,8 +182,14 @@ const BattleTrainerView = () => {
         })
         setReadyForBattle(true)
     }
+
+    const rerouteToSelect = () => {
+        if (!opponent) history.push('../battle/gymleaders')
+    }
+
     useEffect(() => {
         setSelectedMove('')
+        rerouteToSelect()
     }, [])
 
     const attack = async (slot, attackingPokemon, target) => {
@@ -513,6 +532,46 @@ const BattleTrainerView = () => {
         }, 6000)
     }
 
+    const getTrainerImage = () => {
+        console.log(opponent.name)
+        if(opponent.name === 'brock') {
+            return brockFullbody
+        }
+        if (opponent.name === 'misty') {
+            return mistyFullbody
+        }
+        if (opponent.name === 'ltsurge') {
+            return ltsurgeFullbody
+        }
+        if (opponent.name === 'erika') {
+            return erikaFullbody
+        }
+        if (opponent.name === 'koga') {
+            return kogaFullbody
+        }
+        if (opponent.name === 'sabrina') {
+            return sabrinaFullbody
+        }
+        if (opponent.name === 'blaine') {
+            return blaineFullbody
+        }
+        if (opponent.name === 'giovanni') {
+            return giovanniFullbody
+        }
+        if (opponent.name === 'lorelei') {
+            return loreleiFullbody
+        }
+        if (opponent.name === 'bruno') {
+            return brunoFullbody
+        }
+        if (opponent.name === 'agatha') {
+            return agathaFullbody
+        }
+        if (opponent.name === 'lance') {
+            return lanceFullbody
+        }
+    }
+
     if(readyForBattle) {
         return (
             <div className="view-body">
@@ -679,9 +738,22 @@ const BattleTrainerView = () => {
         )
     } else {
         return (
-            <>
-                <h1>Are You Ready To Battle?</h1>
-                <button onClick={clickToBattle}>Click to Battle</button>
+            <> 
+                <Navbar />
+                <div className="trainer-dialogue-container">
+                    <div className="trainer-dialogue-box">
+                        <div className="trainer-image">
+                            <img src={getTrainerImage()}></img>
+                        </div>
+                        <div className="trainer-dialogue">
+                            <h2>{opponent.pre_battle_quote}</h2>
+                            <button onClick={clickToBattle}>BATTLE!</button>
+                        </div>
+                    </div>
+                </div>
+                {/* <Footer /> */}
+                {/* <h1>Are You Ready To Battle?</h1>
+                <button onClick={clickToBattle}>Click to Battle</button> */}
             </>
         )
     }

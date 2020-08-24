@@ -34,7 +34,6 @@ const App = props => {
 
   const checkUserExist = () => {
     try{
-      console.log('asd')
       setUser(JSON.parse(localStorage.user))
       setUser_slot_1(JSON.parse(user.slot_1))
       setUser_slot_2(JSON.parse(user.slot_2))

@@ -1,0 +1,67 @@
+.trainer-dialogue-container {
+    width: 100%;
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.trainer-dialogue-box {
+    height: 70%;
+    width: 80%;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    background-color: #e9f3e4;
+    box-shadow: 0 2px 12px 0 rgba(255,255,255,.56)
+}
+
+.trainer-image {
+    height: 100%;
+    width:100%;
+}
+
+.trainer-image > img {
+    height: 550px;
+    width: 100%;
+    position: relative;
+}
+
+.trainer-dialogue {
+    background-color: white;
+    margin-top: 30px;
+    margin-left: 90px;
+    height: 60%;
+    width: 80%;
+    /* border: 5px solid black; */
+    /* box-shadow: 0 2px 12px 0 rgba(255,255,255,.56); */
+    border-radius: 20px;
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 5px;
+    display: flex;
+    flex-direction: column;
+    border: rgba(0, 0, 0, 0.77) solid 5px;
+}
+
+.trainer-dialogue > button {
+    background-color: #f9c1b1;
+    background-image: linear-gradient(315deg, #f9c1b1 0%, #fb8085 74%);
+    /* box-shadow: 10px 10px 12px 0 rgba(255, 255, 255, 0.848); */
+    color: rgb(255, 255, 255);
+    border-radius: 50px;
+    border: none;
+    height: 40px;
+    width: 100px;
+}
+
+.trainer-dialogue > button:hover {
+    background-color: rgb(255, 55, 55);
+    background-image: none;
+    transition-duration: .5s;
+    cursor: pointer;
+}
+
+.trainer-dialogue > button:focus {
+    outline: none;
+}

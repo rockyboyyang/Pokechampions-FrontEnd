@@ -3,6 +3,8 @@
 @import 'home.css';
 @import 'selectteam.css';
 @import 'editpokemoninfo.css';
+@import 'battleselect.css';
+@import 'prebattle.css';
 
 
 html,
@@ -41,11 +43,6 @@ body,
     box-shadow: 0 2px 12px 0 rgba(255,255,255,.36);
 }
 
-.select-battle-view {
-    display: grid;
-    grid-template-rows: 5fr 1fr;
-}
-
 .battling-pokemon {
     display: flex;
     justify-content: center;
@@ -53,30 +50,6 @@ body,
 }
 
 .battling-pokemon > img {
-}
-
-.gym-leader-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-}
-
-.elitefour-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-
-.select-trainer-icon {
-    height: 135px;
-    width: 135px;
-}
-
-.select-trainer-icon {
-    border: 1px solid black;
 }
 
 .move-slots-container {

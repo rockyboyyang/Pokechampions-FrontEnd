@@ -1,0 +1,86 @@
+.select-battle-view {
+    display: grid;
+    grid-template-rows: 5fr 1fr;
+}
+
+.select-trainer-icon {
+    height: 100%;
+    width: 100%;
+}
+
+.select-trainer-icon {
+}
+
+.select-trainer-icon > img {
+    background-color: #f9c1b1;
+    background-image: linear-gradient(315deg, #f9c1b1 0%, #fb8085 74%);
+    height: 80%;
+    width: 80%;
+    border-radius: 20px;
+    box-shadow: 10px 10px 12px 0 rgba(255, 255, 255, 0.848);
+}
+
+.select-trainer-icon > img:hover {
+    background-color: rgb(254, 254, 165);
+    background-image: none;
+    transition-duration: .5s;
+    cursor: pointer;
+}
+
+.gym-leader-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+
+.gym-leader-container > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.elitefour-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.elitefour-container > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.elitefour-container img {
+    width: 143.77px;
+    height: 170px;
+}
+
+.trainer-type-button {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.trainer-type-button > button {
+    background-color: #f9c1b1;
+    background-image: linear-gradient(315deg, #f9c1b1 0%, #fb8085 74%);
+    box-shadow: 10px 10px 12px 0 rgba(255, 255, 255, 0.848);
+    color: rgb(255, 255, 255);
+    border-radius: 50px;
+    border: none;
+    height: 40px;
+    width: 100px;
+}
+
+.trainer-type-button > button:hover {
+    background-color: rgb(255, 55, 55);
+    background-image: none;
+    transition-duration: .5s;
+    cursor: pointer;
+}
+
+.trainer-type-button > button:focus {
+    outline: none;
+}
