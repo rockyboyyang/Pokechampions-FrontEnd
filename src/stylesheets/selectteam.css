@@ -1,0 +1,70 @@
+.pokemon-list {
+    overflow-y: scroll;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.pokemon-list > div  {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100px;
+    text-align: center;
+    margin: 10px;
+    background-color: #f9c1b1;
+    background-image: linear-gradient(315deg, #f9c1b1 0%, #fb8085 74%);
+    box-shadow: 10px 10px 12px 0 rgba(255, 255, 255, 0.848);
+    color: rgb(255, 255, 255);
+    border-radius: 50px;
+}
+
+.pokemon-list > div:hover  {
+    background-color: rgb(255, 55, 55);
+    background-image: none;
+    transition-duration: .5s;
+    cursor: pointer;
+}
+
+.pokemon-list img {
+    justify-self: center;
+}
+
+.pokemon-list p {
+    padding-left: 3px;
+}
+
+.pokemon-team-container {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    height: 100%;
+    margin: auto;
+    width: 100%;
+}
+
+.pokemon-team-container > div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0px 12px 0 rgba(255, 255, 255, 0.848);
+}
+
+.pokemon-team-container > div:hover {
+    background-color: rgb(255, 251, 146);
+    transition-duration: .5s;
+    cursor: pointer;
+}
+
+.team-box{
+    /* background-color: black; */
+    display: grid;
+    grid-template-rows: 1fr 5fr;
+}
+
+.header {
+    background-color: #f9c1b1;
+    background-image: linear-gradient(315deg, #f9c1b1 0%, #fb8085 74%);
+    color: white;
+    display: flex;
+    justify-content: center;
+}

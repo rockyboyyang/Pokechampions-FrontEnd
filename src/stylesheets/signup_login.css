@@ -41,7 +41,8 @@
     height: 50px;
     width: 150px;
     border: none;
-    background-color: rgb(255, 149, 149);
+    background-color: #f9c1b1;
+    background-image: linear-gradient(315deg, #f9c1b1 0%, #fb8085 74%);
     color: white;
     border-radius: 20px;
 }
@@ -59,6 +60,7 @@
     background-color: rgb(255, 55, 55);
     transition-duration: .5s;
     cursor: pointer;
+    background-image: none;
 }
 
 .form-container button:focus {

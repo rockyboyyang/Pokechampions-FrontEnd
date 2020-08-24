@@ -50,6 +50,9 @@ const App = props => {
 
   // Capitalize first letter of string
   const capFirstLetter = (word) => {
+    if (word === 'nidoranf') return 'Nidoran ♀'
+    if (word === 'nidoranm') return 'Nidoran ♂'
+    if (word === 'mrmime') return 'Mr. Mime'
     let capLetter = word.slice(0, 1)
     return capLetter.toUpperCase() + word.slice(1)
   }

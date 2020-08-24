@@ -5,7 +5,7 @@ import Navbar from '../Navbar'
 import Footer from '../Footer'
 
 const SelectTeam = () => {
-    const { pokemonList, spritesApi, user, setCurrentSlot } = useContext(AppContext)
+    const { pokemonList, spritesApi, user, setCurrentSlot, capFirstLetter } = useContext(AppContext)
     const history = useHistory();
 
     const routeToPokemonBattleDetails = (e) => {
@@ -29,10 +29,12 @@ const SelectTeam = () => {
                 <Navbar />
                 <div className="center-body">
                 <div className="left-box pokemon-list">{pokemonList.map((pokemon) => (
-                    <div id={pokemon.name} onClick={routeToPokemonBattleDetails}><p>{pokemon.name}</p> <img src={spritesApi + `${pokemon.name}.gif`} /></div>
+                    <div id={pokemon.name} onClick={routeToPokemonBattleDetails}><p>{capFirstLetter(pokemon.name)}</p> <img src={spritesApi + `${pokemon.name}.gif`} /></div>
                 ))}</div>
                     <div className="right-box team-box">
-                        <h1>Pokemon Team</h1>
+                        <div className="header">
+                            <h1>Pokemon Team</h1>
+                        </div>
                         <div className="pokemon-team-container">
                             {user.slot_1 !== null ? (
                                 <div className="user-pokemon-slot_1" id={JSON.parse(user.slot_1).pokemon} onClick={routeToExistingPokemonBattleDetails}><img className="user-pokemon-slot_1" src={spritesApi + `${JSON.parse(user.slot_1).pokemon}.gif`} /></div>

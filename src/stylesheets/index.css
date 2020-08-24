@@ -1,5 +1,9 @@
 /* TODO Add site wide styles */
 @import 'signup_login.css';
+@import 'home.css';
+@import 'selectteam.css';
+
+
 html,
 body,
 #root,
@@ -19,7 +23,8 @@ body,
     display: flex;
     flex-direction: row;
     justify-content: center;
-    border: 1px solid black;
+    box-shadow: 0 2px 12px 0 rgba(255,255,255,.36);
+    background-color: #e9f3e4;
 }
 
 .center-body {
@@ -30,8 +35,9 @@ body,
 .left-box {
     height: 510px;
     width: 60%;
-    border: solid 1px black;
+    background-color: #e9f3e4;
     margin: 0px 20px;
+    box-shadow: 0 2px 12px 0 rgba(255,255,255,.36);
 }
 
 .select-battle-view {
@@ -70,27 +76,6 @@ body,
 
 .select-trainer-icon {
     border: 1px solid black;
-}
-
-.pokemon-list {
-    overflow-y: scroll;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-}
-
-.pokemon-list > div  {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid black;
-    height: 100px;
-    text-align: center;
-    margin: 10px;
-}
-
-.pokemon-list img  {
-    height: 70px;
-    width: 70px;
 }
 
 .pokemon-detail {
@@ -165,20 +150,6 @@ body,
     margin: auto;
 }
 
-.home-left-box {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    border: solid 1px black;
-}
-
-.home-left-box > div {
-    border: solid 1px black;
-    width: 50%;
-    height: 15%;
-    margin: auto;
-    text-align: center;
-}
 
 .battle-box {
     display: grid;
@@ -276,8 +247,9 @@ body,
 .right-box {
     height: 510px;
     width: 30%;
-    border: solid 1px black;
     margin: 0px 20px;
+    background-color: #e9f3e4;
+    box-shadow: 0 2px 12px 0 rgba(255,255,255,.36);
 }
 
 .pokemon-team {
@@ -305,23 +277,10 @@ body,
 }
 
 .footer {
-    border: solid 1px black;
+    background-color: #e9f3e4;
+    box-shadow: 0 2px 12px 0 rgba(255,255,255,.36);
 }
 
-.pokemon-team-container {
-    display: grid;
-    grid-template-rows: 1fr 1fr 1fr;
-    grid-template-columns: 1fr 1fr;
-    height: 84%;
-    margin: auto;
-    /* width: 54%; */
-}
-
-.pokemon-team-container > div{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
 
 /* TYPEWRITER CODE START */

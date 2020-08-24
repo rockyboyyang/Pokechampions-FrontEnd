@@ -25,8 +25,8 @@ const Home = () => {
             <Navbar />
             <div className="center-body">
                 <div className="left-box home-left-box">
-                    <div id="battle-select-button" onClick={routeToBattleSelectScreen}>Battle</div>
-                    <div id="team-select-button" onClick={routeToTeamSelectScreen}>Edit Pokemon Team</div>
+                    <div id="battle-select-button" onClick={routeToBattleSelectScreen}><p>Battle</p></div>
+                    <div id="team-select-button" onClick={routeToTeamSelectScreen}><p>Edit Pokemon Team</p></div>
                 </div>
                 <div className="right-box"></div>
             </div>
