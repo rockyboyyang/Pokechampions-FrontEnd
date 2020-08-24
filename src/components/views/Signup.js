@@ -14,9 +14,14 @@ const Signup = () => {
     const signup = async (e) => {
         e.preventDefault()
         if(password !== confirmPassword) {
-            console.log('passwords do not match')
+            alert('passwords do not match')
             return
         }
+        if(password === '' || username === '') {
+            alert('You cannot leave an empty field!')
+            return
+        }
+
         let body = {
             username: username,
             password: password,
@@ -29,7 +34,11 @@ const Signup = () => {
         })
         console.log(res)
         if (res.ok) {
-            const { access_token, user } = await res.json();
+            const { access_token, user, error } = await res.json();
+            if(error) {
+                alert(error)
+                return
+            }
             setToken({ access_token });
             setUser(user)
             window.localStorage.access_token = access_token;
@@ -41,7 +50,9 @@ const Signup = () => {
             setUser_slot_5(JSON.parse(user.slot_5))
             setUser_slot_6(JSON.parse(user.slot_6))
             history.push("/home");
+            return
         }
+        alert('Username is already taken!')
     }
 
     const handleUsernameChange = (e) => {
@@ -56,6 +67,9 @@ const Signup = () => {
         setConfirmPassword(e.target.value)
     }
 
+    const goToLogin = (e) => {
+        history.push('/login')
+    }
     return (
         <div className="login-form">
             <div className="logo">
@@ -64,7 +78,7 @@ const Signup = () => {
                         <img src={ProfessorOak}></img>
                     </div>
                     <div className="dialogue-box">
-                        <audio autoplay='true'>
+                        <audio autoPlay='true' loop='true'>
                             <source src={OpeningTheme} type='audio/mpeg'/>
                         </audio>
                         <p id='oak-signup-typewriter'>
@@ -81,6 +95,7 @@ const Signup = () => {
                         <input type="password" placeholder="Confirm Password" value={confirmPassword} onChange={handleConfirmPasswordChange}></input>
                     </div>
                     <button onClick={signup}>Sign Up</button>
+                    <p id='link-to-login-signup' onClick={goToLogin}>Already have an account?</p>
                 </form>
             </div>
         </div>

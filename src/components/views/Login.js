@@ -1,6 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom";
 import { AppContext } from '../../context/AppContext'
+import ProfessorOak from '../../assets/images/professoroak2.png'
+import OpeningTheme from '../../assets/music/pokemonopening.mp3'
 
 const Login = () => {
     const [username, setUsername] = useState('')
@@ -34,6 +36,9 @@ const Login = () => {
             setUser_slot_6(JSON.parse(user.slot_6))
             history.push("/home");
         }
+        if(!res.ok) {
+            alert('Wrong password or username!')
+        }
     }
 
     const handleUsernameChange = (e) => {
@@ -44,16 +49,38 @@ const Login = () => {
         setPassword(e.target.value)
     }
 
+    const goToSignup = (e) => {
+        history.push('/signup')
+    }
+
     return (
-       <div className="login-form">
-           <form>
-               <div className="entry-fields">
-                    <input type="text" placeholder="Enter Username" value={username} onChange={handleUsernameChange}></input>
-                    <input type="password" placeholder="Enter Password" value={password} onChange={handlePasswordChange}></input>
-               </div>
-               <button onClick={login}>Log In</button>
-           </form>
-       </div>
+        <div className="login-form">
+            <div className="logo">
+                <div className="oak-dialogue-box">
+                    <div className="oak-image">
+                        <img src={ProfessorOak}></img>
+                    </div>
+                    <div className="dialogue-box">
+                        <audio autoPlay='true' loop='true'>
+                            <source src={OpeningTheme} type='audio/mpeg' />
+                        </audio>
+                        <p id='oak-signup-typewriter'>
+                            <h1>Hey future Champion! Long time no see!  I see that you're well rested.  Why don't you log in and continue your quest!</h1>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div className="form-container">
+                <form>
+                    <div className="entry-fields">
+                        <input type="text" placeholder="Enter Username" value={username} onChange={handleUsernameChange}></input>
+                        <input type="password" placeholder="Enter Password" value={password} onChange={handlePasswordChange}></input>
+                    </div>
+                    <button onClick={login}>Log In</button>
+                    <p id='link-to-login-signup' onClick={goToSignup}>Don't have an account?</p>
+                </form>
+            </div>
+        </div>
     )
 }
 

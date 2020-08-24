@@ -1,5 +1,5 @@
 /* TODO Add site wide styles */
-@import 'signup.css';
+@import 'signup_login.css';
 html,
 body,
 #root,
@@ -7,6 +7,7 @@ body,
     height: 100%;
     margin: auto;
     background: -webkit-gradient(linear,left top,left bottom,from(#C2FFD8),to(#465EFB));
+    font-family: Verdana,Helvetica,Arial,sans-serif;
 }
 
 .view-body {
