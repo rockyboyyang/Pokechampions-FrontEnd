@@ -207,34 +207,36 @@ const EditPokemonInfo = ({ pokemonName }) => {
                         </div>
                         <div className="sprite-container"><img src={`${spritesApi}/${pokemonName}.gif`} alt={pokemonName}></img></div>
                         <div className="move-slots-container">
-                            <button className="move-slot slot-1" onClick={slot_1Handler}>{slot_1.name}</button>
-                            <button className="move-slot slot-2" onClick={slot_2Handler}>{slot_2.name}</button>
-                            <button className="move-slot slot-3" onClick={slot_3Handler}>{slot_3.name}</button>
-                            <button className="move-slot slot-4" onClick={slot_4Handler}>{slot_4.name}</button>
+                            <button className="move-slot slot-1" onClick={slot_1Handler}>{capFirstLetter(slot_1.name)}</button>
+                            <button className="move-slot slot-2" onClick={slot_2Handler}>{capFirstLetter(slot_2.name)}</button>
+                            <button className="move-slot slot-3" onClick={slot_3Handler}>{capFirstLetter(slot_3.name)}</button>
+                            <button className="move-slot slot-4" onClick={slot_4Handler}>{capFirstLetter(slot_4.name)}</button>
                         </div>
                     </div>
                     <div className="right-box description-button-container">
                         <div className="moves-container">
                             {listOfPokemonDetails[pokemonName].moves.map((move) => 
-                                <div className="move-selection" id={move.move.name} onClick={fetchMoveInfo}>{move.move.name}</div>
+                                <div className="move-selection" id={move.move.name} onClick={fetchMoveInfo}>{capFirstLetter(move.move.name)}</div>
                             )}
                         </div>
                         <div className="move-description">
                             {selectedMove ? (
                                 <>
                                     <div>
+                                        <div>Name: {capFirstLetter(selectedMove.name)}</div>
                                         <div>Power: {selectedMove.power}</div>
                                         <div>PP: {selectedMove.pp}</div>
-                                        <div>Accuracy: {selectedMove.Accuracy}</div>
-                                        <div>Type: {selectedMove.type}</div>
-                                        <div>Description: {selectedMove.effect}</div>
+                                        <div>Damage Class: {capFirstLetter(selectedMove.damage_class)}</div>
+                                        <div>Accuracy: {selectedMove.accuracy}</div>
+                                        <div>Type: {capFirstLetter(selectedMove.type)}</div>
+                                        <div>Description: {capFirstLetter(selectedMove.effect)}</div>
                                     </div>
                                 </>
                             ) : (
                                 <div></div>
                             )}
                         </div>
-                        <div className="button-containers">
+                        <div className="buttons-container">
                             <button className="add-button" id="slot_1" onClick={fetchPostToUserSlot}>Slot 1</button>
                             <button className="add-button" id="slot_2" onClick={fetchPostToUserSlot}>Slot 2</button>
                             <button className="add-button" id="slot_3" onClick={fetchPostToUserSlot}>Slot 3</button>

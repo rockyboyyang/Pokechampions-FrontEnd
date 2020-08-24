@@ -48,11 +48,21 @@ const App = props => {
     }
   }
 
-  // Capitalize first letter of string
+  // Capitalize first letter of string or first letter of two words if string has two words
   const capFirstLetter = (word) => {
+    if(!word) return;
     if (word === 'nidoranf') return 'Nidoran ♀'
     if (word === 'nidoranm') return 'Nidoran ♂'
     if (word === 'mrmime') return 'Mr. Mime'
+    if(word.includes('-')) {
+      let strArr = word.split('-')
+      let newArrCap = []
+      for(let i = 0; i < strArr.length; i++) {
+        let capLetter = strArr[i].slice(0, 1)
+        newArrCap.push(capLetter.toUpperCase() + strArr[i].slice(1))
+      }
+      return newArrCap.join(' ')
+    }
     let capLetter = word.slice(0, 1)
     return capLetter.toUpperCase() + word.slice(1)
   }
@@ -79,7 +89,7 @@ const App = props => {
 
   // Grabs the information about move selected
   const fetchMoveInfo = async (e) => {
-    console.log(e.target.id)
+    e.preventDefault()
     const res = await fetch(`https://pokeapi.co/api/v2/move/${e.target.id}/`);
 
     const results = await res.json();
