@@ -1,11 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { AppContext } from '../../context/AppContext'
 import Navbar from '../Navbar'
 import Footer from '../Footer'
 
 const Home = () => {
-    const { setSelectedMove } = useContext(AppContext)
+    const { setSelectedMove, } = useContext(AppContext)
     let history = useHistory()
 
     const routeToBattleSelectScreen = () => {
@@ -16,8 +16,15 @@ const Home = () => {
         history.push('./selectteam')
     }
 
+    const checkForToken = () => {
+        if (!localStorage.user && !localStorage.access_token) {
+            history.push('/signup')
+        }
+    }
+
     useEffect(() => {
         setSelectedMove('')
+        checkForToken()
     }, [])
 
     return (

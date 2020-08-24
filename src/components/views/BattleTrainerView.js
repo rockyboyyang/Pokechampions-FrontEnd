@@ -92,6 +92,10 @@ const BattleTrainerView = () => {
         let userSlot_5 = JSON.parse(user.slot_5)
         let userSlot_6 = JSON.parse(user.slot_6)
 
+        if(!userSlot_1) {
+            alert('You don\'t have a Pokemon in your first slot!')
+            return
+        }
         if(user.slot_1) {
             userSlot_1.remaininghp = userSlot_1.pokemonStats[0].base_stat + 60
         }
@@ -202,7 +206,7 @@ const BattleTrainerView = () => {
         if (slot === 'slot_2') moveSelected = attackingPokemon.moveSlot_2;
         if (slot === 'slot_3') moveSelected = attackingPokemon.moveSlot_3;
         if (slot === 'slot_4') moveSelected = attackingPokemon.moveSlot_4;
-        
+        if(!moveSelected) return;
         // calculate only if it is an attacking move
         if(moveSelected.damage_class === "physical" || moveSelected.damage_class === "special"){
             const res = await fetch(`https://pokeapi.co/api/v2/type/${moveSelected.type}`)
@@ -363,6 +367,7 @@ const BattleTrainerView = () => {
     const beginBattleSequence = async (e) => {
         e.preventDefault()
         let userMove = e.target.id
+        if(e.target.innerText === '') return
         let opponentMove = opponentMoveRandomizer()
         // determine opponent move
         // TODO: For now opponent will do random moves
@@ -372,6 +377,7 @@ const BattleTrainerView = () => {
         setBattleSequence(true)
         if(userPokemonStats.speed > opponentPokemonStats.speed || (userPokemonStats.speed === opponentPokemonStats.speed && speedTieBreaker === 1)) {
             let userMoveUsed = await attack(userMove, userCurrentPokemon, opponentCurrentPokemon).then((res) => res)
+            if(!userMoveUsed) return
             let tempOppPokemon = opponentPokemonStats
             tempOppPokemon.remaininghp = hpLoss(tempOppPokemon.remaininghp, userMoveUsed.damage)
             let remainingPercentage = Math.floor((tempOppPokemon.remaininghp / opponentPokemonStats.maxhp) * 100)
@@ -416,6 +422,7 @@ const BattleTrainerView = () => {
 
             setTimeout(async () => {
                 let userMoveUsed = await attack(userMove, userCurrentPokemon, opponentCurrentPokemon).then((res) => res)
+                if (!userMoveUsed) return
                 let tempOppPokemon = opponentPokemonStats
                 tempOppPokemon.remaininghp = hpLoss(tempOppPokemon.remaininghp, userMoveUsed.damage)
                 let remainingPercentage = Math.floor((tempOppPokemon.remaininghp / opponentPokemonStats.maxhp) * 100)
@@ -456,6 +463,15 @@ const BattleTrainerView = () => {
         if (slot === 'slot_5') switchPokemon = userSlot_5Pokemon
         if (slot === 'slot_6') switchPokemon = userSlot_6Pokemon
 
+        if(switchPokemon.remaininghp === 0) {
+            alert('That Pokemon is Fainted!')
+            return;
+        }
+
+        if(switchPokemon.pokemon === tempUser.pokemon) {
+            alert(`${capFirstLetter(switchPokemon.pokemon)} is already out on the field!`)
+            return;
+        }
         if(userSlot_1Pokemon) {
             if (userSlot_1Pokemon.pokemon === tempUser.pokemon) setUserSlot_1CurrentPokemon(tempUser)
         }
@@ -524,6 +540,7 @@ const BattleTrainerView = () => {
             setOpponentCritical(opponentMoveUsed.critical)
             setUserPokemonStats(tempUserPokemon)
             setOpponentSequence(true)
+            if (ifFainted(remainingPercentage, userHpbar, 'user')) return;
         }, 3000)
         setTimeout(() => {
             setSwitchSequence(false)
@@ -609,26 +626,32 @@ const BattleTrainerView = () => {
                                 {opponentSentOutPokemon || opponentPokemonFaint || userPokemonFaint ? (
                                     <>
                                         {opponentPokemonFaint ? (
-                                            <h1 id='typewriter-text'>
-                                                <p id="text_1">{opponent.name}'s {opponentCurrentPokemon.pokemon} fainted!</p>
-                                            </h1>
+                                            <div className='switch-sequence-container'>
+                                                <h1 id='typewriter-text'>
+                                                    <p id="text_1">{capFirstLetter(opponent.name)}'s {capFirstLetter(opponentCurrentPokemon.pokemon)} fainted!</p>
+                                                </h1>
+                                            </div>
                                         ) : (
                                                 <>
                                                 </>
                                         )}
                                         {opponentSentOutPokemon ? (
-                                            <h1 id='typewriter-text'>
-                                                <p id="text_1">{opponent.name} sent out {opponentCurrentPokemon.pokemon}!</p>
-                                            </h1>
+                                            <div className='switch-sequence-container'>
+                                                <h1 id='typewriter-text'>
+                                                    <p id="text_1">{capFirstLetter(opponent.name)} sent out {capFirstLetter(opponentCurrentPokemon.pokemon)}!</p>
+                                                </h1>
+                                            </div>
                                         ) : (
                                                 <>
                                                 </>
                                         )}
                                         {userPokemonFaint ? (
-                                            <h1 id='typewriter-text'>
-                                                <p id="text_1">{user.username}'s' {userCurrentPokemon.pokemon} fainted!</p>
-                                                <p id="text_1">Please switch out your pokemon!</p>
-                                            </h1>
+                                            <div className='switch-sequence-container'>
+                                                <h1 id='typewriter-text'>
+                                                    <p id="text_1">{capFirstLetter(user.username)}'s {capFirstLetter(userCurrentPokemon.pokemon)} fainted!</p>
+                                                    <p id="text_1">Please switch out your pokemon!</p>
+                                                </h1>
+                                            </div>
                                         ) : (
                                                 <>
                                                 </>
@@ -636,59 +659,65 @@ const BattleTrainerView = () => {
                                     </>
                                 ) : (
                                     <>
-                                        <button className="move-slot" id="slot_1" onClick={beginBattleSequence}>{userCurrentPokemon.moveSlot_1.name}</button>
-                                        <button className="move-slot" id="slot_2" onClick={beginBattleSequence}>{userCurrentPokemon.moveSlot_2.name}</button>
-                                        <button className="move-slot" id="slot_3" onClick={beginBattleSequence}>{userCurrentPokemon.moveSlot_3.name}</button>
-                                        <button className="move-slot" id="slot_4" onClick={beginBattleSequence}>{userCurrentPokemon.moveSlot_4.name}</button>
+                                        <button className="move-slot" id="slot_1" onClick={beginBattleSequence}>{capFirstLetter(userCurrentPokemon.moveSlot_1.name)}</button>
+                                        <button className="move-slot" id="slot_2" onClick={beginBattleSequence}>{capFirstLetter(userCurrentPokemon.moveSlot_2.name)}</button>
+                                        <button className="move-slot" id="slot_3" onClick={beginBattleSequence}>{capFirstLetter(userCurrentPokemon.moveSlot_3.name)}</button>
+                                        <button className="move-slot" id="slot_4" onClick={beginBattleSequence}>{capFirstLetter(userCurrentPokemon.moveSlot_4.name)}</button>
                                     </>
                                 )}
                             </div>
                             ) : (
-                                <div className="typewriter">
+                                <div className="battle-sequence">
                                     {userSequence ? (
-                                        <h1 id='typewriter-text'>
-                                            <p id="text_1">{userCurrentPokemon.pokemon} used {userMoveUsed}</p>
-                                            {userEffective ? (
-                                                <p id="text_1">It's {userEffective}!</p>
-                                            ) : (
-                                                <>
-                                                </>
-                                            )}
-                                            {userCritical > 1 ? (
-                                                <p id="text_1">It's a critical hit!</p>
-                                            ) : (
-                                                <>
-                                                </>
-                                            )}
-                                        </h1>
+                                        <div className="sequence-container">
+                                            <h1 id='typewriter-text'>
+                                                <p id="text_1">{capFirstLetter(userCurrentPokemon.pokemon)} used {capFirstLetter(userMoveUsed)}!</p>
+                                                {userEffective ? (
+                                                    <p id="text_1">It's {userEffective}!</p>
+                                                ) : (
+                                                    <>
+                                                    </>
+                                                )}
+                                                {userCritical > 1 ? (
+                                                    <p id="text_1">It's a critical hit!</p>
+                                                ) : (
+                                                    <>
+                                                    </>
+                                                )}
+                                            </h1>
+                                        </div>
                                     ) : (
                                         <>
                                         </>
                                     )}
                                     {opponentSequence ? (
-                                        <h1 id='typewriter-text'>
-                                            <p id="text_1">{opponentCurrentPokemon.pokemon} used {opponentMoveUsed}</p>
-                                            {opponentEffective ? (
-                                                <p id="text_1">It's {opponentEffective}!</p>
-                                            ) : (
-                                                <>
-                                                </>
-                                            )}
-                                            {opponentCritical > 1 ? (
-                                                <p id="text_1">It's a critical hit!</p>
-                                            ) : (
-                                                <>
-                                                </>
-                                            )}
-                                        </h1>
+                                        <div className="sequence-container">
+                                            <h1 id='typewriter-text'>
+                                                <p id="text_1">{capFirstLetter(opponentCurrentPokemon.pokemon)} used {capFirstLetter(opponentMoveUsed)}!</p>
+                                                {opponentEffective ? (
+                                                    <p id="text_1">It's {opponentEffective}!</p>
+                                                ) : (
+                                                    <>
+                                                    </>
+                                                )}
+                                                {opponentCritical > 1 ? (
+                                                    <p id="text_1">It's a critical hit!</p>
+                                                ) : (
+                                                    <>
+                                                    </>
+                                                )}
+                                            </h1>
+                                        </div>
                                     ) : (
                                         <>
                                         </>
                                     )}
                                     {switchSequence ? (
-                                        <h1 id='typewriter-text'>
-                                            <p id="text_1">{user.username} sent out {userCurrentPokemon.pokemon}</p>
-                                        </h1>
+                                        <div className="sequence-container">
+                                            <h1 id='typewriter-text'>
+                                                <p id="text_1">{capFirstLetter(user.username)} sent out {capFirstLetter(userCurrentPokemon.pokemon)}!</p>
+                                            </h1>
+                                        </div>
                                     ) : (
                                         <>
                                         </>
@@ -698,7 +727,9 @@ const BattleTrainerView = () => {
                         }
                     </div>
                     <div className="right-box team-box">
-                        <h1>Pokemon Team</h1>
+                        <div className="header">
+                            <h1>Pokemon Team</h1>
+                        </div>
                         <div className="pokemon-team-container">
                             {user.slot_1 !== null ? (
                                 <div className="user-pokemon-slot_1" id={userSlot_1Pokemon.pokemon} onClick={switchOut}><img className="user-pokemon-slot_1" src={spritesApi + `${JSON.parse(user.slot_1).pokemon}.gif`} /></div>
@@ -746,7 +777,8 @@ const BattleTrainerView = () => {
                             <img src={getTrainerImage()}></img>
                         </div>
                         <div className="trainer-dialogue">
-                            <h2>{opponent.pre_battle_quote}</h2>
+                            <h1>{capFirstLetter(opponent.name)}</h1>
+                            <h3>{opponent.pre_battle_quote}</h3>
                             <button onClick={clickToBattle}>BATTLE!</button>
                         </div>
                     </div>

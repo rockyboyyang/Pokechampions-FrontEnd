@@ -5,7 +5,8 @@
 @import 'editpokemoninfo.css';
 @import 'battleselect.css';
 @import 'prebattle.css';
-
+@import 'battletrainerview.css';
+@import 'navbar.css';
 
 html,
 body,
@@ -22,13 +23,6 @@ body,
     grid-template-rows: 50px 1fr 50px;
 }
 
-.navbar {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    box-shadow: 0 2px 12px 0 rgba(255,255,255,.36);
-    background-color: #e9f3e4;
-}
 
 .center-body {
     display: flex;
@@ -90,21 +84,6 @@ body,
     cursor: pointer;
 }
 
-.battle-box {
-    display: grid;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-}
-
-.move-slots-container-battle {
-    grid-row: 7 / span 3;
-    grid-column: 1 / span 2;
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    grid-template-columns: 1fr 1fr;
-    height: 100%;
-    width: 100%;
-    background-color: black;
-}
 
 .battle-screen-container {
     grid-row: 1 / span 6;

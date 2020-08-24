@@ -1,0 +1,58 @@
+.battle-screen-container {
+
+}
+
+.battle-box {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.move-slots-container-battle {
+    grid-row: 7 / span 3;
+    grid-column: 1 / span 2;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    height: 100%;
+    width: 100%;
+    padding-bottom: 2px;
+    background-color: #f9c1b1;
+    background-image: linear-gradient(315deg, #f9c1b1 0%, #fb8085 74%);
+}
+
+.battle-sequence {
+    padding-bottom: 2px;
+    grid-row: 7 / span 3;
+    grid-column: 1 / span 2;
+    font-size: 12px;
+    height: 100%;
+    width: 100%;
+    background-color: #f9c1b1;
+    background-image: linear-gradient(315deg, #f9c1b1 0%, #fb8085 74%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sequence-container {
+    height: 90%;
+    width: 80%;
+    background-color: white;
+    line-height: 5px;
+    border-radius: 20px;
+    padding-left: 10px;
+}
+
+.switch-sequence-container {
+    height: 90%;
+    width: 80%;
+    font-size: 12px;
+    background-color: white;
+    line-height: 5px;
+    border-radius: 20px;
+    padding-left: 10px;
+    grid-row: 1 / span 2;
+    grid-column: 1 / span 2;
+    align-self: center;
+    justify-self: center;
+}

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom";
+import { BrowserRouter, Route, Switch, useHistory, Redirect } from "react-router-dom";
 import Login from "./components/views/Login";
 import Signup from "./components/views/Signup";
 import Home from "./components/views/Home";
@@ -31,7 +31,7 @@ const App = props => {
   const [listOfPokemonDetails, setListOfPokemonDetails] = useState({})
   const [selectedMove, setSelectedMove] = useState('')
   const [opponent, setOpponent] = useState('')
-
+  let history = useHistory();
   const checkUserExist = () => {
     try{
       setUser(JSON.parse(localStorage.user))
@@ -53,6 +53,9 @@ const App = props => {
     if (word === 'nidoranf') return 'Nidoran ♀'
     if (word === 'nidoranm') return 'Nidoran ♂'
     if (word === 'mrmime') return 'Mr. Mime'
+    if (word === 'ltsurge') return 'Lt. Surge'
+    if (word === 'x-scissor') return 'X-Scissor'
+
     if(word.includes('-')) {
       let strArr = word.split('-')
       let newArrCap = []
@@ -167,9 +170,10 @@ const App = props => {
                                     setSelectedMove,
                                     setOpponent,
                                     opponent,
-                                    back_spritesApi }
+                                    back_spritesApi, }
                                     }>
         <Switch>
+          <Route exact path="/" render={(props) => <Redirect to='/home'/>}/>
           <Route path="/signup" component={Signup}/>
           <Route path="/login" component={Login} />
           <Route path="/home" component={Home} />

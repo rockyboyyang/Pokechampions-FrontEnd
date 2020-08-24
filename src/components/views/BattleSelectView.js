@@ -32,7 +32,12 @@ const BattleSelectView = ({  }) => {
 
     const swapSelectionScreen = (e) => {
         e.preventDefault();
-        history.push(`./${e.target.id.slice(7)}`)
+        let trainerType = e.target.id.slice(7)
+        if(trainerType === 'champion') {
+            alert('Champion Trainer has not yet been added!')
+            return;
+        }
+        history.push(`./${trainerType}`)
     }
 
     const challengeTrainer = (e) => {
