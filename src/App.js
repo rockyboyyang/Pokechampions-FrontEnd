@@ -14,7 +14,8 @@ import EditExistingPokemonInfo from "./components/views/EditExistingPokemonInfo"
 import { AppContext } from './context/AppContext'
 
 const App = props => {
-  const backendUrl = "https://infinite-everglades-82990.herokuapp.com"
+  // const backendUrl = "https://infinite-everglades-82990.herokuapp.com"
+  const backendUrl = "http://localhost:5000"
   const [tokenState, setToken] = useState(localStorage.access_token);
   const [user, setUser] = useState('')
   const [user_slot_1, setUser_slot_1] = useState('')

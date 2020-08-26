@@ -277,9 +277,18 @@ const BattleTrainerView = () => {
             let effective = null;
     
             if(targetType1 + targetType2 >= 3) effective = 'Super Effective'
-            else if(targetType1 + targetType1 < 2) effective = 'Not-Very Effective'
+            else if(targetType1 + targetType2 < 2) effective = 'Not-Very Effective'
             if(targetType1 * targetType2 === 0) effective = 'No Effect'
-    
+            
+            console.log({
+                'move':moveSelected.name,
+                'critical': critical,
+                'effective': effective,
+                'damage': totalDamage,
+                'targetType1': targetType1,
+                'targetType2': targetType2,
+            })
+
             return {
                 'move':moveSelected.name,
                 'critical': critical,
@@ -732,32 +741,62 @@ const BattleTrainerView = () => {
                         </div>
                         <div className="pokemon-team-container">
                             {user.slot_1 !== null ? (
-                                <div className="user-pokemon-slot_1" id={userSlot_1Pokemon.pokemon} onClick={switchOut}><img className="user-pokemon-slot_1" src={spritesApi + `${JSON.parse(user.slot_1).pokemon}.gif`} /></div>
+                                <>
+                                    <div className="user-pokemon-slot_1" id={userSlot_1Pokemon.pokemon} onClick={switchOut}>
+                                        <img className="user-pokemon-slot_1" src={spritesApi + `${JSON.parse(user.slot_1).pokemon}.gif`} />
+                                        <div className="team-hpbar-container"></div>
+                                    </div>
+                                </>
                             ) : (
                                     <div className="user-pokemon-slot_1"></div>
                                 )}
                             {user.slot_2 !== null ? (
-                                <div className="user-pokemon-slot_2" id={userSlot_2Pokemon.pokemon} onClick={switchOut}><img className="user-pokemon-slot_2" src={spritesApi + `${JSON.parse(user.slot_2).pokemon}.gif`} /></div>
+                                <>
+                                    <div className="user-pokemon-slot_2" id={userSlot_2Pokemon.pokemon} onClick={switchOut}>
+                                        <img className="user-pokemon-slot_2" src={spritesApi + `${JSON.parse(user.slot_2).pokemon}.gif`} />
+                                        <div className="team-hpbar-container"></div>
+                                    </div>
+                                </>
                             ) : (
                                     <div className="user-pokemon-slot_2"></div>
                                 )}
                             {user.slot_3 !== null ? (
-                                <div className="user-pokemon-slot_3" id={userSlot_3Pokemon.pokemon} onClick={switchOut}><img className="user-pokemon-slot_3" src={spritesApi + `${JSON.parse(user.slot_3).pokemon}.gif`} /></div>
+                                <>
+                                    <div className="user-pokemon-slot_3" id={userSlot_3Pokemon.pokemon} onClick={switchOut}>
+                                        <img className="user-pokemon-slot_3" src={spritesApi + `${JSON.parse(user.slot_3).pokemon}.gif`} />
+                                        <div className="team-hpbar-container"></div>
+                                    </div>
+                                </>
                             ) : (
                                     <div className="user-pokemon-slot_3"></div>
                                 )}
                             {user.slot_4 !== null ? (
-                                <div className="user-pokemon-slot_4" id={userSlot_4Pokemon.pokemon} onClick={switchOut}><img className="user-pokemon-slot_4" src={spritesApi + `${JSON.parse(user.slot_4).pokemon}.gif`} /></div>
+                                <>
+                                    <div className="user-pokemon-slot_4" id={userSlot_4Pokemon.pokemon} onClick={switchOut}>
+                                        <img className="user-pokemon-slot_4" src={spritesApi + `${JSON.parse(user.slot_4).pokemon}.gif`} />
+                                        <div className="team-hpbar-container"></div>
+                                    </div>
+                                </>
                             ) : (
                                     <div className="user-pokemon-slot_4"></div>
                                 )}
                             {user.slot_5 !== null ? (
-                                <div className="user-pokemon-slot_5" id={userSlot_5Pokemon.pokemon} onClick={switchOut}><img className="user-pokemon-slot_5" src={spritesApi + `${JSON.parse(user.slot_5).pokemon}.gif`} /></div>
+                                <>
+                                    <div className="user-pokemon-slot_5" id={userSlot_5Pokemon.pokemon} onClick={switchOut}>
+                                        <img className="user-pokemon-slot_5" src={spritesApi + `${JSON.parse(user.slot_5).pokemon}.gif`} />
+                                        <div className="team-hpbar-container"></div>
+                                    </div>
+                                </>
                             ) : (
                                     <div className="user-pokemon-slot_5"></div>
                                 )}
                             {user.slot_6 !== null ? (
-                                <div className={`user-pokemon-slot_6`} id={userSlot_6Pokemon.pokemon} onClick={switchOut}><img className="user-pokemon-slot_6" src={spritesApi + `${JSON.parse(user.slot_6).pokemon}.gif`} /></div>
+                                <>
+                                    <div className={`user-pokemon-slot_6`} id={userSlot_6Pokemon.pokemon} onClick={switchOut}>
+                                        <img className="user-pokemon-slot_6" src={spritesApi + `${JSON.parse(user.slot_6).pokemon}.gif`} />
+                                        <div className="team-hpbar-container"></div>
+                                    </div>
+                                </>
                             ) : (
                                     <div className="user-pokemon-slot_6"></div>
                                 )}

@@ -44,7 +44,7 @@
 
 .pokemon-team-container > div{
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     box-shadow: 0 0px 12px 0 rgba(255, 255, 255, 0.848);
 }
