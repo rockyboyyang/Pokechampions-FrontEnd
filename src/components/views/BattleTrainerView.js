@@ -196,6 +196,51 @@ const BattleTrainerView = () => {
         rerouteToSelect()
     }, [])
 
+
+    const setHpBarForTeam = (remainingPercentage) => {
+        if(userSlot_1Pokemon) {
+            if(userSlot_1Pokemon.pokemon === userCurrentPokemon.pokemon) {
+                let slotHpBar = document.getElementById('slot-1-hpbar')
+                slotHpBar.style.width = `${remainingPercentage}%`
+            }
+        }
+
+        if (userSlot_2Pokemon) {
+            if (userSlot_2Pokemon.pokemon === userCurrentPokemon.pokemon) {
+                let slotHpBar = document.getElementById('slot-2-hpbar')
+                slotHpBar.style.width = `${remainingPercentage}%`
+            }
+        }
+
+        if (userSlot_3Pokemon) {
+            if (userSlot_3Pokemon.pokemon === userCurrentPokemon.pokemon) {
+                let slotHpBar = document.getElementById('slot-3-hpbar')
+                slotHpBar.style.width = `${remainingPercentage}%`
+            }
+        }
+
+        if (userSlot_4Pokemon) {
+            if (userSlot_4Pokemon.pokemon === userCurrentPokemon.pokemon) {
+                let slotHpBar = document.getElementById('slot-4-hpbar')
+                slotHpBar.style.width = `${remainingPercentage}%`
+            }
+        }
+
+        if (userSlot_5Pokemon) {
+            if (userSlot_5Pokemon.pokemon === userCurrentPokemon.pokemon) {
+                let slotHpBar = document.getElementById('slot-5-hpbar')
+                slotHpBar.style.width = `${remainingPercentage}%`
+            }
+        }
+
+        if (userSlot_6Pokemon) {
+            if (userSlot_6Pokemon.pokemon === userCurrentPokemon.pokemon) {
+                let slotHpBar = document.getElementById('slot-6-hpbar')
+                slotHpBar.style.width = `${remainingPercentage}%`
+            }
+        }
+    }
+
     const attack = async (slot, attackingPokemon, target) => {
         // e.preventDefault()
 
@@ -407,6 +452,7 @@ const BattleTrainerView = () => {
                 let remainingPercentage = Math.floor((tempUserPokemon.remaininghp / userPokemonStats.maxhp) * 100)
                 let userHpbar = document.getElementById('user-hpbar')
                 userHpbar.style.width = `${remainingPercentage}%`
+                setHpBarForTeam(remainingPercentage)
                 setOpponentMoveUsed(opponentMoveUsed.move)
                 setOpponentEffective(opponentMoveUsed.effective)
                 setOpponentCritical(opponentMoveUsed.critical)
@@ -423,6 +469,7 @@ const BattleTrainerView = () => {
             let remainingPercentage = Math.floor((tempUserPokemon.remaininghp / userPokemonStats.maxhp) * 100)
             let userHpbar = document.getElementById('user-hpbar')
             userHpbar.style.width = `${remainingPercentage}%`
+            setHpBarForTeam(remainingPercentage)
             setOpponentMoveUsed(opponentMoveUsed.move)
             setOpponentEffective(opponentMoveUsed.effective)
             setOpponentCritical(opponentMoveUsed.critical)
@@ -744,7 +791,9 @@ const BattleTrainerView = () => {
                                 <>
                                     <div className="user-pokemon-slot_1" id={userSlot_1Pokemon.pokemon} onClick={switchOut}>
                                         <img className="user-pokemon-slot_1" src={spritesApi + `${JSON.parse(user.slot_1).pokemon}.gif`} />
-                                        <div className="team-hpbar-container"></div>
+                                        <div className="team-hpbar-container">
+                                            <div className='team-hpbar' id='slot-1-hpbar'></div>
+                                        </div>
                                     </div>
                                 </>
                             ) : (
@@ -754,7 +803,9 @@ const BattleTrainerView = () => {
                                 <>
                                     <div className="user-pokemon-slot_2" id={userSlot_2Pokemon.pokemon} onClick={switchOut}>
                                         <img className="user-pokemon-slot_2" src={spritesApi + `${JSON.parse(user.slot_2).pokemon}.gif`} />
-                                        <div className="team-hpbar-container"></div>
+                                        <div className="team-hpbar-container">
+                                            <div className='team-hpbar' id='slot-2-hpbar'></div>
+                                        </div>
                                     </div>
                                 </>
                             ) : (
@@ -764,7 +815,9 @@ const BattleTrainerView = () => {
                                 <>
                                     <div className="user-pokemon-slot_3" id={userSlot_3Pokemon.pokemon} onClick={switchOut}>
                                         <img className="user-pokemon-slot_3" src={spritesApi + `${JSON.parse(user.slot_3).pokemon}.gif`} />
-                                        <div className="team-hpbar-container"></div>
+                                        <div className="team-hpbar-container">
+                                            <div className='team-hpbar' id='slot-3-hpbar'></div>
+                                        </div>
                                     </div>
                                 </>
                             ) : (
@@ -774,7 +827,9 @@ const BattleTrainerView = () => {
                                 <>
                                     <div className="user-pokemon-slot_4" id={userSlot_4Pokemon.pokemon} onClick={switchOut}>
                                         <img className="user-pokemon-slot_4" src={spritesApi + `${JSON.parse(user.slot_4).pokemon}.gif`} />
-                                        <div className="team-hpbar-container"></div>
+                                        <div className="team-hpbar-container">
+                                            <div className='team-hpbar' id='slot-4-hpbar'></div>
+                                        </div>
                                     </div>
                                 </>
                             ) : (
@@ -784,7 +839,9 @@ const BattleTrainerView = () => {
                                 <>
                                     <div className="user-pokemon-slot_5" id={userSlot_5Pokemon.pokemon} onClick={switchOut}>
                                         <img className="user-pokemon-slot_5" src={spritesApi + `${JSON.parse(user.slot_5).pokemon}.gif`} />
-                                        <div className="team-hpbar-container"></div>
+                                        <div className="team-hpbar-container">
+                                            <div className='team-hpbar' id='slot-5-hpbar'></div>
+                                        </div>
                                     </div>
                                 </>
                             ) : (
@@ -794,7 +851,9 @@ const BattleTrainerView = () => {
                                 <>
                                     <div className={`user-pokemon-slot_6`} id={userSlot_6Pokemon.pokemon} onClick={switchOut}>
                                         <img className="user-pokemon-slot_6" src={spritesApi + `${JSON.parse(user.slot_6).pokemon}.gif`} />
-                                        <div className="team-hpbar-container"></div>
+                                        <div className="team-hpbar-container">
+                                            <div className='team-hpbar' id='slot-6-hpbar'></div>
+                                        </div>
                                     </div>
                                 </>
                             ) : (
