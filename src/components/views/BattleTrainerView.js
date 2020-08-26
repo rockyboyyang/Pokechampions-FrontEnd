@@ -38,11 +38,12 @@ const BattleTrainerView = () => {
     const [opponentSlot_6Pokemon, setOpponentSlot_6CurrentPokemon] = useState('')
     const [opponentPokemonFaint, setOpponentPokemonFaint] = useState(false)
     const [opponentSentOutPokemon, setOpponentSentOutPokemon] = useState(false)
-    const [opponentPokemonKOCount, setOpponentPokemonKOCount] = useState(0)
+    const [opponentPokemonKOCount, setOpponentPokemonKOCount] = useState(5)
     const [battleSequence, setBattleSequence] = useState(false)
     const [userSequence, setUserSequence] = useState(false)
     const [opponentSequence, setOpponentSequence] = useState(false)
     const [switchSequence, setSwitchSequence] = useState(false)
+    const [victory, setVictory] = useState(false)
     const [userMoveUsed, setUserMoveUsed] = useState('')
     const [opponentMoveUsed, setOpponentMoveUsed] = useState('')
     const [userPokemonStats, setUserPokemonStats] = useState({})
@@ -432,12 +433,18 @@ const BattleTrainerView = () => {
 
             setTimeout(() => {
                 setUserSequence(false)
-                console.log('dead')
                 setOpponentPokemonFaint(true)
                 setBattleSequence(false)
             }, 2000)
 
             setTimeout(() => {
+                setOpponentPokemonFaint(false)
+                if(currentKOCount === 6) {
+                    setVictory(true)
+                    return
+                } else {
+                    setOpponentSentOutPokemon(true)
+                }
                 setOpponentCurrentPokemon(nextOpponent)
                 setOpponentPokemonStats({
                     'maxhp': nextOpponent.pokemonStats[0].base_stat + 60,
@@ -448,8 +455,6 @@ const BattleTrainerView = () => {
                     'special_defense': nextOpponent.pokemonStats[4].base_stat + 5,
                     'speed': nextOpponent.pokemonStats[5].base_stat + 5,
                 })
-                setOpponentPokemonFaint(false)
-                setOpponentSentOutPokemon(true)
                 oppHpbar.style.width = `100%`
             }, 6000)
 
@@ -746,6 +751,16 @@ const BattleTrainerView = () => {
                                             <div className='switch-sequence-container'>
                                                 <h1 id='typewriter-text'>
                                                     <p id="text_1">{capFirstLetter(opponent.name)} sent out {capFirstLetter(opponentCurrentPokemon.pokemon)}!</p>
+                                                </h1>
+                                            </div>
+                                        ) : (
+                                                <>
+                                                </>
+                                        )}
+                                        {victory ? (
+                                            <div className='switch-sequence-container'>
+                                                <h1 id='typewriter-text'>
+                                                    <p id="text_1">You defeated {capFirstLetter(opponent.name)}}!</p>
                                                 </h1>
                                             </div>
                                         ) : (
