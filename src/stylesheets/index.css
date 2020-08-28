@@ -129,6 +129,14 @@ body,
     grid-row: 1fr 9fr;
 }
 
+.badge-container {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-template-columns:  1fr 1fr;
+}
+
 .footer {
     background-color: #e9f3e4;
     box-shadow: 0 2px 12px 0 rgba(255,255,255,.36);

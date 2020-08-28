@@ -11,6 +11,7 @@ import kogaFace from '../../assets/images/koga-face.png'
 import sabrinaFace from '../../assets/images/sabrina-face.png'
 import blaineFace from '../../assets/images/blaine-face.png'
 import giovanniFace from '../../assets/images/giovanni-face.png'
+import BadgeContainer from '../BadgeContainer';
 
 const BattleSelectView = ({  }) => {
     const { user_slot1,
@@ -80,7 +81,9 @@ const BattleSelectView = ({  }) => {
                             <button onClick={swapSelectionScreen} id="button-champion">Champion</button>
                         </div>
                     </div>
-                    <div className="right-box"></div>
+                    <div className="right-box">
+                        <BadgeContainer />
+                    </div>
                 </div>
                 <Footer />
             </div>

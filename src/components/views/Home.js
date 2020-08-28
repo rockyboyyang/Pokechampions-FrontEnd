@@ -3,6 +3,16 @@ import { useHistory } from "react-router-dom";
 import { AppContext } from '../../context/AppContext'
 import Navbar from '../Navbar'
 import Footer from '../Footer'
+import BadgeContainer from '../BadgeContainer';
+import Boulderbadge from '../../assets/images/boulderbadge.png'
+import Cascadebadge from '../../assets/images/cascadebadge.png'
+import Thunderbadge from '../../assets/images/thunderbadge.png'
+import Rainbowbadge from '../../assets/images/rainbowbadge.png'
+import Soulbadge from '../../assets/images/soulbadge.png'
+import Marshbadge from '../../assets/images/marshbadge.png'
+import Volcanobadge from '../../assets/images/volcanobadge.png'
+import Earthbadge from '../../assets/images/earthbadge.png'
+
 
 const Home = () => {
     const { setSelectedMove, } = useContext(AppContext)
@@ -35,7 +45,9 @@ const Home = () => {
                     <div id="battle-select-button" onClick={routeToBattleSelectScreen}><p>Battle</p></div>
                     <div id="team-select-button" onClick={routeToTeamSelectScreen}><p>Edit Pokemon Team</p></div>
                 </div>
-                <div className="right-box"></div>
+                <div className="right-box">
+                    <BadgeContainer />
+                </div>
             </div>
             <Footer />
         </div>

@@ -715,6 +715,7 @@ const BattleTrainerView = () => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(opponent.name),
         })
+        setVictory(false)
     }
 
     if(readyForBattle) {
