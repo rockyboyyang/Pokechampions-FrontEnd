@@ -38,7 +38,7 @@ const BattleTrainerView = () => {
     const [opponentSlot_6Pokemon, setOpponentSlot_6CurrentPokemon] = useState('')
     const [opponentPokemonFaint, setOpponentPokemonFaint] = useState(false)
     const [opponentSentOutPokemon, setOpponentSentOutPokemon] = useState(false)
-    const [opponentPokemonKOCount, setOpponentPokemonKOCount] = useState(5)
+    const [opponentPokemonKOCount, setOpponentPokemonKOCount] = useState(0)
     const [battleSequence, setBattleSequence] = useState(false)
     const [userSequence, setUserSequence] = useState(false)
     const [opponentSequence, setOpponentSequence] = useState(false)
@@ -441,7 +441,7 @@ const BattleTrainerView = () => {
                 setOpponentPokemonFaint(false)
                 if(currentKOCount === 6) {
                     setVictory(true)
-                    return
+                    return true
                 } else {
                     setOpponentSentOutPokemon(true)
                 }
@@ -735,7 +735,7 @@ const BattleTrainerView = () => {
                         </div>
                         {!battleSequence ? (
                             <div className="move-slots-container-battle">
-                                {opponentSentOutPokemon || opponentPokemonFaint || userPokemonFaint ? (
+                                {opponentSentOutPokemon || opponentPokemonFaint || victory ? (
                                     <>
                                         {opponentPokemonFaint ? (
                                             <div className='switch-sequence-container'>
@@ -760,7 +760,8 @@ const BattleTrainerView = () => {
                                         {victory ? (
                                             <div className='switch-sequence-container'>
                                                 <h1 id='typewriter-text'>
-                                                    <p id="text_1">You defeated {capFirstLetter(opponent.name)}}!</p>
+                                                    <p id="text_1">You defeated {capFirstLetter(opponent.name)}!</p>
+                                                    <div id='badge-claim'>End Battle</div>
                                                 </h1>
                                             </div>
                                         ) : (
