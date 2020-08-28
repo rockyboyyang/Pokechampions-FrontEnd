@@ -140,3 +140,27 @@
     height: 100%;
     width: 100%;
 }
+
+.victory-text {
+    display: flex;
+    flex-direction: column;
+}
+
+#end-battle {
+    height: 20%;
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: #f9c1b1;
+    background-image: linear-gradient(315deg, #f9c1b1 0%, #fb8085 74%);
+    border-radius: 20px;
+}
+
+#end-battle:hover {
+    background-color: rgb(255, 55, 55);
+    background-image: none;
+    transition-duration: .5s;
+    cursor: pointer;
+}

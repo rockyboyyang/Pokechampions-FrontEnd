@@ -18,7 +18,7 @@ import lanceFullbody from '../../assets/images/lance-fullbody.png'
 
 
 const BattleTrainerView = () => {
-    const { setSelectedMove, spritesApi, back_spritesApi, user, opponent, capFirstLetter } = useContext(AppContext)
+    const { setSelectedMove, spritesApi, back_spritesApi, user, opponent, capFirstLetter, backendUrl } = useContext(AppContext)
     let history = useHistory()
     const [readyForBattle, setReadyForBattle] = useState(false)
     const [userCurrentPokemon, setUserCurrentPokemon] = useState(user)
@@ -701,6 +701,22 @@ const BattleTrainerView = () => {
         }
     }
 
+    const endBattle = (e) => {
+        e.preventDefault()
+
+        setReadyForBattle(false);
+    }
+
+    const collectBadge = async (e) => {
+        e.preventDefault()
+
+        const res = await fetch(backendUrl + `/api/session_user/${user.id}/badges`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(opponent.name),
+        })
+    }
+
     if(readyForBattle) {
         return (
             <div className="view-body">
@@ -735,7 +751,7 @@ const BattleTrainerView = () => {
                         </div>
                         {!battleSequence ? (
                             <div className="move-slots-container-battle">
-                                {opponentSentOutPokemon || opponentPokemonFaint || victory ? (
+                                {opponentSentOutPokemon || opponentPokemonFaint || victory || userPokemonFaint? (
                                     <>
                                         {opponentPokemonFaint ? (
                                             <div className='switch-sequence-container'>
@@ -758,11 +774,11 @@ const BattleTrainerView = () => {
                                                 </>
                                         )}
                                         {victory ? (
-                                            <div className='switch-sequence-container'>
+                                            <div className='switch-sequence-container victory-text'>
                                                 <h1 id='typewriter-text'>
                                                     <p id="text_1">You defeated {capFirstLetter(opponent.name)}!</p>
-                                                    <div id='badge-claim'>End Battle</div>
                                                 </h1>
+                                                <div id='end-battle' onClick={endBattle}>End Battle</div>
                                             </div>
                                         ) : (
                                                 <>
@@ -932,7 +948,25 @@ const BattleTrainerView = () => {
                 <Footer />
             </div>
         )
-    } else {
+    } else if (victory) {
+        return (
+            <>
+                <Navbar />
+                <div className="trainer-dialogue-container">
+                    <div className="trainer-dialogue-box">
+                        <div className="trainer-image">
+                            <img src={getTrainerImage()}></img>
+                        </div>
+                        <div className="trainer-dialogue">
+                            <h1>{capFirstLetter(opponent.name)}</h1>
+                            <h3>{opponent.post_battle_quote}</h3>
+                            <button onClick={collectBadge}>Collect Badge</button>
+                        </div>
+                    </div>
+                </div>
+            </>
+        )
+    }   {
         return (
             <> 
                 <Navbar />
