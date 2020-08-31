@@ -137,6 +137,21 @@ body,
   grid-template-columns:  1fr 1fr;
 }
 
+.badge-container > div {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.badge-container img {
+  height: 115px;
+  width: 115px;
+  background-image: none;
+  /* size: 1px; */
+}
+
 .footer {
     background-color: #e9f3e4;
     box-shadow: 0 2px 12px 0 rgba(255,255,255,.36);

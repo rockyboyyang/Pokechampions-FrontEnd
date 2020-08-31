@@ -1,18 +1,27 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useReducer } from 'react';
 import { useHistory } from "react-router-dom";
 import { AppContext } from '../context/AppContext'
+import Boulderbadge from '../assets/images/boulderbadge.png'
+import Cascadebadge from '../assets/images/cascadebadge.png'
+import Thunderbadge from '../assets/images/thunderbadge.png'
+import Rainbowbadge from '../assets/images/rainbowbadge.png'
+import Soulbadge from '../assets/images/soulbadge.png'
+import Marshbadge from '../assets/images/marshbadge.png'
+import Volcanobadge from '../assets/images/volcanobadge.png'
+import Earthbadge from '../assets/images/earthbadge.png'
 
 const BadgeContainer = () => {
+    const { user } = useContext(AppContext)
+
     return (
         <div className="badge-container">
-            <div className='cascadebadge'></div>
-            <div className='boulderbadge'></div>
-            <div className='thunderbadge'></div>
-            <div className='rainbowbadge'></div>
-            <div className='soulbadge'></div>
-            <div className='marshbadge'></div>
-            <div className='volcanobadge'></div>
-            <div className='earthbadge'></div>
+            {user.boulderbadge ? (
+                <div className='boulderbadge'>
+                    <img src={Boulderbadge} />
+                </div>
+            ):(
+                <div className='boulderbadge'><div>
+            )}
         </div>
     )
 }
