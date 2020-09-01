@@ -165,7 +165,14 @@ const EditPokemonInfo = ({ pokemonName }) => {
     }, [])
 
     const changeToAlolan = () => {
+        if(pokemonName.includes('alola')) return
         history.push(`/select/${pokemonName}-alola`)
+    }
+
+    const changeToRegularForm = () => {
+        if(pokemonName.includes('alola')) {
+            history.push(`/select/${pokemonName.slice(0, pokemonName.length - 6)}`)
+        }
     }
 
     const ifHaveAlolanForm = () => {
@@ -245,17 +252,19 @@ const EditPokemonInfo = ({ pokemonName }) => {
                                 </div>
                             </div>
                         </div>
-                        <div className="sprite-container if-have-forms">
-                            {ifHaveAlolanForm() ? (
+                        {ifHaveAlolanForm() ? (
+                            <div className="sprite-container if-have-forms">    
                                 <div className="change-form-buttons">
-                                    <div className="regular-form">Regular</div>
+                                    <div className="regular-form" onClick={changeToRegularForm}>Regular</div>
                                     <div className="Alolan-form" onClick={changeToAlolan}>Alolan</div>
                                 </div>
-                            ) : (
-                                <></>
-                            )}
-                            <img src={`${spritesApi}/${adjustName(pokemonName)}.gif`} alt={pokemonName}></img>
-                        </div>
+                                <img src={`${spritesApi}/${adjustName(pokemonName)}.gif`} alt={pokemonName}></img>
+                            </div>
+                        ) : (
+                            <div className="sprite-container">
+                                <img src={`${spritesApi}/${adjustName(pokemonName)}.gif`} alt={pokemonName}></img>
+                            </div>
+                        )}
                         <div className="move-slots-container">
                             <button className="move-slot slot-1" onClick={slot_1Handler}>{capFirstLetter(slot_1.name)}</button>
                             <button className="move-slot slot-2" onClick={slot_2Handler}>{capFirstLetter(slot_2.name)}</button>

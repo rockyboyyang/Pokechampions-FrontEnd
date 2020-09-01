@@ -192,106 +192,104 @@ const BattleTrainerView = () => {
         if (!opponent) history.push('../battle/gymleaders')
     }
 
-    const setCurrentHpBarForTeam = () => {
-        if(userSlot_1Pokemon) {
-            let maxHp = userSlot_1Pokemon.pokemonStats[0].base_stat + 60
-            console.log(maxHp)
-            let remainingPercentage = Math.floor((userSlot_1Pokemon.remaininghp / maxHp) * 100)
-            let slotHpBar = document.getElementById('slot-1-hpbar')
-            slotHpBar.style.width = `${remainingPercentage}%`
-        }
+    // const setCurrentHpBarForTeam = () => {
+    //     if(userSlot_1Pokemon) {
+    //         let maxHp = userSlot_1Pokemon.pokemonStats[0].base_stat + 60
+    //         let remainingPercentage = Math.floor((userSlot_1Pokemon.remaininghp / maxHp) * 100)
+    //         let slotHpBar = document.getElementById('slot-1-hpbar')
+    //         slotHpBar.style.width = `${remainingPercentage}%`
+    //     }
 
-        if (userSlot_2Pokemon) {
-            let maxHp = userSlot_2Pokemon.pokemonStats[0].base_stat + 60
-            console.log(maxHp)
-            let remainingPercentage = Math.floor((userSlot_2Pokemon.remaininghp / maxHp) * 100)
-            let slotHpBar = document.getElementById('slot-2-hpbar')
-            slotHpBar.style.width = `${remainingPercentage}%`
-        }
+    //     if (userSlot_2Pokemon) {
+    //         let maxHp = userSlot_2Pokemon.pokemonStats[0].base_stat + 60
+    //         let remainingPercentage = Math.floor((userSlot_2Pokemon.remaininghp / maxHp) * 100)
+    //         let slotHpBar = document.getElementById('slot-2-hpbar')
+    //         slotHpBar.style.width = `${remainingPercentage}%`
+    //     }
 
-        if (userSlot_3Pokemon) {
-            let maxHp = userSlot_3Pokemon.pokemonStats[0].base_stat + 60
-            let remainingPercentage = Math.floor((userSlot_3Pokemon.remaininghp / maxHp) * 100)
-            let slotHpBar = document.getElementById('slot-3-hpbar')
-            slotHpBar.style.width = `${remainingPercentage}%`
-        }
+    //     if (userSlot_3Pokemon) {
+    //         let maxHp = userSlot_3Pokemon.pokemonStats[0].base_stat + 60
+    //         let remainingPercentage = Math.floor((userSlot_3Pokemon.remaininghp / maxHp) * 100)
+    //         let slotHpBar = document.getElementById('slot-3-hpbar')
+    //         slotHpBar.style.width = `${remainingPercentage}%`
+    //     }
 
-        if (userSlot_4Pokemon) {
-            let maxHp = userSlot_4Pokemon.pokemonStats[0].base_stat + 60
-            let remainingPercentage = Math.floor((userSlot_4Pokemon.remaininghp / maxHp) * 100)
-            let slotHpBar = document.getElementById('slot-4-hpbar')
-            slotHpBar.style.width = `${remainingPercentage}%`
-        }
+    //     if (userSlot_4Pokemon) {
+    //         let maxHp = userSlot_4Pokemon.pokemonStats[0].base_stat + 60
+    //         let remainingPercentage = Math.floor((userSlot_4Pokemon.remaininghp / maxHp) * 100)
+    //         let slotHpBar = document.getElementById('slot-4-hpbar')
+    //         slotHpBar.style.width = `${remainingPercentage}%`
+    //     }
 
-        if (userSlot_5Pokemon) {
-            let maxHp = userSlot_5Pokemon.pokemonStats[0].base_stat + 60
-            let remainingPercentage = Math.floor((userSlot_5Pokemon.remaininghp / maxHp) * 100)
-            let slotHpBar = document.getElementById('slot-5-hpbar')
-            slotHpBar.style.width = `${remainingPercentage}%`
-        }
+    //     if (userSlot_5Pokemon) {
+    //         let maxHp = userSlot_5Pokemon.pokemonStats[0].base_stat + 60
+    //         let remainingPercentage = Math.floor((userSlot_5Pokemon.remaininghp / maxHp) * 100)
+    //         let slotHpBar = document.getElementById('slot-5-hpbar')
+    //         slotHpBar.style.width = `${remainingPercentage}%`
+    //     }
 
-        if (userSlot_6Pokemon) {
-            let maxHp = userSlot_6Pokemon.pokemonStats[0].base_stat + 60
-            let remainingPercentage = Math.floor((userSlot_6Pokemon.remaininghp / maxHp) * 100)
-            let slotHpBar = document.getElementById('slot-6-hpbar')
-            slotHpBar.style.width = `${remainingPercentage}%`
-        }
-    }
+    //     if (userSlot_6Pokemon) {
+    //         let maxHp = userSlot_6Pokemon.pokemonStats[0].base_stat + 60
+    //         let remainingPercentage = Math.floor((userSlot_6Pokemon.remaininghp / maxHp) * 100)
+    //         let slotHpBar = document.getElementById('slot-6-hpbar')
+    //         slotHpBar.style.width = `${remainingPercentage}%`
+    //     }
+    // }
 
     useEffect(() => {
         setSelectedMove('')
         rerouteToSelect()
-        setCurrentHpBarForTeam()
+        // setCurrentHpBarForTeam()
     }, [])
 
 
-    const setHpBarForTeam = (remainingPercentage, switchPokemon) => {
-        setCurrentHpBarForTeam();
-        let switchingPokemon;
-        if(switchPokemon) switchingPokemon = switchPokemon.pokemon;
+    // const setHpBarForTeam = (remainingPercentage, switchPokemon) => {
+    //     setCurrentHpBarForTeam();
+    //     let switchingPokemon;
+    //     if(switchPokemon) switchingPokemon = switchPokemon.pokemon;
 
-        if(userSlot_1Pokemon) {
-            if(userSlot_1Pokemon.pokemon === userCurrentPokemon.pokemon || userSlot_1Pokemon.pokemon === switchingPokemon) {
-                let slotHpBar = document.getElementById('slot-1-hpbar')
-                slotHpBar.style.width = `${remainingPercentage}%`
-            }
-        }
+    //     if(userSlot_1Pokemon) {
+    //         if(userSlot_1Pokemon.pokemon === userCurrentPokemon.pokemon || userSlot_1Pokemon.pokemon === switchingPokemon) {
+    //             let slotHpBar = document.getElementById('slot-1-hpbar')
+    //             slotHpBar.style.width = `${remainingPercentage}%`
+    //         }
+    //     }
 
-        if (userSlot_2Pokemon) {
-            if (userSlot_2Pokemon.pokemon === userCurrentPokemon.pokemon || userSlot_2Pokemon.pokemon === switchingPokemon) {
-                let slotHpBar = document.getElementById('slot-2-hpbar')
-                slotHpBar.style.width = `${remainingPercentage}%`
-            }
-        }
+    //     if (userSlot_2Pokemon) {
+    //         if (userSlot_2Pokemon.pokemon === userCurrentPokemon.pokemon || userSlot_2Pokemon.pokemon === switchingPokemon) {
+    //             let slotHpBar = document.getElementById('slot-2-hpbar')
+    //             slotHpBar.style.width = `${remainingPercentage}%`
+    //         }
+    //     }
 
-        if (userSlot_3Pokemon) {
-            if (userSlot_3Pokemon.pokemon === userCurrentPokemon.pokemon || userSlot_3Pokemon.pokemon === switchingPokemon) {
-                let slotHpBar = document.getElementById('slot-3-hpbar')
-                slotHpBar.style.width = `${remainingPercentage}%`
-            }
-        }
+    //     if (userSlot_3Pokemon) {
+    //         if (userSlot_3Pokemon.pokemon === userCurrentPokemon.pokemon || userSlot_3Pokemon.pokemon === switchingPokemon) {
+    //             let slotHpBar = document.getElementById('slot-3-hpbar')
+    //             slotHpBar.style.width = `${remainingPercentage}%`
+    //         }
+    //     }
 
-        if (userSlot_4Pokemon) {
-            if (userSlot_4Pokemon.pokemon === userCurrentPokemon.pokemon || userSlot_4Pokemon.pokemon === switchingPokemon) {
-                let slotHpBar = document.getElementById('slot-4-hpbar')
-                slotHpBar.style.width = `${remainingPercentage}%`
-            }
-        }
+    //     if (userSlot_4Pokemon) {
+    //         if (userSlot_4Pokemon.pokemon === userCurrentPokemon.pokemon || userSlot_4Pokemon.pokemon === switchingPokemon) {
+    //             let slotHpBar = document.getElementById('slot-4-hpbar')
+    //             slotHpBar.style.width = `${remainingPercentage}%`
+    //         }
+    //     }
 
-        if (userSlot_5Pokemon) {
-            if (userSlot_5Pokemon.pokemon === userCurrentPokemon.pokemon || userSlot_5Pokemon.pokemon === switchingPokemon) {
-                let slotHpBar = document.getElementById('slot-5-hpbar')
-                slotHpBar.style.width = `${remainingPercentage}%`
-            }
-        }
+    //     if (userSlot_5Pokemon) {
+    //         if (userSlot_5Pokemon.pokemon === userCurrentPokemon.pokemon || userSlot_5Pokemon.pokemon === switchingPokemon) {
+    //             let slotHpBar = document.getElementById('slot-5-hpbar')
+    //             slotHpBar.style.width = `${remainingPercentage}%`
+    //         }
+    //     }
 
-        if (userSlot_6Pokemon) {
-            if (userSlot_6Pokemon.pokemon === userCurrentPokemon.pokemon || userSlot_6Pokemon.pokemon === switchingPokemon) {
-                let slotHpBar = document.getElementById('slot-6-hpbar')
-                slotHpBar.style.width = `${remainingPercentage}%`
-            }
-        }
-    }
+    //     if (userSlot_6Pokemon) {
+    //         if (userSlot_6Pokemon.pokemon === userCurrentPokemon.pokemon || userSlot_6Pokemon.pokemon === switchingPokemon) {
+    //             let slotHpBar = document.getElementById('slot-6-hpbar')
+    //             slotHpBar.style.width = `${remainingPercentage}%`
+    //         }
+    //     }
+    // }
 
     const attack = async (slot, attackingPokemon, target) => {
         // e.preventDefault()
@@ -474,6 +472,32 @@ const BattleTrainerView = () => {
         return false;
     }
 
+    const setUserCurrentPokemonHPFromTeamContainer = (tempUser) => {
+        if (userSlot_1Pokemon) {
+            if (userSlot_1Pokemon.pokemon === tempUser.pokemon) setUserSlot_1CurrentPokemon(tempUser)
+        }
+
+        if (userSlot_2Pokemon) {
+            if (userSlot_2Pokemon.pokemon === tempUser.pokemon) setUserSlot_2CurrentPokemon(tempUser)
+        }
+
+        if (userSlot_3Pokemon) {
+            if (userSlot_3Pokemon.pokemon === tempUser.pokemon) setUserSlot_3CurrentPokemon(tempUser)
+        }
+
+        if (userSlot_4Pokemon) {
+            if (userSlot_4Pokemon.pokemon === tempUser.pokemon) setUserSlot_4CurrentPokemon(tempUser)
+        }
+
+        if (userSlot_5Pokemon) {
+            if (userSlot_5Pokemon.pokemon === tempUser.pokemon) setUserSlot_5CurrentPokemon(tempUser)
+        }
+
+        if (userSlot_6Pokemon) {
+            if (userSlot_6Pokemon.pokemon === tempUser.pokemon) setUserSlot_6CurrentPokemon(tempUser)
+        }
+    }
+
     const beginBattleSequence = async (e) => {
         e.preventDefault()
         let userMove = e.target.id
@@ -503,12 +527,14 @@ const BattleTrainerView = () => {
 
             setTimeout(async () => {
                 let opponentMoveUsed = await attack(opponentMove, opponentCurrentPokemon, userCurrentPokemon).then((res) => res)
+                let tempUser = userCurrentPokemon
                 let tempUserPokemon = userPokemonStats
                 tempUserPokemon.remaininghp = hpLoss(tempUserPokemon.remaininghp, opponentMoveUsed.damage)
+                tempUser.remaininghp = tempUserPokemon.remaininghp
+                setUserCurrentPokemonHPFromTeamContainer(tempUser)
                 let remainingPercentage = Math.floor((tempUserPokemon.remaininghp / userPokemonStats.maxhp) * 100)
                 let userHpbar = document.getElementById('user-hpbar')
                 userHpbar.style.width = `${remainingPercentage}%`
-                setHpBarForTeam(remainingPercentage)
                 setOpponentMoveUsed(opponentMoveUsed.move)
                 setOpponentEffective(opponentMoveUsed.effective)
                 setOpponentCritical(opponentMoveUsed.critical)
@@ -520,12 +546,14 @@ const BattleTrainerView = () => {
             }, 3000)
         } else {
             let opponentMoveUsed = await attack(opponentMove, opponentCurrentPokemon, userCurrentPokemon).then((res) => res)
+            let tempUser = userCurrentPokemon
             let tempUserPokemon = userPokemonStats
             tempUserPokemon.remaininghp = hpLoss(tempUserPokemon.remaininghp, opponentMoveUsed.damage)
+            tempUser.remaininghp = tempUserPokemon.remaininghp
+            setUserCurrentPokemonHPFromTeamContainer(tempUser)
             let remainingPercentage = Math.floor((tempUserPokemon.remaininghp / userPokemonStats.maxhp) * 100)
             let userHpbar = document.getElementById('user-hpbar')
             userHpbar.style.width = `${remainingPercentage}%`
-            setHpBarForTeam(remainingPercentage)
             setOpponentMoveUsed(opponentMoveUsed.move)
             setOpponentEffective(opponentMoveUsed.effective)
             setOpponentCritical(opponentMoveUsed.critical)
@@ -584,29 +612,8 @@ const BattleTrainerView = () => {
             alert(`${capFirstLetter(switchPokemon.pokemon)} is already out on the field!`)
             return;
         }
-        if(userSlot_1Pokemon) {
-            if (userSlot_1Pokemon.pokemon === tempUser.pokemon) setUserSlot_1CurrentPokemon(tempUser)
-        }
 
-        if (userSlot_2Pokemon) {
-            if (userSlot_2Pokemon.pokemon === tempUser.pokemon) setUserSlot_2CurrentPokemon(tempUser)
-        }
-
-        if (userSlot_3Pokemon) {
-            if (userSlot_3Pokemon.pokemon === tempUser.pokemon) setUserSlot_3CurrentPokemon(tempUser)
-        }
-
-        if (userSlot_4Pokemon) {
-            if (userSlot_4Pokemon.pokemon === tempUser.pokemon) setUserSlot_4CurrentPokemon(tempUser)
-        }
-
-        if (userSlot_5Pokemon) {
-            if (userSlot_5Pokemon.pokemon === tempUser.pokemon) setUserSlot_5CurrentPokemon(tempUser)
-        }
-
-        if (userSlot_6Pokemon) {
-            if (userSlot_6Pokemon.pokemon === tempUser.pokemon) setUserSlot_6CurrentPokemon(tempUser)
-        }
+        setUserCurrentPokemonHPFromTeamContainer(tempUser)
 
         setUserCurrentPokemon(switchPokemon)
         let switchingMonStats = {
@@ -624,7 +631,6 @@ const BattleTrainerView = () => {
         let remainingPercentage = Math.floor((switchPokemon.remaininghp / (switchPokemon.pokemonStats[0].base_stat + 60)) * 100)
         let userHpbar = document.getElementById('user-hpbar')
         userHpbar.style.width = `${remainingPercentage}%`
-        setHpBarForTeam(remainingPercentage, switchPokemon)
         // console.log(switchPokemon)
         if(userPokemonFaint) {
             setBattleSequence(true)
@@ -643,7 +649,10 @@ const BattleTrainerView = () => {
             let opponentMove = opponentMoveRandomizer()
             let opponentMoveUsed = await attack(opponentMove, opponentCurrentPokemon, switchPokemon).then((res) => res)
             let tempUserPokemon = switchingMonStats
+            let tempUser = switchPokemon
             tempUserPokemon.remaininghp = hpLoss(tempUserPokemon.remaininghp, opponentMoveUsed.damage)
+            tempUser.remaininghp = tempUserPokemon.remaininghp
+            setUserCurrentPokemonHPFromTeamContainer(tempUser)
             let remainingPercentage = Math.floor((tempUserPokemon.remaininghp / switchingMonStats.maxhp) * 100)
             // let userHpbar = document.getElementById('user-hpbar')
             userHpbar.style.width = `${remainingPercentage}%`
@@ -882,7 +891,7 @@ const BattleTrainerView = () => {
                                     <div className="user-pokemon-slot_1" id={userSlot_1Pokemon.pokemon} onClick={switchOut}>
                                         <img className="user-pokemon-slot_1" src={spritesApi + `${JSON.parse(user.slot_1).pokemon}.gif`} />
                                         <div className="team-hpbar-container">
-                                            <div className='team-hpbar' id='slot-1-hpbar'></div>
+                                            <div className='team-hpbar' id='slot-1-hpbar'>HP: {userSlot_1Pokemon.remaininghp} / {userSlot_1Pokemon.pokemonStats[0].base_stat + 60}</div>
                                         </div>
                                     </div>
                                 </>
@@ -894,7 +903,7 @@ const BattleTrainerView = () => {
                                     <div className="user-pokemon-slot_2" id={userSlot_2Pokemon.pokemon} onClick={switchOut}>
                                         <img className="user-pokemon-slot_2" src={spritesApi + `${JSON.parse(user.slot_2).pokemon}.gif`} />
                                         <div className="team-hpbar-container">
-                                            <div className='team-hpbar' id='slot-2-hpbar'></div>
+                                            <div className='team-hpbar' id='slot-2-hpbar'>HP: {userSlot_2Pokemon.remaininghp} / {userSlot_2Pokemon.pokemonStats[0].base_stat + 60}</div>
                                         </div>
                                     </div>
                                 </>
@@ -906,7 +915,7 @@ const BattleTrainerView = () => {
                                     <div className="user-pokemon-slot_3" id={userSlot_3Pokemon.pokemon} onClick={switchOut}>
                                         <img className="user-pokemon-slot_3" src={spritesApi + `${JSON.parse(user.slot_3).pokemon}.gif`} />
                                         <div className="team-hpbar-container">
-                                            <div className='team-hpbar' id='slot-3-hpbar'></div>
+                                            <div className='team-hpbar' id='slot-3-hpbar'>HP: {userSlot_3Pokemon.remaininghp} / {userSlot_3Pokemon.pokemonStats[0].base_stat + 60}</div>
                                         </div>
                                     </div>
                                 </>
@@ -918,7 +927,7 @@ const BattleTrainerView = () => {
                                     <div className="user-pokemon-slot_4" id={userSlot_4Pokemon.pokemon} onClick={switchOut}>
                                         <img className="user-pokemon-slot_4" src={spritesApi + `${JSON.parse(user.slot_4).pokemon}.gif`} />
                                         <div className="team-hpbar-container">
-                                            <div className='team-hpbar' id='slot-4-hpbar'></div>
+                                            <div className='team-hpbar' id='slot-4-hpbar'>HP: {userSlot_4Pokemon.remaininghp} / {userSlot_4Pokemon.pokemonStats[0].base_stat + 60}</div>
                                         </div>
                                     </div>
                                 </>
@@ -930,7 +939,7 @@ const BattleTrainerView = () => {
                                     <div className="user-pokemon-slot_5" id={userSlot_5Pokemon.pokemon} onClick={switchOut}>
                                         <img className="user-pokemon-slot_5" src={spritesApi + `${JSON.parse(user.slot_5).pokemon}.gif`} />
                                         <div className="team-hpbar-container">
-                                            <div className='team-hpbar' id='slot-5-hpbar'></div>
+                                            <div className='team-hpbar' id='slot-5-hpbar'>HP: {userSlot_5Pokemon.remaininghp} / {userSlot_5Pokemon.pokemonStats[0].base_stat + 60}</div>
                                         </div>
                                     </div>
                                 </>
@@ -942,7 +951,7 @@ const BattleTrainerView = () => {
                                     <div className={`user-pokemon-slot_6`} id={userSlot_6Pokemon.pokemon} onClick={switchOut}>
                                         <img className="user-pokemon-slot_6" src={spritesApi + `${JSON.parse(user.slot_6).pokemon}.gif`} />
                                         <div className="team-hpbar-container">
-                                            <div className='team-hpbar' id='slot-6-hpbar'></div>
+                                            <div className='team-hpbar' id='slot-6-hpbar'>HP: {userSlot_6Pokemon.remaininghp} / {userSlot_6Pokemon.pokemonStats[0].base_stat + 60}</div>
                                         </div>
                                     </div>
                                 </>

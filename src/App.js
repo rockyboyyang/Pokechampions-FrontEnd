@@ -87,13 +87,17 @@ const App = props => {
     if (word === 'sirfetch') return 'Sirfetch\'d'
     if (word === 'mr') return 'mrrime'
     if (word === 'minior-red-meteor') return 'Minior'
-    if (word.includes('-')) {
     if (word === 'type-null') return 'Type: Null'
+    if (word.includes('-')) {
       let strArr = word.split('-')
       let newArrCap = []
       for(let i = 0; i < strArr.length; i++) {
         let capLetter = strArr[i].slice(0, 1)
         newArrCap.push(capLetter.toUpperCase() + strArr[i].slice(1))
+      }
+      if(newArrCap[newArrCap.length - 1] === 'Alola') {
+        newArrCap.pop()
+        newArrCap.push('(Alolan)')
       }
       return newArrCap.join(' ')
     }
