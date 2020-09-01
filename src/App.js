@@ -56,8 +56,39 @@ const App = props => {
     if (word === 'mrmime') return 'Mr. Mime'
     if (word === 'ltsurge') return 'Lt. Surge'
     if (word === 'x-scissor') return 'X-Scissor'
-
-    if(word.includes('-')) {
+    if (word === 'mime-jr') return 'Mime Jr.'
+    if (word === 'ho-oh') return 'hooh'
+    if (word === 'deoxys-normal') return 'Deoxys'
+    if (word === 'wormadam-plant') return 'Wormadam'
+    if (word === 'giratina-altered') return 'Giratina'
+    if (word === 'darmanitan-standard') return 'Darmanitan'
+    if (word === 'landorus-incarnate') return 'Landorus'
+    if (word === 'tornadus-incarnate') return 'Tornadus'
+    if (word === 'meloetta-aria') return 'Meloetta'
+    if (word === 'thundurus-incarnate') return 'Thundurus'
+    if (word === 'shaymin-land') return 'Shaymin'
+    if (word === 'keldeo-ordinary') return 'Keldeo'
+    if (word === 'basculin-red-striped') return 'Basculin'
+    if (word === 'meowstic-male') return 'Meowstic'
+    if (word === 'aegislash-shield') return 'Aegislash'
+    if (word === 'gourgeist-average') return 'Gourgeist'
+    if (word === 'pumpkaboo-average') return 'Pumpkaboo'
+    if (word === 'oricorio-baile') return 'Oricorio'
+    if (word === 'wishiwashi-solo') return 'Wishiwashi'
+    if (word === 'lycanroc-midday') return 'Lycanroc'
+    if (word === 'mimikyu-disguised') return 'Mimikyu'
+    if (word === 'kommo-o') return 'Kommo-O'
+    if (word === 'jangmo-o') return 'Jangmo-O'
+    if (word === 'hakamo-o') return 'Hakamo-O'
+    // if (word === 'tapu-koko') return 'tapukoko'
+    // if (word === 'tapu-lele') return 'tapulele'
+    // if (word === 'tapu-bulu') return 'tapubulu'
+    // if (word === 'tapu-fini') return 'tapufini'
+    if (word === 'sirfetch') return 'Sirfetch\'d'
+    if (word === 'mr') return 'mrrime'
+    if (word === 'minior-red-meteor') return 'Minior'
+    if (word.includes('-')) {
+    if (word === 'type-null') return 'Type: Null'
       let strArr = word.split('-')
       let newArrCap = []
       for(let i = 0; i < strArr.length; i++) {
@@ -72,7 +103,11 @@ const App = props => {
   
   // Grabs a list of Pokemon
   const fetchPokemonNames = async () => {
-    const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=890&offset=0');
+    // ALL POKEMON
+    const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=807&offset=0');
+
+    // FIRST 151
+    // const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151&offset=0');
     
     const { results } = await res.json();
     fetchPokemonSprites(results)
@@ -115,20 +150,55 @@ const App = props => {
   const fetchPokemonSprites = async (pokemonList) => {
     let pokemonInfo = {};
 
-    let i = 0;
-    while(i < pokemonList.length) {
-      const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonList[i].name}`);
-      const results = await res.json()
-      if (pokemonList[i].name === 'nidoran-m') pokemonList[i].name = 'nidoranm'
-      if (pokemonList[i].name === 'mr-mime') pokemonList[i].name = 'mrmime'
-      if (pokemonList[i].name === 'nidoran-f') pokemonList[i].name = 'nidoranf'
-      // pokemonList[28].name = 'nidoranf'
-      // pokemonList[121].name = 'mrmime'
-      // const realSprites = results.sprites.versions['generation-vii']['ultra-sun-ultra-moon']
-      pokemonInfo[pokemonList[i].name] = results
-      i++
+    const mergeSort = async(array) => {
+      if (array.length === 1) {
+        let res;
+        
+        try {
+          res = await fetch(`https://pokeapi.co/api/v2/pokemon/${array[0].name}`);
+        } catch (e) {
+
+        }
+
+        if(res.ok) {
+          const results = await res.json()
+          try {
+            pokemonInfo[array[0].name] = results
+          } catch(e) {
+          }
+          return pokemonInfo;
+        }
+      }
+
+      if(array.length === 0) return
+
+      let midIdx = Math.floor(array.length / 2);
+      let leftHalf = array.slice(0, midIdx);
+      let rightHalf = array.slice(midIdx);
+
+      mergeSort(leftHalf);
+      mergeSort(rightHalf);
+
+      // return pokemonInfo
     }
-    setListOfPokemonDetails(pokemonInfo)
+    // let i = 0;
+
+    // while(i < pokemonList.length) {
+    //   const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonList[i].name}`);
+    //   const results = await res.json()
+    //   if (pokemonList[i].name === 'nidoran-m') pokemonList[i].name = 'nidoranm'
+    //   if (pokemonList[i].name === 'mr-mime') pokemonList[i].name = 'mrmime'
+    //   if (pokemonList[i].name === 'nidoran-f') pokemonList[i].name = 'nidoranf'
+    //   // pokemonList[28].name = 'nidoranf'
+    //   // pokemonList[121].name = 'mrmime'
+    //   // const realSprites = results.sprites.versions['generation-vii']['ultra-sun-ultra-moon']
+    //   pokemonInfo[pokemonList[i].name] = results
+    //   console.log(results)
+    //   i++
+    // }
+    mergeSort(pokemonList).then(setListOfPokemonDetails(pokemonInfo))
+    // console.log(mergeSort(pokemonList, pokemonInfo).then((res) => res))
+    // setListOfPokemonDetails(pokemonList)
   }
   
   useEffect(() => {
