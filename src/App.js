@@ -115,9 +115,6 @@ const App = props => {
     
     const { results } = await res.json();
     fetchPokemonSprites(results)
-    // results[31].name = 'nidoranm'
-    // results[28].name = 'nidoranf'
-    // results[121].name = 'mrmime'
     setPokemonList(results)
   }
 
@@ -147,7 +144,6 @@ const App = props => {
     moveDetails.priority = results.priority
     moveDetails.effect_chance = results.effect_chance
     moveDetails.effect = fixEffectText(results.effect_entries[0].effect, results.effect_chance)
-    console.log(results)
     setSelectedMove(moveDetails)
   }
 
