@@ -10,6 +10,7 @@ const EditPokemonInfo = ({ pokemonName }) => {
             user, 
             setUser, 
             listOfPokemonDetails, 
+            setListOfPokemonDetails,
             capFirstLetter, 
             fetchMoveInfo, 
             selectedMove, 
@@ -27,7 +28,8 @@ const EditPokemonInfo = ({ pokemonName }) => {
             setUser_slot_5,
             setUser_slot_6,
             setCurrentSlot,
-            setSelectedMove  
+            setSelectedMove,
+            adjustName,
         } = useContext(AppContext)
         
     const [slot_1, setSlot_1] = useState({ name: '-' })
@@ -159,8 +161,47 @@ const EditPokemonInfo = ({ pokemonName }) => {
 
      useEffect(() => {
        editingExistingMember()
+       grabAlolanFormStats()
     }, [])
 
+    const changeToAlolan = () => {
+        history.push(`/select/${pokemonName}-alola`)
+    }
+
+    const ifHaveAlolanForm = () => {
+        if(
+            pokemonName.includes('ratata')  ||
+            pokemonName.includes('raticate') ||
+            pokemonName.includes('raichu') ||
+            pokemonName.includes('sandshrew') ||
+            pokemonName.includes('sandslash') ||
+            pokemonName.includes('vulpix') ||
+            pokemonName.includes('ninetales') ||
+            pokemonName.includes('diglett') ||
+            pokemonName.includes('dugtrio') ||
+            pokemonName.includes('meowth') ||
+            pokemonName.includes('persian') ||
+            pokemonName.includes('geodude') ||
+            pokemonName.includes('graveler') ||
+            pokemonName.includes('golem') ||
+            pokemonName.includes('grimer') ||
+            pokemonName.includes('muk') ||
+            pokemonName.includes('exeggutor') ||
+            pokemonName.includes('marowak')) return true;
+        
+        return false;
+    }
+
+    const grabAlolanFormStats = async () => {
+        let tempDetails = listOfPokemonDetails
+        if(ifHaveAlolanForm() && !pokemonName.includes('alola')) {
+            let res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}-alola`);
+            let result = await res.json()
+            tempDetails[`${pokemonName}-alola`] = result
+        }
+
+        setListOfPokemonDetails(tempDetails)
+    }
 
     if (Object.keys(listOfPokemonDetails).length) {
         return (
@@ -197,7 +238,6 @@ const EditPokemonInfo = ({ pokemonName }) => {
                                         </div>
                                     </>
                                 )}
-                                {/* <div className="pokemon-information-type2">{listOfPokemonDetails[pokemonName].types[1]}</div> */}
                                 <div className="pokemon-information-stats">
                                     {listOfPokemonDetails[pokemonName].stats.map((stat) => 
                                         <p>{stat.stat.name.toUpperCase()}: {stat.base_stat}</p>
@@ -205,7 +245,17 @@ const EditPokemonInfo = ({ pokemonName }) => {
                                 </div>
                             </div>
                         </div>
-                        <div className="sprite-container"><img src={`${spritesApi}/${pokemonName}.gif`} alt={pokemonName}></img></div>
+                        <div className="sprite-container if-have-forms">
+                            {ifHaveAlolanForm() ? (
+                                <div className="change-form-buttons">
+                                    <div className="regular-form">Regular</div>
+                                    <div className="Alolan-form" onClick={changeToAlolan}>Alolan</div>
+                                </div>
+                            ) : (
+                                <></>
+                            )}
+                            <img src={`${spritesApi}/${adjustName(pokemonName)}.gif`} alt={pokemonName}></img>
+                        </div>
                         <div className="move-slots-container">
                             <button className="move-slot slot-1" onClick={slot_1Handler}>{capFirstLetter(slot_1.name)}</button>
                             <button className="move-slot slot-2" onClick={slot_2Handler}>{capFirstLetter(slot_2.name)}</button>

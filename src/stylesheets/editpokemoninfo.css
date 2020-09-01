@@ -51,6 +51,36 @@
     width: 35%; */
     max-height: 340px;
     max-width: 340px;
+    justify-self: center;
+}
+
+.change-form-buttons {
+    display: flex;
+}
+
+.change-form-buttons > div {
+    background-color: #f9c1b1;
+    background-image: linear-gradient(315deg, #f9c1b1 0%, #fb8085 74%);
+    border-radius: 20px;
+    color: white;
+    width: 75px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+}
+
+.change-form-buttons > div:hover {
+    background-color: rgb(255, 55, 55);
+    background-image: none;
+    transition-duration: .5s;
+    cursor: pointer;
+}
+
+.if-have-forms {
+    display:grid;
+    grid-template-rows: 1fr 7fr;
 }
 
 .description-button-container {

@@ -18,7 +18,7 @@ import lanceFullbody from '../../assets/images/lance-fullbody.png'
 
 
 const BattleTrainerView = () => {
-    const { setSelectedMove, spritesApi, back_spritesApi, user, setUser, opponent, capFirstLetter, backendUrl } = useContext(AppContext)
+    const { setSelectedMove, spritesApi, back_spritesApi, user, setUser, opponent, capFirstLetter, backendUrl, adjustName } = useContext(AppContext)
     let history = useHistory()
     const [readyForBattle, setReadyForBattle] = useState(false)
     const [userCurrentPokemon, setUserCurrentPokemon] = useState(user)
@@ -732,8 +732,8 @@ const BattleTrainerView = () => {
                     <div className="left-box battle-box">
                         <div className="battle-screen-container">
                             <div className="battle-screen">
-                                <div className="user-current-pokemon battling-pokemon"><img src={`${back_spritesApi}${userCurrentPokemon.pokemon}.gif`}></img></div>
-                                <div className="opponent-current-pokemon battling-pokemon"><img src={`${spritesApi}${opponentCurrentPokemon.pokemon}.gif`}></img></div>
+                                <div className="user-current-pokemon battling-pokemon"><img src={`${back_spritesApi}${adjustName(userCurrentPokemon.pokemon)}.gif`}></img></div>
+                                <div className="opponent-current-pokemon battling-pokemon"><img src={`${spritesApi}${adjustName(opponentCurrentPokemon.pokemon)}.gif`}></img></div>
                                 <div className="user-pokemon-status-info status-info-container">
                                     <div className="status-info-name"><p>{capFirstLetter(userCurrentPokemon.pokemon)}  Lv50</p></div>
                                     <div className="status-info-hpbar">
