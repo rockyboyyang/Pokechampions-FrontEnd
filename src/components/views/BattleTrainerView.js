@@ -18,7 +18,7 @@ import lanceFullbody from '../../assets/images/lance-fullbody.png'
 
 
 const BattleTrainerView = () => {
-    const { setSelectedMove, spritesApi, back_spritesApi, user, opponent, capFirstLetter, backendUrl } = useContext(AppContext)
+    const { setSelectedMove, spritesApi, back_spritesApi, user, setUser, opponent, capFirstLetter, backendUrl } = useContext(AppContext)
     let history = useHistory()
     const [readyForBattle, setReadyForBattle] = useState(false)
     const [userCurrentPokemon, setUserCurrentPokemon] = useState(user)
@@ -715,6 +715,12 @@ const BattleTrainerView = () => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(opponent.name),
         })
+        if (res.ok) {
+            const { user } = await res.json();
+            setUser(user)
+            window.localStorage.user = JSON.stringify(user);
+            history.push("/home");
+        }
         setVictory(false)
     }
 

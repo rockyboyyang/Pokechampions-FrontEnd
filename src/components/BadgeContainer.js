@@ -20,7 +20,56 @@ const BadgeContainer = () => {
                     <img src={Boulderbadge} />
                 </div>
             ):(
-                <div className='boulderbadge'><div>
+                <div className='boulderbadge'></div>
+            )}
+            {user.cascadebadge ? (
+                <div className='cascadebadge'>
+                    <img src={Cascadebadge} />
+                </div>
+            ) : (
+                    <div className='cascadebadge'></div>
+            )}
+            {user.thunderbadge ? (
+                <div className='thunderbadge'>
+                    <img src={Thunderbadge} />
+                </div>
+            ) : (
+                    <div className='thunderbadge'></div>
+            )}
+            {user.rainbowbadge ? (
+                <div className='rainbowbadge'>
+                    <img src={Rainbowbadge} />
+                </div>
+            ) : (
+                    <div className='rainbowbadge'></div>
+            )}
+            {user.marshbadge ? (
+                <div className='marshbadge'>
+                    <img src={Marshbadge} />
+                </div>
+            ) : (
+                    <div className='marshbadge'></div>
+                )}
+            {user.marshbadge ? (
+                <div className='marshbadge'>
+                    <img src={Marshbadge} />
+                </div>
+            ) : (
+                    <div className='Marshbadge'></div>
+                )}
+            {user.volcanobadge ? (
+                <div className='volcanobadge'>
+                    <img src={Volcanobadge} />
+                </div>
+            ) : (
+                    <div className='volcanobadge'></div>
+                )}
+            {user.earthbadge ? (
+                <div className='earthbadge'>
+                    <img src={Earthbadge} />
+                </div>
+            ) : (
+                    <div className='earthbadge'></div>
             )}
         </div>
     )

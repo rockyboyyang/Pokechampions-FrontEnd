@@ -72,7 +72,7 @@ const App = props => {
   
   // Grabs a list of Pokemon
   const fetchPokemonNames = async () => {
-    const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151&offset=0');
+    const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=890&offset=0');
     
     const { results } = await res.json();
     fetchPokemonSprites(results)
@@ -140,7 +140,62 @@ const App = props => {
   }, [])
 
   // if(!user) return <h1>Loading</h1>
-  
+
+  // Check to see if you can battle selected trainer
+  const checkForAbilityToChallenge = (trainer) => {
+    if (trainer === 'misty' && !user.boulderbadge) {
+      alert('You have not received the Boulderbadge yet!')
+      return false
+    }
+
+    if (trainer === 'ltsurge' && !user.cascadebadge) {
+      alert('You have not received the Cascadebadge yet!')
+      return false
+    }
+
+    if (trainer === 'erika' && !user.thunderbadge) {
+      alert('You have not received the Thunderrbadge yet!')
+      return false
+    }
+
+    if (trainer === 'koga' && !user.rainbowbadge) {
+      alert('You have not received the Rainbowbadge yet!')
+      return false
+    }
+
+    if (trainer === 'sabrina' && !user.soulbadge) {
+      alert('You have not received the Soulbadge yet!')
+      return false
+    }
+
+    if (trainer === 'blaine' && !user.marshbadge) {
+      alert('You have not received the Marshbadge yet!')
+      return false
+    }
+
+    if (trainer === 'giovanni' && !user.volcanobadge) {
+      alert('You have not received the Volcanobadge yet!')
+      return false
+    }
+
+    if (trainer === 'bruno' && !user.beatElite4_1) {
+      alert('You have not defeated Lorelei yet!')
+      return false
+    }
+
+    if (trainer === 'agatha' && !user.beatElite4_2) {
+      alert('You have not defeated Bruno yet!')
+      return false
+    }
+
+    if (trainer === 'lance' && !user.beatEite4_3) {
+      alert('You have not defeated Agatha yet!')
+      return false
+    }
+    return true
+  }
+
+
   return (
     <BrowserRouter>
       <AppContext.Provider value={{ backendUrl,
@@ -171,7 +226,8 @@ const App = props => {
                                     setSelectedMove,
                                     setOpponent,
                                     opponent,
-                                    back_spritesApi, }
+                                    back_spritesApi,
+                                    checkForAbilityToChallenge, }
                                     }>
         <Switch>
           <Route exact path="/" render={(props) => <Redirect to='/home'/>}/>

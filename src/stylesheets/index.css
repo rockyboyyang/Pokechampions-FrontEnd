@@ -143,6 +143,8 @@ body,
   display: flex;
   justify-content: center;
   align-items: center;
+  box-shadow: 0 0px 12px 0 rgba(255, 255, 255, 0.848);
+
 }
 
 .badge-container img {

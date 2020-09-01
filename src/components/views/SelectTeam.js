@@ -22,14 +22,53 @@ const SelectTeam = () => {
     // useEffect(() => {
     //     window.location.reload(true)
     // }, [])
-    
+    const adjustName = (pokemon) => {
+        if (pokemon === 'ho-oh') return 'hooh'
+        if (pokemon === 'mime-jr') return 'mimejr'
+        if (pokemon === 'deoxys-normal') return 'deoxys'
+        if (pokemon === 'wormadam-plant') return 'wormadam'
+        if (pokemon === 'giratina-altered') return 'giratina'
+        if (pokemon === 'darmanitan-standard') return 'darmanitan'
+        if (pokemon === 'mr-mime') return 'mrmime'
+        if (pokemon === 'nidoran-m') return 'nidoranm'
+        if (pokemon === 'landorus-incarnate') return 'landorus'
+        if (pokemon === 'tornadus-incarnate') return 'tornadus'
+        if (pokemon === 'meloetta-aria') return 'meloetta'
+        if (pokemon === 'thundurus-incarnate') return 'thundurus'
+        if (pokemon === 'shaymin-land') return 'shaymin'
+        if (pokemon === 'keldeo-ordinary') return 'keldeo'
+        if (pokemon === 'basculin-red-striped') return 'basculin'
+        if (pokemon === 'meowstic-male') return 'meowstic'
+        if (pokemon === 'aegislash-shield') return 'aegislash'
+        if (pokemon === 'gourgeist-average') return 'gourgeist'
+        if (pokemon === 'pumpkaboo-average') return 'pumpkaboo'
+        if (pokemon === 'oricorio-baile') return 'oricorio'
+        if (pokemon === 'wishiwashi-solo') return 'wishiwashi'
+        if (pokemon === 'lycanroc-midday') return 'lycanroc'
+        if (pokemon === 'mimikyu-disguised') return 'mimikyu'
+        if (pokemon === 'kommo-o') return 'kommoo'
+        if (pokemon === 'jangmo-o') return 'jangmoo'
+        if (pokemon === 'hakamo-o') return 'hakamoo'
+        if (pokemon === 'tapu-koko') return 'tapukoko'
+        if (pokemon === 'tapu-lele') return 'tapulele'
+        if (pokemon === 'tapu-bulu') return 'tapubulu'
+        if (pokemon === 'tapu-fini') return 'tapufini'
+        if (pokemon === 'sirfetch') return 'sirfetchd'
+        if (pokemon === 'mr') return 'mrrime'
+        if (pokemon === 'minior-red-meteor') return 'minior'
+        if (pokemon === 'type-null') return 'typenull'
+
+
+        return pokemon
+    }
+
     if(Object.keys(spritesApi).length) {
         return (
             <div className="view-body">
                 <Navbar />
                 <div className="center-body">
                 <div className="left-box pokemon-list">{pokemonList.map((pokemon) => (
-                    <div id={pokemon.name} onClick={routeToPokemonBattleDetails}><p>{capFirstLetter(pokemon.name)}</p> <img src={spritesApi + `${pokemon.name}.gif`} /></div>
+                    <div id={pokemon.name} onClick={routeToPokemonBattleDetails}><p>{capFirstLetter(pokemon.name)}</p> <img src={spritesApi + `${adjustName(pokemon.name)}.gif`} /></div>
                 ))}</div>
                     <div className="right-box team-box">
                         <div className="header">

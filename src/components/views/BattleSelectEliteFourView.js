@@ -18,6 +18,7 @@ const BattleSelectEliteFourView = ({ gymLeader }) => {
         backendUrl,
         setOpponent,
         setSelectedMove,
+        checkForAbilityToChallenge,
     } = useContext(AppContext)
 
     let history = useHistory();
@@ -33,21 +34,19 @@ const BattleSelectEliteFourView = ({ gymLeader }) => {
 
     const challengeTrainer = (e) => {
         e.preventDefault()
-
+        let trainer = e.target.id.slice(14)
+        if (!checkForAbilityToChallenge(trainer)) return
         const data = async (trainerName) => {
-            const response = await fetch(backendUrl + `/api/gymleaders/${e.target.id.slice(14)}`);
+            const response = await fetch(backendUrl + `/api/trainers/${e.target.id.slice(14)}`);
             const { opponentData } = await response.json();
             if (response.ok) {
-                // console.log(JSON.parse(opponentData.slot_1))
-                // console.log(JSON.parse(opponentData.slot_2))
-                // console.log(JSON.parse(opponentData.slot_3))
-                // console.log(JSON.parse(opponentData.slot_4))
                 setOpponent(opponentData)
                 history.push(`../challenge/${trainerName}`)
             }
         };
-        data(e.target.id.slice(14))
+        data(trainer)
     }
+
     return (
         <Switch>
             <div className="view-body">
