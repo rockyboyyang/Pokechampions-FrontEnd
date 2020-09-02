@@ -147,3 +147,25 @@
     align-items: center;
     background-image: linear-gradient(315deg, #f9c1b1 0%, #fb8085 74%);
 }
+
+.pokedex-info {
+    background-color: #f9c1b1;
+    background-image: linear-gradient(315deg, #f9c1b1 0%, #fb8085 74%);
+    box-shadow: 10px 10px 12px 0 rgba(255, 255, 255, 0.848);
+    color: white;
+    width: 90%;
+    height: 90%;
+    margin: auto;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 2fr;
+    text-align: center;
+}
+
+#dex-entry {
+    display: flex;
+    flex-direction: column;
+    line-height: 25px;
+    justify-content: center;
+    align-items: center;
+    /* margin: auto; */
+}

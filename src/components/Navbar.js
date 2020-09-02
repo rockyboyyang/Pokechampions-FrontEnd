@@ -25,8 +25,8 @@ const Navbar = () => {
     return (
         <div className="navbar">
             <div className="tab" onClick={routeToHome}><p>Home</p></div>
-            {/* <div className="tab" onClick={routeToPokedex}><p>Pokedex</p></div>
-            <div className="tab" onClick={routeToTrainerBio}><p>Trainer Bio</p></div> */}
+            <div className="tab" onClick={routeToPokedex}><p>Pokedex</p></div>
+            {/* <div className="tab" onClick={routeToTrainerBio}><p>Trainer Bio</p></div> */}
             <div className='tab signout-tab' onClick={signout}><p>Sign Out</p></div>
         </div>
     )

@@ -4,6 +4,7 @@ import Login from "./components/views/Login";
 import Signup from "./components/views/Signup";
 import Home from "./components/views/Home";
 import Pokedex from "./components/views/Pokedex";
+import ViewPokemonInfo from "./components/views/ViewPokemonInfo";
 import TrainerBio from "./components/views/TrainerBio";
 import BattleSelectView from "./components/views/BattleSelectView";
 import BattleSelectEliteFourView from "./components/views/BattleSelectEliteFourView";
@@ -14,8 +15,8 @@ import EditExistingPokemonInfo from "./components/views/EditExistingPokemonInfo"
 import { AppContext } from './context/AppContext'
 
 const App = props => {
-  const backendUrl = "https://infinite-everglades-82990.herokuapp.com"
-  // const backendUrl = "http://localhost:5000"
+  // const backendUrl = "https://infinite-everglades-82990.herokuapp.com"
+  const backendUrl = "http://localhost:5000"
   const [tokenState, setToken] = useState(localStorage.access_token);
   const [user, setUser] = useState('')
   const [user_slot_1, setUser_slot_1] = useState('')
@@ -348,6 +349,7 @@ const App = props => {
           <Route path="/login" component={Login} />
           <Route path="/home" component={Home} />
           <Route path="/pokedex" component={Pokedex} />
+          <Route path="/viewpokemon/:pokemonName" render={(props) => <ViewPokemonInfo  {...props} pokemonName={props.match.params.pokemonName} />} />
           <Route path="/trainers" component={TrainerBio} />
           <Route path="/battle/gymleaders" component={BattleSelectView} />
           <Route path="/battle/elitefour" component={BattleSelectEliteFourView} />

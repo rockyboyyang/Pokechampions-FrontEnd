@@ -20,7 +20,7 @@ body,
 
 .view-body {
     display: grid;
-    grid-template-rows: 50px 1fr 50px;
+    grid-template-rows: 75px 1fr 75px;
 }
 
 
@@ -154,9 +154,19 @@ body,
   /* size: 1px; */
 }
 
+.fa {
+  font-size: 40px;
+  color: #292929;
+  text-decoration: none;
+  padding: 0px 10px;
+}
+
 .footer {
-    background-color: #e9f3e4;
-    box-shadow: 0 2px 12px 0 rgba(255,255,255,.36);
+  background-color: #e9f3e4;
+  box-shadow: 0 2px 12px 0 rgba(255,255,255,.36);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 
