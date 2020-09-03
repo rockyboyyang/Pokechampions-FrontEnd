@@ -19,7 +19,7 @@ import rockyFace from '../../assets/images/rocky-face.png'
 
 
 const BattleTrainerView = () => {
-    const { setSelectedMove, spritesApi, back_spritesApi, user, setUser, opponent, capFirstLetter, backendUrl, adjustName } = useContext(AppContext)
+    const { setSelectedMove, spritesApi, shinySpritesApi, back_spritesApi, shinyBack_spritesApi, user, setUser, opponent, capFirstLetter, backendUrl, adjustName } = useContext(AppContext)
     let history = useHistory()
     const [readyForBattle, setReadyForBattle] = useState(false)
     const [userCurrentPokemon, setUserCurrentPokemon] = useState(user)
@@ -737,6 +737,33 @@ const BattleTrainerView = () => {
         setVictory(false)
     }
 
+    const statsDiv = (e) => {
+        e.preventDefault()
+        let className = e.target.className;
+        let element;
+        if (className.includes('slot_1')) element = document.getElementById('pokemon-status-slot_1')
+        if (className.includes('slot_2')) element = document.getElementById('pokemon-status-slot_2')
+        if (className.includes('slot_3')) element = document.getElementById('pokemon-status-slot_3')
+        if (className.includes('slot_4')) element = document.getElementById('pokemon-status-slot_4')
+        if (className.includes('slot_5')) element = document.getElementById('pokemon-status-slot_5')
+        if (className.includes('slot_6')) element = document.getElementById('pokemon-status-slot_6')
+        element.style.display = 'flex'
+    }
+
+    const hideStatsDiv = (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        let className = e.target.className;
+        let element;
+        if (className.includes('slot_1')) element = document.getElementById('pokemon-status-slot_1')
+        if (className.includes('slot_2')) element = document.getElementById('pokemon-status-slot_2')
+        if (className.includes('slot_3')) element = document.getElementById('pokemon-status-slot_3')
+        if (className.includes('slot_4')) element = document.getElementById('pokemon-status-slot_4')
+        if (className.includes('slot_5')) element = document.getElementById('pokemon-status-slot_5')
+        if (className.includes('slot_6')) element = document.getElementById('pokemon-status-slot_6')
+        element.style.display = 'none'
+    }
+
     if(readyForBattle) {
         return (
             <div className="view-body">
@@ -745,7 +772,13 @@ const BattleTrainerView = () => {
                     <div className="left-box battle-box">
                         <div className="battle-screen-container">
                             <div className="battle-screen">
-                                <div className="user-current-pokemon battling-pokemon"><img src={`${back_spritesApi}${adjustName(userCurrentPokemon.pokemon)}.gif`}></img></div>
+                                <div className="user-current-pokemon battling-pokemon">
+                                    {userCurrentPokemon.isShiny ? (
+                                        <img src={`${shinyBack_spritesApi}${adjustName(userCurrentPokemon.pokemon)}.gif`}></img>
+                                    ) : (
+                                        <img src={`${back_spritesApi}${adjustName(userCurrentPokemon.pokemon)}.gif`}></img>
+                                    )}
+                                </div>
                                 <div className="opponent-current-pokemon battling-pokemon"><img src={`${spritesApi}${adjustName(opponentCurrentPokemon.pokemon)}.gif`}></img></div>
                                 <div className="user-pokemon-status-info status-info-container">
                                     <div className="status-info-name"><p>{capFirstLetter(userCurrentPokemon.pokemon)}  Lv50</p></div>
@@ -892,10 +925,20 @@ const BattleTrainerView = () => {
                         <div className="pokemon-team-container">
                             {user.slot_1 !== null ? (
                                 <>
-                                    <div className="user-pokemon-slot_1" id={userSlot_1Pokemon.pokemon} onClick={switchOut}>
-                                        <img className="user-pokemon-slot_1" src={spritesApi + `${JSON.parse(user.slot_1).pokemon}.gif`} />
-                                        <div className="team-hpbar-container">
+                                    <div className="user-pokemon-slot_1" id={userSlot_1Pokemon.pokemon} onClick={switchOut} onMouseEnter={statsDiv} onMouseLeave={hideStatsDiv}>
+                                        {userSlot_1Pokemon.isShiny ? (
+                                            <img className="user-pokemon-slot_1" src={shinySpritesApi + `${JSON.parse(user.slot_1).pokemon}.gif`} />
+                                        ) : (
+                                            <img className="user-pokemon-slot_1" src={spritesApi + `${JSON.parse(user.slot_1).pokemon}.gif`} />
+                                        )}
+                                        <div className="pokemon-status" id="pokemon-status-slot_1">
                                             <div className='team-hpbar' id='slot-1-hpbar'>HP: {userSlot_1Pokemon.remaininghp} / {userSlot_1Pokemon.pokemonStats[0].base_stat + 60}</div>
+                                            <div className="movesList">
+                                                <li>{capFirstLetter(userSlot_1Pokemon.moveSlot_1.name)}</li>
+                                                <li>{capFirstLetter(userSlot_1Pokemon.moveSlot_2.name)}</li>
+                                                <li>{capFirstLetter(userSlot_1Pokemon.moveSlot_3.name)}</li>
+                                                <li>{capFirstLetter(userSlot_1Pokemon.moveSlot_4.name)}</li>
+                                            </div>
                                         </div>
                                     </div>
                                 </>
@@ -904,10 +947,20 @@ const BattleTrainerView = () => {
                                 )}
                             {user.slot_2 !== null ? (
                                 <>
-                                    <div className="user-pokemon-slot_2" id={userSlot_2Pokemon.pokemon} onClick={switchOut}>
-                                        <img className="user-pokemon-slot_2" src={spritesApi + `${JSON.parse(user.slot_2).pokemon}.gif`} />
-                                        <div className="team-hpbar-container">
+                                    <div className="user-pokemon-slot_2" id={userSlot_2Pokemon.pokemon} onClick={switchOut} onMouseEnter={statsDiv} onMouseLeave={hideStatsDiv}>
+                                        {userSlot_2Pokemon.isShiny ? (
+                                            <img className="user-pokemon-slot_2" src={shinySpritesApi + `${JSON.parse(user.slot_2).pokemon}.gif`} />
+                                        ) : (
+                                                <img className="user-pokemon-slot_2" src={spritesApi + `${JSON.parse(user.slot_2).pokemon}.gif`} />
+                                            )}
+                                        <div className="pokemon-status" id="pokemon-status-slot_2">
                                             <div className='team-hpbar' id='slot-2-hpbar'>HP: {userSlot_2Pokemon.remaininghp} / {userSlot_2Pokemon.pokemonStats[0].base_stat + 60}</div>
+                                            <div className="movesList">
+                                                <li>{capFirstLetter(userSlot_2Pokemon.moveSlot_1.name)}</li>
+                                                <li>{capFirstLetter(userSlot_2Pokemon.moveSlot_2.name)}</li>
+                                                <li>{capFirstLetter(userSlot_2Pokemon.moveSlot_3.name)}</li>
+                                                <li>{capFirstLetter(userSlot_2Pokemon.moveSlot_4.name)}</li>
+                                            </div>
                                         </div>
                                     </div>
                                 </>
@@ -916,10 +969,20 @@ const BattleTrainerView = () => {
                                 )}
                             {user.slot_3 !== null ? (
                                 <>
-                                    <div className="user-pokemon-slot_3" id={userSlot_3Pokemon.pokemon} onClick={switchOut}>
-                                        <img className="user-pokemon-slot_3" src={spritesApi + `${JSON.parse(user.slot_3).pokemon}.gif`} />
-                                        <div className="team-hpbar-container">
+                                    <div className="user-pokemon-slot_3" id={userSlot_3Pokemon.pokemon} onClick={switchOut} onMouseEnter={statsDiv} onMouseLeave={hideStatsDiv}>
+                                        {userSlot_3Pokemon.isShiny ? (
+                                            <img className="user-pokemon-slot_3" src={shinySpritesApi + `${JSON.parse(user.slot_3).pokemon}.gif`} />
+                                        ) : (
+                                            <img className="user-pokemon-slot_3" src={spritesApi + `${JSON.parse(user.slot_3).pokemon}.gif`} />
+                                        )}
+                                        <div className="pokemon-status" id="pokemon-status-slot_3">
                                             <div className='team-hpbar' id='slot-3-hpbar'>HP: {userSlot_3Pokemon.remaininghp} / {userSlot_3Pokemon.pokemonStats[0].base_stat + 60}</div>
+                                            <div className="movesList">
+                                                <li>{capFirstLetter(userSlot_3Pokemon.moveSlot_1.name)}</li>
+                                                <li>{capFirstLetter(userSlot_3Pokemon.moveSlot_2.name)}</li>
+                                                <li>{capFirstLetter(userSlot_3Pokemon.moveSlot_3.name)}</li>
+                                                <li>{capFirstLetter(userSlot_3Pokemon.moveSlot_4.name)}</li>
+                                            </div>
                                         </div>
                                     </div>
                                 </>
@@ -928,10 +991,20 @@ const BattleTrainerView = () => {
                                 )}
                             {user.slot_4 !== null ? (
                                 <>
-                                    <div className="user-pokemon-slot_4" id={userSlot_4Pokemon.pokemon} onClick={switchOut}>
-                                        <img className="user-pokemon-slot_4" src={spritesApi + `${JSON.parse(user.slot_4).pokemon}.gif`} />
-                                        <div className="team-hpbar-container">
+                                    <div className="user-pokemon-slot_4" id={userSlot_4Pokemon.pokemon} onClick={switchOut} onMouseEnter={statsDiv} onMouseLeave={hideStatsDiv}>
+                                        {userSlot_4Pokemon.isShiny ? (
+                                            <img className="user-pokemon-slot_4" src={shinySpritesApi + `${JSON.parse(user.slot_4).pokemon}.gif`} />
+                                        ) : (
+                                            <img className="user-pokemon-slot_4" src={spritesApi + `${JSON.parse(user.slot_4).pokemon}.gif`} />
+                                        )}
+                                        <div className="pokemon-status" id="pokemon-status-slot_4">
                                             <div className='team-hpbar' id='slot-4-hpbar'>HP: {userSlot_4Pokemon.remaininghp} / {userSlot_4Pokemon.pokemonStats[0].base_stat + 60}</div>
+                                            <div className="movesList">
+                                                <li>{capFirstLetter(userSlot_4Pokemon.moveSlot_1.name)}</li>
+                                                <li>{capFirstLetter(userSlot_4Pokemon.moveSlot_2.name)}</li>
+                                                <li>{capFirstLetter(userSlot_4Pokemon.moveSlot_3.name)}</li>
+                                                <li>{capFirstLetter(userSlot_4Pokemon.moveSlot_4.name)}</li>
+                                            </div>
                                         </div>
                                     </div>
                                 </>
@@ -940,10 +1013,20 @@ const BattleTrainerView = () => {
                                 )}
                             {user.slot_5 !== null ? (
                                 <>
-                                    <div className="user-pokemon-slot_5" id={userSlot_5Pokemon.pokemon} onClick={switchOut}>
-                                        <img className="user-pokemon-slot_5" src={spritesApi + `${JSON.parse(user.slot_5).pokemon}.gif`} />
-                                        <div className="team-hpbar-container">
+                                    <div className="user-pokemon-slot_5" id={userSlot_5Pokemon.pokemon} onClick={switchOut} onMouseEnter={statsDiv} onMouseLeave={hideStatsDiv}>
+                                        {userSlot_5Pokemon.isShiny ? (
+                                            <img className="user-pokemon-slot_5" src={shinySpritesApi + `${JSON.parse(user.slot_5).pokemon}.gif`} />
+                                        ) : (
+                                            <img className="user-pokemon-slot_5" src={spritesApi + `${JSON.parse(user.slot_5).pokemon}.gif`} />
+                                        )}
+                                        <div className="pokemon-status" id="pokemon-status-slot_5">
                                             <div className='team-hpbar' id='slot-5-hpbar'>HP: {userSlot_5Pokemon.remaininghp} / {userSlot_5Pokemon.pokemonStats[0].base_stat + 60}</div>
+                                            <div className="movesList">
+                                                <li>{capFirstLetter(userSlot_5Pokemon.moveSlot_1.name)}</li>
+                                                <li>{capFirstLetter(userSlot_5Pokemon.moveSlot_2.name)}</li>
+                                                <li>{capFirstLetter(userSlot_5Pokemon.moveSlot_3.name)}</li>
+                                                <li>{capFirstLetter(userSlot_5Pokemon.moveSlot_4.name)}</li>
+                                            </div>
                                         </div>
                                     </div>
                                 </>
@@ -952,16 +1035,26 @@ const BattleTrainerView = () => {
                                 )}
                             {user.slot_6 !== null ? (
                                 <>
-                                    <div className={`user-pokemon-slot_6`} id={userSlot_6Pokemon.pokemon} onClick={switchOut}>
-                                        <img className="user-pokemon-slot_6" src={spritesApi + `${JSON.parse(user.slot_6).pokemon}.gif`} />
-                                        <div className="team-hpbar-container">
+                                    <div className={`user-pokemon-slot_6`} id={userSlot_6Pokemon.pokemon} onClick={switchOut} onMouseEnter={statsDiv} onMouseLeave={hideStatsDiv}>
+                                        {userSlot_6Pokemon.isShiny ? (
+                                            <img className="user-pokemon-slot_6" src={shinySpritesApi + `${JSON.parse(user.slot_6).pokemon}.gif`} />
+                                        ) : (
+                                            <img className="user-pokemon-slot_6" src={spritesApi + `${JSON.parse(user.slot_6).pokemon}.gif`} />
+                                        )}
+                                        <div className="pokemon-status" id="pokemon-status-slot_6">
                                             <div className='team-hpbar' id='slot-6-hpbar'>HP: {userSlot_6Pokemon.remaininghp} / {userSlot_6Pokemon.pokemonStats[0].base_stat + 60}</div>
+                                            <div className="movesList">
+                                                <li>{capFirstLetter(userSlot_6Pokemon.moveSlot_1.name)}</li>
+                                                <li>{capFirstLetter(userSlot_6Pokemon.moveSlot_2.name)}</li>
+                                                <li>{capFirstLetter(userSlot_6Pokemon.moveSlot_3.name)}</li>
+                                                <li>{capFirstLetter(userSlot_6Pokemon.moveSlot_4.name)}</li>
+                                            </div>
                                         </div>
                                     </div>
                                 </>
                             ) : (
-                                    <div className="user-pokemon-slot_6"></div>
-                                )}
+                                <div className="user-pokemon-slot_6"></div>
+                            )}
                         </div>
                     </div>
                 </div>

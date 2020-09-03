@@ -31,7 +31,8 @@ const App = props => {
   const [pokemonList, setPokemonList] = useState([])
   const [shinySpritesApi, setShinySpritesList] = useState('https://play.pokemonshowdown.com/sprites/ani-shiny/')
   const [spritesApi, setSpritesList] = useState('https://play.pokemonshowdown.com/sprites/ani/')
-  const [back_spritesApi, seBack_SpritesList] = useState('https://play.pokemonshowdown.com/sprites/ani-back/')
+  const [back_spritesApi, setBack_SpritesList] = useState('https://play.pokemonshowdown.com/sprites/ani-back/')
+  const [shinyBack_spritesApi, setShinyBack_SpritesList] = useState('https://play.pokemonshowdown.com/sprites/ani-back-shiny/')
   const [listOfPokemonDetails, setListOfPokemonDetails] = useState({})
   const [selectedMove, setSelectedMove] = useState('')
   const [opponent, setOpponent] = useState('')
@@ -344,7 +345,8 @@ const App = props => {
                                     back_spritesApi,
                                     checkForAbilityToChallenge,
                                     adjustName,
-                                    shinySpritesApi }
+                                    shinySpritesApi,
+                                    shinyBack_spritesApi }
                                     }>
         <Switch>
           <Route exact path="/" render={(props) => <Redirect to='/home'/>}/>

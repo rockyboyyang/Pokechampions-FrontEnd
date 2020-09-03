@@ -128,6 +128,32 @@
     flex-direction: column;
 }
 
+.pokemon-team-container img {
+    max-height: 65%;
+    max-width: 65%;
+}
+
+.pokemon-status {
+    display: none;
+    position: fixed;
+    top: 75px;
+    border: black 1px solid;
+    flex-direction: column;
+    padding: 20px;
+    width: 200px;
+    background-color: white;
+}
+
+#pokemon-status-slot_3,
+#pokemon-status-slot_4 {
+    top: 215px;
+}
+
+#pokemon-status-slot_5,
+#pokemon-status-slot_6 {
+    top: 350px;
+}
+
 /* .team-hpbar-container {
     height: 10px;
     width: 100px;
