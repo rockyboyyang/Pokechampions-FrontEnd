@@ -42,6 +42,11 @@ const BattleSelectView = ({  }) => {
             alert('You have not collected all 8 Gym Badges yet!')
             return;
         }
+
+        if (trainerType === 'champion' && !user.beatElite4_4) {
+            alert('You have not defeated the Elite Four yet!')
+            return;
+        }
         
         history.push(`./${trainerType}`)
     }

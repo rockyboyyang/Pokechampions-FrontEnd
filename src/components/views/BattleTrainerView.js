@@ -1061,27 +1061,9 @@ const BattleTrainerView = () => {
                 <Footer />
             </div>
         )
-    } else if (victory) {
+    } else {
         return (
-            <>
-                <Navbar />
-                <div className="trainer-dialogue-container">
-                    <div className="trainer-dialogue-box">
-                        <div className="trainer-image">
-                            <img src={getTrainerImage()}></img>
-                        </div>
-                        <div className="trainer-dialogue">
-                            <h1>{capFirstLetter(opponent.name)}</h1>
-                            <h3>{opponent.post_battle_quote}</h3>
-                            <button onClick={collectBadge}>Collect Badge</button>
-                        </div>
-                    </div>
-                </div>
-            </>
-        )
-    }   {
-        return (
-            <> 
+            <div className='view-body'> 
                 <Navbar />
                 <div className="trainer-dialogue-container">
                     <div className="trainer-dialogue-box">
@@ -1097,16 +1079,25 @@ const BattleTrainerView = () => {
                         <div className="outer-trainer-dialogue">
                             <div className="trainer-dialogue">
                                 <h1>{capFirstLetter(opponent.name)}</h1>
-                                <h3>{opponent.pre_battle_quote}</h3>
-                                <button onClick={clickToBattle}>BATTLE!</button>
+                                {victory ? (
+                                    <>
+                                        <h4>{opponent.post_battle_quote}</h4>
+                                        <button onClick={collectBadge}>Collect Badge</button>
+                                    </>
+                                ) : (
+                                    <>
+                                        <h4>{opponent.pre_battle_quote}</h4>    
+                                        <button onClick={clickToBattle}>BATTLE!</button>
+                                    </>
+                                )}
                             </div>
                         </div>
                     </div>
                 </div>
-                {/* <Footer /> */}
+                <Footer />
                 {/* <h1>Are You Ready To Battle?</h1>
                 <button onClick={clickToBattle}>Click to Battle</button> */}
-            </>
+            </div>
         )
     }
 }

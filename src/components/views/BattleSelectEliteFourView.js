@@ -33,6 +33,11 @@ const BattleSelectEliteFourView = ({ gymLeader }) => {
         e.preventDefault();
         let trainerType = e.target.id.slice(7)
 
+        if (trainerType === 'champion' && !user.beatElite4_4) {
+            alert('You have not defeated the Elite Four yet!')
+            return;
+        }
+        
         history.push(`./${trainerType}`)
     }
 
