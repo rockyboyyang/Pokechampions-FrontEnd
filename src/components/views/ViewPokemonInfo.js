@@ -40,12 +40,12 @@ const ViewPokemonInfo = ({ pokemonName }) => {
 
     const changeToAlolan = () => {
         if (pokemonName.includes('alola')) return
-        history.push(`/select/${pokemonName}-alola`)
+        history.push(`/viewpokemon/${pokemonName}-alola`)
     }
 
     const changeToRegularForm = () => {
         if (pokemonName.includes('alola')) {
-            history.push(`/select/${pokemonName.slice(0, pokemonName.length - 6)}`)
+            history.push(`/viewpokemon/${pokemonName.slice(0, pokemonName.length - 6)}`)
         }
     }
 
@@ -162,8 +162,18 @@ const ViewPokemonInfo = ({ pokemonName }) => {
                             )}
                         <div className="move-slots-container">
                             <div className="switch-sequence-container" id='dex-entry'>
-                                <h2>National Dex #: {listOfPokemonDetails[pokemonName].id}</h2>
-                                <h1>{dexEntry}</h1>
+                                {!pokemonName.includes('alola') ? (
+                                    <>
+                                        <h2>National Dex #: {listOfPokemonDetails[pokemonName].id}</h2>
+                                        <h1>{dexEntry}</h1>
+                                    </>
+                                ) : (
+                                    <>
+                                        <h2>National Dex #: {listOfPokemonDetails[pokemonName.slice(0, pokemonName.length - 6)].id}</h2>
+                                        <h1>{dexEntry}</h1>
+                                    </>
+                                )}
+                                
                             </div>
                         </div>
                     </div>

@@ -45,7 +45,7 @@ const BadgeContainer = () => {
             )}
             {user.marshbadge ? (
                 <div className='marshbadge'>
-                    <img src={Marshbadge} />
+                    <img src={Soulbadge} />
                 </div>
             ) : (
                     <div className='marshbadge'></div>

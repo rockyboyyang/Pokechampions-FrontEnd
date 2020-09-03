@@ -7,6 +7,7 @@ import loreleiFace from '../../assets/images/lorelei-face.png'
 import brunoFace from '../../assets/images/bruno-face.png'
 import agathaFace from '../../assets/images/agatha-face.png'
 import lanceFace from '../../assets/images/lance-face.png'
+import lock from '../../assets/images/lock.png'
 
 const BattleSelectEliteFourView = ({ gymLeader }) => {
     const { user_slot1,
@@ -19,6 +20,7 @@ const BattleSelectEliteFourView = ({ gymLeader }) => {
         setOpponent,
         setSelectedMove,
         checkForAbilityToChallenge,
+        user,
     } = useContext(AppContext)
 
     let history = useHistory();
@@ -55,9 +57,21 @@ const BattleSelectEliteFourView = ({ gymLeader }) => {
                     <div className="left-box select-battle-view">
                         <div className="trainer-container elitefour-container">
                             <div className="select-trainer-icon"><img src={loreleiFace} onClick={challengeTrainer} id="select-button-lorelei"></img></div>
-                            <div className="select-trainer-icon"><img src={brunoFace} onClick={challengeTrainer} id="select-button-bruno"></img></div>
-                            <div className="select-trainer-icon"><img src={agathaFace} onClick={challengeTrainer} id="select-button-agatha"></img></div>
-                            <div className="select-trainer-icon"><img src={lanceFace} onClick={challengeTrainer} id="select-button-lance"></img></div>
+                            {user.beatElite4_1 ? (
+                                <div className="select-trainer-icon"><img src={brunoFace} onClick={challengeTrainer} id="select-button-bruno"></img></div>
+                            ) : (
+                                <div className="select-trainer-icon"><img src={lock} onClick={challengeTrainer} id="select-button-bruno"></img></div>
+                            )}
+                            {user.beatElite4_2 ? (
+                                <div className="select-trainer-icon"><img src={agathaFace} onClick={challengeTrainer} id="select-button-agatha"></img></div>
+                            ) : (
+                                <div className="select-trainer-icon"><img src={lock} onClick={challengeTrainer} id="select-button-lance"></img></div>
+                            )}
+                            {user.beatElite4_3 ? (
+                                <div className="select-trainer-icon"><img src={lanceFace} onClick={challengeTrainer} id="select-button-lance"></img></div>
+                            ) : (
+                                <div className="select-trainer-icon"><img src={lock} onClick={challengeTrainer} id="select-button-lance"></img></div>
+                            )}
                         </div>
                         <div className="trainer-type-button">
                             <button onClick={swapSelectionScreen} id="button-gymleaders">Gym Leaders</button>

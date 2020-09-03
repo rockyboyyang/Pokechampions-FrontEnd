@@ -16,6 +16,14 @@ const Login = () => {
             password: password,
         };
 
+        let demo = e.target.id
+        if(demo.includes('demo')) {
+            body = {
+                username: demo,
+                password: 'password'
+            }
+        }
+
         const res = await fetch(backendUrl + "/api/session_user", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -53,6 +61,11 @@ const Login = () => {
         history.push('/signup')
     }
 
+    const demologin = (e) => {
+        e.preventDefault()
+
+    }
+
     return (
         <div className="login-form">
             <div className="logo">
@@ -78,6 +91,12 @@ const Login = () => {
                     </div>
                     <button onClick={login}>Log In</button>
                     <p id='link-to-login-signup' onClick={goToSignup}>Don't have an account?</p>
+                    <div className='demoUserButtons'>
+                        <button onClick={login} id="demouser">Demo</button>
+                        <button onClick={login} id="demouserallgymleader">Demo def. Gym Leaders</button>
+                        <button onClick={login} id="demouserallelitefour">Demo def. Elite Four</button>
+                        <button onClick={login} id="demouserchampion">Demo def. Champion</button>
+                    </div>
                 </form>
             </div>
         </div>

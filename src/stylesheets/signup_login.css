@@ -121,3 +121,24 @@
     align-items: center;
     justify-content: center;
 }
+
+.demoUserButtons {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+    align-items: center;
+    justify-self: end;
+    align-self: flex-end;
+}
+
+#demouser,
+#demouserallgymleader,
+#demouserallelitefour,
+#demouserchampion {
+    width: 75%;
+    height: 95%;
+    align-self: center;
+    justify-self: center;
+    margin: 10px;
+}
