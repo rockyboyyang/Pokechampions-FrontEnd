@@ -15,6 +15,7 @@ import loreleiFullbody from '../../assets/images/lorelei-fullbody.png'
 import brunoFullbody from '../../assets/images/bruno-fullbody.png'
 import agathaFullbody from '../../assets/images/agatha-fullbody.png'
 import lanceFullbody from '../../assets/images/lance-fullbody.png'
+import rockyFace from '../../assets/images/rocky-face.png'
 
 
 const BattleTrainerView = () => {
@@ -708,6 +709,9 @@ const BattleTrainerView = () => {
         if (opponent.name === 'lance') {
             return lanceFullbody
         }
+        if (opponent.name === 'rocky') {
+            return rockyFace
+        }
     }
 
     const endBattle = (e) => {
@@ -988,13 +992,21 @@ const BattleTrainerView = () => {
                 <Navbar />
                 <div className="trainer-dialogue-container">
                     <div className="trainer-dialogue-box">
-                        <div className="trainer-image">
-                            <img src={getTrainerImage()}></img>
-                        </div>
-                        <div className="trainer-dialogue">
-                            <h1>{capFirstLetter(opponent.name)}</h1>
-                            <h3>{opponent.pre_battle_quote}</h3>
-                            <button onClick={clickToBattle}>BATTLE!</button>
+                        {opponent.name === 'rocky' ? (
+                            <div className="trainer-image-rocky">
+                                <img src={getTrainerImage()}></img>
+                            </div>
+                        ) : (
+                            <div className="trainer-image">
+                                <img src={getTrainerImage()}></img>
+                            </div>
+                        )}
+                        <div className="outer-trainer-dialogue">
+                            <div className="trainer-dialogue">
+                                <h1>{capFirstLetter(opponent.name)}</h1>
+                                <h3>{opponent.pre_battle_quote}</h3>
+                                <button onClick={clickToBattle}>BATTLE!</button>
+                            </div>
                         </div>
                     </div>
                 </div>

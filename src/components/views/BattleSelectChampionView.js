@@ -3,13 +3,10 @@ import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom";
 import { AppContext } from '../../context/AppContext'
 import Navbar from '../Navbar'
 import Footer from '../Footer'
-import loreleiFace from '../../assets/images/lorelei-face.png'
-import brunoFace from '../../assets/images/bruno-face.png'
-import agathaFace from '../../assets/images/agatha-face.png'
-import lanceFace from '../../assets/images/lance-face.png'
-import lock from '../../assets/images/lock.png'
+import BadgeContainer from '../BadgeContainer';
+import rockyFace from '../../assets/images/rocky-face.png'
 
-const BattleSelectEliteFourView = ({ gymLeader }) => {
+const BattleSelectChampionView = ({ }) => {
     const { user_slot1,
         user_slot_2,
         user_slot_3,
@@ -19,8 +16,8 @@ const BattleSelectEliteFourView = ({ gymLeader }) => {
         backendUrl,
         setOpponent,
         setSelectedMove,
-        checkForAbilityToChallenge,
         user,
+        checkForAbilityToChallenge
     } = useContext(AppContext)
 
     let history = useHistory();
@@ -32,6 +29,11 @@ const BattleSelectEliteFourView = ({ gymLeader }) => {
     const swapSelectionScreen = (e) => {
         e.preventDefault();
         let trainerType = e.target.id.slice(7)
+
+        if (trainerType === 'elitefour' && !user.earthbadge) {
+            alert('You have not collected all 8 Gym Badges yet!')
+            return;
+        }
 
         history.push(`./${trainerType}`)
     }
@@ -57,23 +59,10 @@ const BattleSelectEliteFourView = ({ gymLeader }) => {
                 <Navbar />
                 <div className="center-body">
                     <div className="left-box select-battle-view">
-                        <div className="trainer-container elitefour-container">
-                            <div className="select-trainer-icon"><img src={loreleiFace} onClick={challengeTrainer} id="select-button-lorelei"></img></div>
-                            {user.beatElite4_1 ? (
-                                <div className="select-trainer-icon"><img src={brunoFace} onClick={challengeTrainer} id="select-button-bruno"></img></div>
-                            ) : (
-                                <div className="select-trainer-icon"><img src={lock} onClick={challengeTrainer} id="select-button-bruno"></img></div>
-                            )}
-                            {user.beatElite4_2 ? (
-                                <div className="select-trainer-icon"><img src={agathaFace} onClick={challengeTrainer} id="select-button-agatha"></img></div>
-                            ) : (
-                                <div className="select-trainer-icon"><img src={lock} onClick={challengeTrainer} id="select-button-agatha"></img></div>
-                            )}
-                            {user.beatElite4_3 ? (
-                                <div className="select-trainer-icon"><img src={lanceFace} onClick={challengeTrainer} id="select-button-lance"></img></div>
-                            ) : (
-                                <div className="select-trainer-icon"><img src={lock} onClick={challengeTrainer} id="select-button-lance"></img></div>
-                            )}
+                        <div className="trainer-container champion-container">
+                            <div className="select-trainer-icon select-trainer-champion-icon">
+                                <img src={rockyFace} onClick={challengeTrainer} id="select-button-rocky"></img>
+                            </div>
                         </div>
                         <div className="trainer-type-button">
                             <button onClick={swapSelectionScreen} id="button-gymleaders">Gym Leaders</button>
@@ -81,7 +70,9 @@ const BattleSelectEliteFourView = ({ gymLeader }) => {
                             <button onClick={swapSelectionScreen} id="button-champion">Champion</button>
                         </div>
                     </div>
-                    <div className="right-box"></div>
+                    <div className="right-box">
+                        <BadgeContainer />
+                    </div>
                 </div>
                 <Footer />
             </div>
@@ -89,4 +80,4 @@ const BattleSelectEliteFourView = ({ gymLeader }) => {
     )
 }
 
-export default BattleSelectEliteFourView;
+export default BattleSelectChampionView;

@@ -42,10 +42,7 @@ const BattleSelectView = ({  }) => {
             alert('You have not collected all 8 Gym Badges yet!')
             return;
         }
-        if(trainerType === 'champion') {
-            alert('Champion Trainer has not yet been added!')
-            return;
-        }
+        
         history.push(`./${trainerType}`)
     }
 

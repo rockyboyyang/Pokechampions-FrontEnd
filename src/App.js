@@ -8,6 +8,7 @@ import ViewPokemonInfo from "./components/views/ViewPokemonInfo";
 import TrainerBio from "./components/views/TrainerBio";
 import BattleSelectView from "./components/views/BattleSelectView";
 import BattleSelectEliteFourView from "./components/views/BattleSelectEliteFourView";
+import BattleSelectChampionView from "./components/views/BattleSelectChampionView";
 import BattleTrainerView from "./components/views/BattleTrainerView";
 import SelectTeam from "./components/views/SelectTeam";
 import EditPokemonInfo from "./components/views/EditPokemonInfo";
@@ -301,7 +302,7 @@ const App = props => {
       return false
     }
 
-    if (trainer === 'lance' && !user.beatEite4_3) {
+    if (trainer === 'lance' && !user.beatElite4_3) {
       alert('You have not defeated Agatha yet!')
       return false
     }
@@ -354,6 +355,7 @@ const App = props => {
           <Route path="/trainers" component={TrainerBio} />
           <Route path="/battle/gymleaders" component={BattleSelectView} />
           <Route path="/battle/elitefour" component={BattleSelectEliteFourView} />
+          <Route path="/battle/champion" component={BattleSelectChampionView} />
           <Route path="/challenge/:trainer" render={(props) => <BattleTrainerView {...props} trainer={props.match.params.trainer} />} />
           <Route path="/selectteam" component={SelectTeam} />
           <Route path="/select/:pokemonName" render={(props) => <EditPokemonInfo  {...props} pokemonName={props.match.params.pokemonName} />} />

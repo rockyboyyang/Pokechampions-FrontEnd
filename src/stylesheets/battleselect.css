@@ -87,3 +87,16 @@
     outline: none;
 }
 
+.select-trainer-champion-icon {
+    width: 25%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.champion-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

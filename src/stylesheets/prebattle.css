@@ -17,12 +17,27 @@
 .trainer-image {
     height: 100%;
     width:100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .trainer-image > img {
-    height: 550px;
-    width: 100%;
+    height: 400px;
+    width: 75%;
     position: relative;
+}
+
+.trainer-image-rocky {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.trainer-image-rocky > img{
+    height: 50%;
+    width: 80%;
+    border-radius: 20px;
 }
 
 .trainer-dialogue {
@@ -63,4 +78,11 @@
 
 .trainer-dialogue > button:focus {
     outline: none;
+}
+
+
+.outer-trainer-dialogue {
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
 }
