@@ -343,7 +343,8 @@ const App = props => {
                                     opponent,
                                     back_spritesApi,
                                     checkForAbilityToChallenge,
-                                    adjustName, }
+                                    adjustName,
+                                    shinySpritesApi }
                                     }>
         <Switch>
           <Route exact path="/" render={(props) => <Redirect to='/home'/>}/>

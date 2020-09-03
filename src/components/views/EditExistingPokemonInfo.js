@@ -7,6 +7,7 @@ import Footer from '../Footer'
 const EditExistingPokemonInfo = ({ pokemonName }) => {
     const { pokemonList,
         spritesApi,
+        shinySpritesApi,
         user,
         setUser,
         listOfPokemonDetails,
@@ -38,6 +39,8 @@ const EditExistingPokemonInfo = ({ pokemonName }) => {
     const [slot_2, setSlot_2] = useState({ name: '-' })
     const [slot_3, setSlot_3] = useState({ name: '-' })
     const [slot_4, setSlot_4] = useState({ name: '-' })
+    const [shiny, setShiny] = useState(false)
+
     // const [userSelectedPokemon, setUserSelectedPokemon] = useState({
         //     pokemon: pokemonName,
         //     pokemonType: listOfPokemonDetails[pokemonName].types,
@@ -116,6 +119,7 @@ const EditExistingPokemonInfo = ({ pokemonName }) => {
             moveSlot_2: slot_2,
             moveSlot_3: slot_3,
             moveSlot_4: slot_4,
+            isShiny: shiny,
         };
 
         const res = await fetch(backendUrl + `/api/session_user/${user.id}/edit_pokemon_slot/${e.target.id}`, {
@@ -182,6 +186,11 @@ const EditExistingPokemonInfo = ({ pokemonName }) => {
         setListOfPokemonDetails(tempDetails)
     }
 
+    const changeToShiny = () => {
+        if (!shiny) setShiny(true)
+        if (shiny) setShiny(false)
+    }
+
     if (Object.keys(listOfPokemonDetails).length ) {
         return (
             <div className="view-body">
@@ -230,14 +239,34 @@ const EditExistingPokemonInfo = ({ pokemonName }) => {
                                 <div className="change-form-buttons">
                                     <div className="regular-form" onClick={changeToRegularForm}>Regular</div>
                                     <div className="Alolan-form" onClick={changeToAlolan}>Alolan</div>
+                                    {user.beatChampion ? (
+                                        <div className="shiny" onClick={changeToShiny}>Shiny Form</div>
+                                    ) : (
+                                        <></>
+                                    )}
                                 </div>
-                                <img src={`${spritesApi}/${adjustName(pokemonName)}.gif`} alt={pokemonName}></img>
+                                {shiny ? (
+                                    <img src={`${shinySpritesApi}/${adjustName(pokemonName)}.gif`} alt={pokemonName}></img>
+                                ) : (
+                                    <img src={`${spritesApi}/${adjustName(pokemonName)}.gif`} alt={pokemonName}></img>
+                                )}
                             </div>
                         ) : (
-                            <div className="sprite-container">
-                                <img src={`${spritesApi}/${adjustName(pokemonName)}.gif`} alt={pokemonName}></img>
+                            <div className="sprite-container if-have-forms">
+                                <div className="change-form-buttons">
+                                    {user.beatChampion ? (
+                                        <div className="shiny" onClick={changeToShiny}>Shiny Form</div>
+                                    ) : (
+                                            <></>
+                                        )}
+                                </div>
+                                {shiny ? (
+                                    <img src={`${shinySpritesApi}/${adjustName(pokemonName)}.gif`} alt={pokemonName}></img>
+                                ) : (
+                                    <img src={`${spritesApi}/${adjustName(pokemonName)}.gif`} alt={pokemonName}></img>
+                                )}
                             </div>
-                        )}
+                            )}
                         <div className="move-slots-container">
                             <button className="move-slot slot-1" onClick={slot_1Handler}>{capFirstLetter(slot_1.name)}</button>
                             <button className="move-slot slot-2" onClick={slot_2Handler}>{capFirstLetter(slot_2.name)}</button>
