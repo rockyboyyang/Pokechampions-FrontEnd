@@ -240,7 +240,7 @@ const EditExistingPokemonInfo = ({ pokemonName }) => {
                                     <div className="regular-form" onClick={changeToRegularForm}>Regular</div>
                                     <div className="Alolan-form" onClick={changeToAlolan}>Alolan</div>
                                     {user.beatChampion ? (
-                                        <div className="shiny" onClick={changeToShiny}>Shiny Form</div>
+                                        <div className="shiny" onClick={changeToShiny}>Shiny</div>
                                     ) : (
                                         <></>
                                     )}
@@ -255,10 +255,10 @@ const EditExistingPokemonInfo = ({ pokemonName }) => {
                             <div className="sprite-container if-have-forms">
                                 <div className="change-form-buttons">
                                     {user.beatChampion ? (
-                                        <div className="shiny" onClick={changeToShiny}>Shiny Form</div>
+                                        <div className="shiny" onClick={changeToShiny}>Shiny</div>
                                     ) : (
-                                            <></>
-                                        )}
+                                        <></>
+                                    )}
                                 </div>
                                 {shiny ? (
                                     <img src={`${shinySpritesApi}/${adjustName(pokemonName)}.gif`} alt={pokemonName}></img>

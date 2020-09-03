@@ -4,7 +4,7 @@ import { AppContext } from '../../context/AppContext'
 import Navbar from '../Navbar'
 import Footer from '../Footer'
 
-const TrainerBio = () => {
+const SelectTrainerBio = () => {
     return (
         <div className="view-body">
             <Navbar />
@@ -17,4 +17,4 @@ const TrainerBio = () => {
     )
 }
 
-export default TrainerBio;
+export default SelectTrainerBio;

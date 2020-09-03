@@ -5,7 +5,7 @@ import Signup from "./components/views/Signup";
 import Home from "./components/views/Home";
 import Pokedex from "./components/views/Pokedex";
 import ViewPokemonInfo from "./components/views/ViewPokemonInfo";
-import TrainerBio from "./components/views/TrainerBio";
+import SelectTrainerBio from "./components/views/SelectTrainerBio";
 import BattleSelectView from "./components/views/BattleSelectView";
 import BattleSelectEliteFourView from "./components/views/BattleSelectEliteFourView";
 import BattleSelectChampionView from "./components/views/BattleSelectChampionView";
@@ -355,7 +355,7 @@ const App = props => {
           <Route path="/home" component={Home} />
           <Route path="/pokedex" component={Pokedex} />
           <Route path="/viewpokemon/:pokemonName" render={(props) => <ViewPokemonInfo  {...props} pokemonName={props.match.params.pokemonName} />} />
-          <Route path="/trainers" component={TrainerBio} />
+          <Route path="/selectbio" component={SelectTrainerBio} />
           <Route path="/battle/gymleaders" component={BattleSelectView} />
           <Route path="/battle/elitefour" component={BattleSelectEliteFourView} />
           <Route path="/battle/champion" component={BattleSelectChampionView} />

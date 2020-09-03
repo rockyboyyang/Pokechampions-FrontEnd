@@ -7,6 +7,7 @@ import Footer from '../Footer'
 const ViewPokemonInfo = ({ pokemonName }) => {
     const { pokemonList,
         spritesApi,
+        shinySpritesApi,
         user,
         setUser,
         listOfPokemonDetails,
@@ -33,6 +34,7 @@ const ViewPokemonInfo = ({ pokemonName }) => {
     } = useContext(AppContext)
 
     let [dexEntry, setDexEntry] = useState('')
+    const [shiny, setShiny] = useState(false)
     let history = useHistory({ forceRefresh: true })
 
 
@@ -105,6 +107,12 @@ const ViewPokemonInfo = ({ pokemonName }) => {
         grabDexEntry()
     }, [])
 
+
+    const changeToShiny = () => {
+        if (!shiny) setShiny(true)
+        if (shiny) setShiny(false)
+    }
+
     if (Object.keys(listOfPokemonDetails).length) {
         return (
             <div className="view-body">
@@ -152,13 +160,33 @@ const ViewPokemonInfo = ({ pokemonName }) => {
                                 <div className="change-form-buttons">
                                     <div className="regular-form" onClick={changeToRegularForm}>Regular</div>
                                     <div className="Alolan-form" onClick={changeToAlolan}>Alolan</div>
+                                    {user.beatChampion ? (
+                                        <div className="shiny" onClick={changeToShiny}>Shiny</div>
+                                    ) : (
+                                        <></>
+                                    )}
                                 </div>
-                                <img src={`${spritesApi}/${adjustName(pokemonName)}.gif`} alt={pokemonName}></img>
+                                {shiny ? (
+                                    <img src={`${shinySpritesApi}/${adjustName(pokemonName)}.gif`} alt={pokemonName}></img>
+                                ) : (
+                                    <img src={`${spritesApi}/${adjustName(pokemonName)}.gif`} alt={pokemonName}></img>
+                                )}
                             </div>
                         ) : (
-                                <div className="sprite-container">
-                                    <img src={`${spritesApi}/${adjustName(pokemonName)}.gif`} alt={pokemonName}></img>
+                            <div className="sprite-container if-have-forms">
+                                <div className="change-form-buttons">
+                                    {user.beatChampion ? (
+                                        <div className="shiny" onClick={changeToShiny}>Shiny</div>
+                                    ) : (
+                                        <></>
+                                    )}
                                 </div>
+                                {shiny ? (
+                                    <img src={`${shinySpritesApi}/${adjustName(pokemonName)}.gif`} alt={pokemonName}></img>
+                                ) : (
+                                    <img src={`${spritesApi}/${adjustName(pokemonName)}.gif`} alt={pokemonName}></img>
+                                )}
+                            </div>
                             )}
                         <div className="move-slots-container">
                             <div className="switch-sequence-container" id='dex-entry'>
