@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom";
 import { AppContext } from '../../context/AppContext'
 import Navbar from '../Navbar'
 import Footer from '../Footer'
+import BadgeContainer from '../BadgeContainer';
 
 const Pokedex = () => {
     const { setSelectedMove, pokemonList, capFirstLetter, spritesApi, adjustName } = useContext(AppContext)
@@ -23,7 +24,9 @@ const Pokedex = () => {
                 <div className="left-box pokemon-list">{pokemonList.map((pokemon) => (
                     <div id={pokemon.name} onClick={routeToPokemonDetails}><p>{capFirstLetter(pokemon.name)}</p> <img src={spritesApi + `${adjustName(pokemon.name)}.gif`} /></div>
                 ))}</div>
-                <div className="right-box"></div>
+                <div className="right-box">
+                    <BadgeContainer />
+                </div>
             </div>
             <Footer />
         </div>

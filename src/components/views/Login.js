@@ -85,6 +85,10 @@ const Login = () => {
             </div>
             <div className="form-container">
                 <form>
+                    <div className="personal-pages-link">
+                        <a className="fa fa-github-square" href='https://github.com/rockyboyyang'></a>
+                        <a className="fa fa-linkedin" href='https://www.linkedin.com/in/rocky-yang-8a6669b8/'></a>
+                    </div>
                     <div className="entry-fields">
                         <input type="text" placeholder="Enter Username" value={username} onChange={handleUsernameChange}></input>
                         <input type="password" placeholder="Enter Password" value={password} onChange={handlePasswordChange}></input>
@@ -93,8 +97,8 @@ const Login = () => {
                     <p id='link-to-login-signup' onClick={goToSignup}>Don't have an account?</p>
                     <div className='demoUserButtons'>
                         <button onClick={login} id="demouser">Demo</button>
-                        <button onClick={login} id="demouserallgymleader">Demo def. Gym Leaders</button>
-                        <button onClick={login} id="demouserallelitefour">Demo def. Elite Four</button>
+                        {/* <button onClick={login} id="demouserallgymleader">Demo def. Gym Leaders</button>
+                        <button onClick={login} id="demouserallelitefour">Demo def. Elite Four</button> */}
                         <button onClick={login} id="demouserchampion">Demo def. Champion</button>
                     </div>
                 </form>

@@ -89,6 +89,10 @@ const Signup = () => {
             </div>
             <div className="form-container">
                 <form>
+                    <div className="personal-pages-link">
+                        <a className="fa fa-github-square" href='https://github.com/rockyboyyang'></a>
+                        <a className="fa fa-linkedin" href='https://www.linkedin.com/in/rocky-yang-8a6669b8/'></a>
+                    </div>
                     <div className="entry-fields">
                         <input type="text" placeholder="Create Username" value={username} onChange={handleUsernameChange}></input>
                         <input type="password" placeholder="Enter Password" value={password} onChange={handlePasswordChange}></input>

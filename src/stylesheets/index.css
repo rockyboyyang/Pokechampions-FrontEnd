@@ -7,6 +7,7 @@
 @import 'prebattle.css';
 @import 'battletrainerview.css';
 @import 'navbar.css';
+@import 'viewbio.css';
 
 html,
 body,
@@ -156,10 +157,19 @@ body,
 
 .fa {
   font-size: 40px;
-  color: #292929;
+  color: #f7ab96;
   text-decoration: none;
   padding: 0px 10px;
 }
+
+.fa:hover {
+  color: rgb(255, 55, 55);
+  transition-duration: .5s;
+}
+
+/* .personal-pages-link {
+  justify-self: flex-start;
+} */
 
 .footer {
   background-color: #e9f3e4;

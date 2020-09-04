@@ -6,6 +6,8 @@ import Home from "./components/views/Home";
 import Pokedex from "./components/views/Pokedex";
 import ViewPokemonInfo from "./components/views/ViewPokemonInfo";
 import SelectTrainerBio from "./components/views/SelectTrainerBio";
+import SelectEliteFourBio from "./components/views/SelectEliteFourBio";
+import SelectChampionBio from "./components/views/SelectChampionBio";
 import BattleSelectView from "./components/views/BattleSelectView";
 import BattleSelectEliteFourView from "./components/views/BattleSelectEliteFourView";
 import BattleSelectChampionView from "./components/views/BattleSelectChampionView";
@@ -13,6 +15,7 @@ import BattleTrainerView from "./components/views/BattleTrainerView";
 import SelectTeam from "./components/views/SelectTeam";
 import EditPokemonInfo from "./components/views/EditPokemonInfo";
 import EditExistingPokemonInfo from "./components/views/EditExistingPokemonInfo";
+import ViewBio from "./components/views/ViewBio";
 import { AppContext } from './context/AppContext'
 
 
@@ -36,6 +39,8 @@ const App = props => {
   const [listOfPokemonDetails, setListOfPokemonDetails] = useState({})
   const [selectedMove, setSelectedMove] = useState('')
   const [opponent, setOpponent] = useState('')
+  const [battleSequence, setBattleSequence] = useState(false)
+
   let history = useHistory();
   const checkUserExist = () => {
     try{
@@ -269,7 +274,7 @@ const App = props => {
     }
 
     if (trainer === 'erika' && !user.thunderbadge) {
-      alert('You have not received the Thunderrbadge yet!')
+      alert('You have not received the Thunderbadge yet!')
       return false
     }
 
@@ -310,6 +315,74 @@ const App = props => {
     return true
   }
 
+  const checkForAbilityToViewBio = (trainer) => {
+    if (trainer === 'brock' && !user.boulderbadge) {
+      alert('You have not received the Boulderbadge yet!')
+      return false
+    }
+
+    if (trainer === 'misty' && !user.cascadebadge) {
+      alert('You have not received the Cascadebadge yet!')
+      return false
+    }
+
+    if (trainer === 'ltsurge' && !user.thunderbadge) {
+      alert('You have not received the Thunderbadge yet!')
+      return false
+    }
+
+    if (trainer === 'erika' && !user.rainbowbadge) {
+      alert('You have not received the Rainbowbadge yet!')
+      return false
+    }
+
+    if (trainer === 'koga' && !user.soulbadge) {
+      alert('You have not received the Soulbadge yet!')
+      return false
+    }
+
+    if (trainer === 'sabrina' && !user.marshbadge) {
+      alert('You have not received the Marshbadge yet!')
+      return false
+    }
+
+    if (trainer === 'blaine' && !user.volcanobadge) {
+      alert('You have not received the Volcanobadge yet!')
+      return false
+    }
+
+    if (trainer === 'giovanni' && !user.earthbadge) {
+      alert('You have not received the Earthbadge yet!')
+      return false
+    }
+
+    if (trainer === 'lorelei' && !user.beatElite4_1) {
+      alert('You have not defeated Lorelei yet!')
+      return false
+    }
+
+    if (trainer === 'bruno' && !user.beatElite4_2) {
+      alert('You have not defeated Bruno yet!')
+      return false
+    }
+
+    if (trainer === 'agatha' && !user.beatElite4_3) {
+      alert('You have not defeated Agatha yet!')
+      return false
+    }
+
+    if (trainer === 'lance' && !user.beatElite4_4) {
+      alert('You have not defeated Lance yet!')
+      return false
+    }
+
+    if (trainer === 'rocky' && !user.beatChampion) {
+      alert('You have not defeated Rocky yet!')
+      return false
+    }
+
+    return true
+  }
 
   return (
     <BrowserRouter>
@@ -344,9 +417,12 @@ const App = props => {
                                     opponent,
                                     back_spritesApi,
                                     checkForAbilityToChallenge,
+                                    checkForAbilityToViewBio,
                                     adjustName,
                                     shinySpritesApi,
-                                    shinyBack_spritesApi }
+                                    shinyBack_spritesApi,
+                                    battleSequence,
+                                    setBattleSequence }
                                     }>
         <Switch>
           <Route exact path="/" render={(props) => <Redirect to='/home'/>}/>
@@ -355,7 +431,10 @@ const App = props => {
           <Route path="/home" component={Home} />
           <Route path="/pokedex" component={Pokedex} />
           <Route path="/viewpokemon/:pokemonName" render={(props) => <ViewPokemonInfo  {...props} pokemonName={props.match.params.pokemonName} />} />
-          <Route path="/selectbio" component={SelectTrainerBio} />
+          <Route path="/viewbio" component={ViewBio} />
+          <Route path="/selectbio/gymleaders" component={SelectTrainerBio} />
+          <Route path="/selectbio/elitefour" component={SelectEliteFourBio} />
+          <Route path="/selectbio/champion" component={SelectChampionBio} />
           <Route path="/battle/gymleaders" component={BattleSelectView} />
           <Route path="/battle/elitefour" component={BattleSelectEliteFourView} />
           <Route path="/battle/champion" component={BattleSelectChampionView} />

@@ -36,74 +36,78 @@ const SelectTeam = () => {
                         <div className="header">
                             <h1>Pokemon Team</h1>
                         </div>
-                        <div className="pokemon-team-container">
-                            {user.slot_1 !== null ? (
-                                <>
-                                    {JSON.parse(user.slot_1).isShiny ? (
-                                        <div className={`user-pokemon-slot_1`} id={JSON.parse(user.slot_1).pokemon} onClick={routeToExistingPokemonBattleDetails}><img className="user-pokemon-slot_1" src={shinySpritesApi + `${JSON.parse(user.slot_1).pokemon}.gif`} /></div>
-                                    ) : (
-                                        <div className={`user-pokemon-slot_1`} id={JSON.parse(user.slot_1).pokemon} onClick={routeToExistingPokemonBattleDetails}><img className="user-pokemon-slot_1" src={spritesApi + `${JSON.parse(user.slot_1).pokemon}.gif`} /></div>
-                                    )}
-                                </>
-                            ) : (
-                                <div className="user-pokemon-slot_1"></div>
-                            )}
-                            {user.slot_2 !== null ? (
-                                <>
-                                    {JSON.parse(user.slot_2).isShiny ? (
-                                        <div className={`user-pokemon-slot_2`} id={JSON.parse(user.slot_2).pokemon} onClick={routeToExistingPokemonBattleDetails}><img className="user-pokemon-slot_2" src={shinySpritesApi + `${JSON.parse(user.slot_2).pokemon}.gif`} /></div>
-                                    ) : (
-                                        <div className={`user-pokemon-slot_2`} id={JSON.parse(user.slot_2).pokemon} onClick={routeToExistingPokemonBattleDetails}><img className="user-pokemon-slot_2" src={spritesApi + `${JSON.parse(user.slot_2).pokemon}.gif`} /></div>
-                                    )}
-                                </>
-                            ) : (
-                                 <div className="user-pokemon-slot_2"></div>
-                            )}
-                            {user.slot_3 !== null ? (
-                                <>
-                                    {JSON.parse(user.slot_3).isShiny ? (
-                                        <div className={`user-pokemon-slot_3`} id={JSON.parse(user.slot_3).pokemon} onClick={routeToExistingPokemonBattleDetails}><img className="user-pokemon-slot_3" src={shinySpritesApi + `${JSON.parse(user.slot_3).pokemon}.gif`} /></div>
-                                    ) : (
-                                         <div className={`user-pokemon-slot_3`} id={JSON.parse(user.slot_3).pokemon} onClick={routeToExistingPokemonBattleDetails}><img className="user-pokemon-slot_3" src={spritesApi + `${JSON.parse(user.slot_3).pokemon}.gif`} /></div>
-                                    )}
-                                </>
-                            ) : (
-                                <div className="user-pokemon-slot_3"></div>
-                            )}
-                            {user.slot_4 !== null ? (
-                                <>
-                                    {JSON.parse(user.slot_4).isShiny ? (
-                                        <div className={`user-pokemon-slot_4`} id={JSON.parse(user.slot_4).pokemon} onClick={routeToExistingPokemonBattleDetails}><img className="user-pokemon-slot_4" src={shinySpritesApi + `${JSON.parse(user.slot_4).pokemon}.gif`} /></div>
-                                    ) : (
-                                        <div className={`user-pokemon-slot_4`} id={JSON.parse(user.slot_4).pokemon} onClick={routeToExistingPokemonBattleDetails}><img className="user-pokemon-slot_4" src={spritesApi + `${JSON.parse(user.slot_4).pokemon}.gif`} /></div>
-                                     )}
-                                </>
-                            ) : (
-                                <div className="user-pokemon-slot_4"></div>
-                            )}
-                            {user.slot_5 !== null ? (
-                                <>
-                                    {JSON.parse(user.slot_5).isShiny ? (
-                                        <div className={`user-pokemon-slot_5`} id={JSON.parse(user.slot_5).pokemon} onClick={routeToExistingPokemonBattleDetails}><img className="user-pokemon-slot_5" src={shinySpritesApi + `${JSON.parse(user.slot_5).pokemon}.gif`} /></div>
-                                    ) : (
-                                        <div className={`user-pokemon-slot_5`} id={JSON.parse(user.slot_5).pokemon} onClick={routeToExistingPokemonBattleDetails}><img className="user-pokemon-slot_5" src={spritesApi + `${JSON.parse(user.slot_5).pokemon}.gif`} /></div>
-                                    )}
-                                </>
-                            ) : (
-                                 <div className="user-pokemon-slot_5"></div>
-                            )}
-                            {user.slot_6 !== null ? (
-                                <>
-                                    {JSON.parse(user.slot_6).isShiny ? (
-                                        <div className={`user-pokemon-slot_6`} id={JSON.parse(user.slot_6).pokemon} onClick={routeToExistingPokemonBattleDetails}><img className="user-pokemon-slot_6" src={shinySpritesApi + `${JSON.parse(user.slot_6).pokemon}.gif`} /></div>
-                                    ) : (
-                                        <div className={`user-pokemon-slot_6`} id={JSON.parse(user.slot_6).pokemon} onClick={routeToExistingPokemonBattleDetails}><img className="user-pokemon-slot_6" src={spritesApi + `${JSON.parse(user.slot_6).pokemon}.gif`} /></div>
-                                    )}
-                                </>
-                            ) : (
-                                <div className="user-pokemon-slot_6"></div>
-                            )}
-                        </div>
+                        {user ? (
+                            <div className="pokemon-team-container">
+                                {user.slot_1 !== null ? (
+                                    <>
+                                        {JSON.parse(user.slot_1).isShiny ? (
+                                            <div className={`user-pokemon-slot_1`} id={JSON.parse(user.slot_1).pokemon} onClick={routeToExistingPokemonBattleDetails}><img className="user-pokemon-slot_1" src={shinySpritesApi + `${JSON.parse(user.slot_1).pokemon}.gif`} /></div>
+                                        ) : (
+                                            <div className={`user-pokemon-slot_1`} id={JSON.parse(user.slot_1).pokemon} onClick={routeToExistingPokemonBattleDetails}><img className="user-pokemon-slot_1" src={spritesApi + `${JSON.parse(user.slot_1).pokemon}.gif`} /></div>
+                                        )}
+                                    </>
+                                ) : (
+                                    <div className="user-pokemon-slot_1"></div>
+                                )}
+                                {user.slot_2 !== null ? (
+                                    <>
+                                        {JSON.parse(user.slot_2).isShiny ? (
+                                            <div className={`user-pokemon-slot_2`} id={JSON.parse(user.slot_2).pokemon} onClick={routeToExistingPokemonBattleDetails}><img className="user-pokemon-slot_2" src={shinySpritesApi + `${JSON.parse(user.slot_2).pokemon}.gif`} /></div>
+                                        ) : (
+                                            <div className={`user-pokemon-slot_2`} id={JSON.parse(user.slot_2).pokemon} onClick={routeToExistingPokemonBattleDetails}><img className="user-pokemon-slot_2" src={spritesApi + `${JSON.parse(user.slot_2).pokemon}.gif`} /></div>
+                                        )}
+                                    </>
+                                ) : (
+                                    <div className="user-pokemon-slot_2"></div>
+                                )}
+                                {user.slot_3 !== null ? (
+                                    <>
+                                        {JSON.parse(user.slot_3).isShiny ? (
+                                            <div className={`user-pokemon-slot_3`} id={JSON.parse(user.slot_3).pokemon} onClick={routeToExistingPokemonBattleDetails}><img className="user-pokemon-slot_3" src={shinySpritesApi + `${JSON.parse(user.slot_3).pokemon}.gif`} /></div>
+                                        ) : (
+                                            <div className={`user-pokemon-slot_3`} id={JSON.parse(user.slot_3).pokemon} onClick={routeToExistingPokemonBattleDetails}><img className="user-pokemon-slot_3" src={spritesApi + `${JSON.parse(user.slot_3).pokemon}.gif`} /></div>
+                                        )}
+                                    </>
+                                ) : (
+                                    <div className="user-pokemon-slot_3"></div>
+                                )}
+                                {user.slot_4 !== null ? (
+                                    <>
+                                        {JSON.parse(user.slot_4).isShiny ? (
+                                            <div className={`user-pokemon-slot_4`} id={JSON.parse(user.slot_4).pokemon} onClick={routeToExistingPokemonBattleDetails}><img className="user-pokemon-slot_4" src={shinySpritesApi + `${JSON.parse(user.slot_4).pokemon}.gif`} /></div>
+                                        ) : (
+                                            <div className={`user-pokemon-slot_4`} id={JSON.parse(user.slot_4).pokemon} onClick={routeToExistingPokemonBattleDetails}><img className="user-pokemon-slot_4" src={spritesApi + `${JSON.parse(user.slot_4).pokemon}.gif`} /></div>
+                                        )}
+                                    </>
+                                ) : (
+                                    <div className="user-pokemon-slot_4"></div>
+                                )}
+                                {user.slot_5 !== null ? (
+                                    <>
+                                        {JSON.parse(user.slot_5).isShiny ? (
+                                            <div className={`user-pokemon-slot_5`} id={JSON.parse(user.slot_5).pokemon} onClick={routeToExistingPokemonBattleDetails}><img className="user-pokemon-slot_5" src={shinySpritesApi + `${JSON.parse(user.slot_5).pokemon}.gif`} /></div>
+                                        ) : (
+                                            <div className={`user-pokemon-slot_5`} id={JSON.parse(user.slot_5).pokemon} onClick={routeToExistingPokemonBattleDetails}><img className="user-pokemon-slot_5" src={spritesApi + `${JSON.parse(user.slot_5).pokemon}.gif`} /></div>
+                                        )}
+                                    </>
+                                ) : (
+                                    <div className="user-pokemon-slot_5"></div>
+                                )}
+                                {user.slot_6 !== null ? (
+                                    <>
+                                        {JSON.parse(user.slot_6).isShiny ? (
+                                            <div className={`user-pokemon-slot_6`} id={JSON.parse(user.slot_6).pokemon} onClick={routeToExistingPokemonBattleDetails}><img className="user-pokemon-slot_6" src={shinySpritesApi + `${JSON.parse(user.slot_6).pokemon}.gif`} /></div>
+                                        ) : (
+                                            <div className={`user-pokemon-slot_6`} id={JSON.parse(user.slot_6).pokemon} onClick={routeToExistingPokemonBattleDetails}><img className="user-pokemon-slot_6" src={spritesApi + `${JSON.parse(user.slot_6).pokemon}.gif`} /></div>
+                                        )}
+                                    </>
+                                ) : (
+                                    <div className="user-pokemon-slot_6"></div>
+                                )}
+                            </div>
+                        ) : (
+                            <></>
+                        )}
                     </div>
                 </div>
                 <Footer />

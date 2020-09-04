@@ -1,0 +1,86 @@
+.trainer-bio-container {
+    height: 100%;
+    width: 100%;
+    /* width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center; */
+    /* display: grid;
+    grid-template-columns: 1fr 1fr; */
+}
+
+.trainer-bio-box {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background-color: #e9f3e4;
+    box-shadow: 0 2px 12px 0 rgba(255,255,255,.56)
+}
+
+.trainer-bio {
+    background-color: white;
+    height: 80%;
+    width: 90%;
+    /* border: 5px solid black; */
+    /* box-shadow: 0 2px 12px 0 rgba(255,255,255,.56); */
+    border-radius: 20px;
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 5px;
+    flex-direction: column;
+    border: rgba(0, 0, 0, 0.77) solid 5px;
+}
+
+.outer-trainer-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.outer-trainer-bio {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.trainer-image-bio {
+    height: 100%;
+    width:100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.trainer-image-bio > img {
+    height: 525px;
+    width: 75%;
+    position: relative;
+}
+
+.trainer-pokemon-team-container {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    height: 100%;
+    margin: auto;
+    width: 100%;
+}
+
+.trainer-pokemon-team-container > div{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    box-shadow: 0 0px 12px 0 rgba(255, 255, 255, 0.848);
+}
+
+.trainer-pokemon-team-container img {
+    max-height: 65%;
+    max-width: 65%;
+}

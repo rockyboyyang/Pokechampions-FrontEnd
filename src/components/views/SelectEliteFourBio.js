@@ -20,7 +20,7 @@ const BattleSelectEliteFourView = ({ gymLeader }) => {
         backendUrl,
         setOpponent,
         setSelectedMove,
-        checkForAbilityToChallenge,
+        checkForAbilityToViewBio,
         user,
     } = useContext(AppContext)
 
@@ -34,7 +34,7 @@ const BattleSelectEliteFourView = ({ gymLeader }) => {
         e.preventDefault();
         let trainerType = e.target.id.slice(7)
 
-        if (trainerType === 'champion' && !user.beatElite4_4) {
+        if (trainerType === 'champion' && !user.beatChampion) {
             alert('You have not defeated the Elite Four yet!')
             return;
         }
@@ -42,16 +42,16 @@ const BattleSelectEliteFourView = ({ gymLeader }) => {
         history.push(`./${trainerType}`)
     }
 
-    const challengeTrainer = (e) => {
+    const viewTrainerBio = (e) => {
         e.preventDefault()
         let trainer = e.target.id.slice(14)
-        if (!checkForAbilityToChallenge(trainer)) return
+        if (!checkForAbilityToViewBio(trainer)) return
         const data = async (trainerName) => {
             const response = await fetch(backendUrl + `/api/trainers/${e.target.id.slice(14)}`);
             const { opponentData } = await response.json();
             if (response.ok) {
                 setOpponent(opponentData)
-                history.push(`../challenge/${trainerName}`)
+                history.push(`../viewbio/${trainerName}`)
             }
         };
         data(trainer)
@@ -64,21 +64,25 @@ const BattleSelectEliteFourView = ({ gymLeader }) => {
                 <div className="center-body">
                     <div className="left-box select-battle-view">
                         <div className="trainer-container elitefour-container">
-                            <div className="select-trainer-icon"><img src={loreleiFace} onClick={challengeTrainer} id="select-button-lorelei"></img></div>
                             {user.beatElite4_1 ? (
-                                <div className="select-trainer-icon"><img src={brunoFace} onClick={challengeTrainer} id="select-button-bruno"></img></div>
+                                <div className="select-trainer-icon"><img src={loreleiFace} onClick={viewTrainerBio} id="select-button-lorelei"></img></div>
                             ) : (
-                                <div className="select-trainer-icon"><img src={lock} onClick={challengeTrainer} id="select-button-bruno"></img></div>
-                            )}
+                                    <div className="select-trainer-icon"><img src={lock} onClick={viewTrainerBio} id="select-button-lorelei"></img></div>
+                                )}
                             {user.beatElite4_2 ? (
-                                <div className="select-trainer-icon"><img src={agathaFace} onClick={challengeTrainer} id="select-button-agatha"></img></div>
+                                <div className="select-trainer-icon"><img src={brunoFace} onClick={viewTrainerBio} id="select-button-bruno"></img></div>
                             ) : (
-                                <div className="select-trainer-icon"><img src={lock} onClick={challengeTrainer} id="select-button-agatha"></img></div>
+                                <div className="select-trainer-icon"><img src={lock} onClick={viewTrainerBio} id="select-button-bruno"></img></div>
                             )}
                             {user.beatElite4_3 ? (
-                                <div className="select-trainer-icon"><img src={lanceFace} onClick={challengeTrainer} id="select-button-lance"></img></div>
+                                <div className="select-trainer-icon"><img src={agathaFace} onClick={viewTrainerBio} id="select-button-agatha"></img></div>
                             ) : (
-                                <div className="select-trainer-icon"><img src={lock} onClick={challengeTrainer} id="select-button-lance"></img></div>
+                                <div className="select-trainer-icon"><img src={lock} onClick={viewTrainerBio} id="select-button-agatha"></img></div>
+                            )}
+                            {user.beatElite4_4 ? (
+                                <div className="select-trainer-icon"><img src={lanceFace} onClick={viewTrainerBio} id="select-button-lance"></img></div>
+                            ) : (
+                                <div className="select-trainer-icon"><img src={lock} onClick={viewTrainerBio} id="select-button-lance"></img></div>
                             )}
                         </div>
                         <div className="trainer-type-button">
