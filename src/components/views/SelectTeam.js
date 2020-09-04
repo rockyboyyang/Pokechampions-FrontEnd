@@ -16,7 +16,6 @@ const SelectTeam = () => {
     const routeToExistingPokemonBattleDetails = (e) => {
         e.stopPropagation();
         setCurrentSlot(e.target.className.slice(13))
-        console.log(e.target.className)
         history.push(`/select-existing/${e.currentTarget.id}`)
     }
     // useEffect(() => {

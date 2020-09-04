@@ -38,15 +38,7 @@ const EditPokemonInfo = ({ pokemonName }) => {
     const [slot_3, setSlot_3] = useState({ name: '-' })
     const [slot_4, setSlot_4] = useState({ name: '-' })
     const [shiny, setShiny] = useState(false)
-    // const [userSelectedPokemon, setUserSelectedPokemon] = useState({
-    //     pokemon: pokemonName,
-    //     pokemonType: listOfPokemonDetails[pokemonName].types,
-    //     pokemonStats: listOfPokemonDetails[pokemonName].stats,
-    //     moveSlot_1: slot_1,
-    //     moveSlot_2: slot_2,
-    //     moveSlot_3: slot_3,
-    //     moveSlot_4: slot_4,
-    // }) 
+
     let history = useHistory({ forceRefresh:true })
     const slot_1Handler = (e) => {
         e.preventDefault()
@@ -54,10 +46,14 @@ const EditPokemonInfo = ({ pokemonName }) => {
             alert('Status moves has not yet been programmed into this application!')
             return
         }
+        if (!selectedMove.power) {
+            alert('Attacking moves must have a base number for Power')
+            return
+        }
         setSlot_1(selectedMove)
-        if (slot_2.name === selectedMove.name) setSlot_2('-')
-        if (slot_3.name === selectedMove.name) setSlot_3('-')
-        if (slot_4.name === selectedMove.name) setSlot_4('-')
+        if (slot_2.name === selectedMove.name) setSlot_2({ name: '-' })
+        if (slot_3.name === selectedMove.name) setSlot_3({ name: '-' })
+        if (slot_4.name === selectedMove.name) setSlot_4({ name: '-' })
     }
     
     const slot_2Handler = (e) => {
@@ -66,10 +62,14 @@ const EditPokemonInfo = ({ pokemonName }) => {
             alert('Status moves has not yet been programmed into this application!')
             return
         }
+        if (!selectedMove.power) {
+            alert('Attacking moves must have a base number for Power')
+            return
+        }
         setSlot_2(selectedMove)
-        if (slot_1.name === selectedMove.name) setSlot_1('-')
-        if (slot_3.name === selectedMove.name) setSlot_3('-')
-        if (slot_4.name === selectedMove.name) setSlot_4('-')
+        if (slot_1.name === selectedMove.name) setSlot_1({ name: '-' })
+        if (slot_3.name === selectedMove.name) setSlot_3({ name: '-' })
+        if (slot_4.name === selectedMove.name) setSlot_4({ name: '-' })
     }
 
     const slot_3Handler = (e) => {
@@ -78,10 +78,14 @@ const EditPokemonInfo = ({ pokemonName }) => {
             alert('Status moves has not yet been programmed into this application!')
             return
         }
+        if (!selectedMove.power) {
+            alert('Attacking moves must have a base number for Power')
+            return
+        }
         setSlot_3(selectedMove)
-        if (slot_2.name === selectedMove.name) setSlot_2('-')
-        if (slot_1.name === selectedMove.name) setSlot_1('-')
-        if (slot_4.name === selectedMove.name) setSlot_4('-')
+        if (slot_2.name === selectedMove.name) setSlot_2({ name: '-' })
+        if (slot_1.name === selectedMove.name) setSlot_1({ name: '-' })
+        if (slot_4.name === selectedMove.name) setSlot_4({ name: '-' })
     }
 
     const slot_4Handler = (e) => {
@@ -90,15 +94,28 @@ const EditPokemonInfo = ({ pokemonName }) => {
             alert('Status moves has not yet been programmed into this application!')
             return
         }
+        if(!selectedMove.power) {
+            alert('Attacking moves must have a base number for Power')
+            return
+        }
         setSlot_4(selectedMove)
-        if (slot_2.name === selectedMove.name) setSlot_2('-')
-        if (slot_3.name === selectedMove.name) setSlot_3('-')
-        if (slot_1.name=== selectedMove.name) setSlot_1('-')
+        if (slot_2.name === selectedMove.name) setSlot_2({ name: '-' })
+        if (slot_3.name === selectedMove.name) setSlot_3({ name: '-' })
+        if (slot_1.name === selectedMove.name) setSlot_1({ name: '-' })
     }
 
     const fetchPostToUserSlot = async(e) => {
         e.preventDefault()
         setSelectedMove('')
+        if(
+            slot_1.name === '-' &&
+            slot_2.name === '-' &&
+            slot_3.name === '-' &&
+            slot_4.name === '-'
+        ) {
+            alert('Your Pokemon must have at least ONE move!')
+            return;
+        }
         let pokemonInfo = {
             pokemon: pokemonName,
             pokemonType: listOfPokemonDetails[pokemonName].types,
@@ -119,7 +136,6 @@ const EditPokemonInfo = ({ pokemonName }) => {
             const { user } = await res.json();
             setUser(user)
             window.localStorage.user = JSON.stringify(user);
-            console.log(user)
             setUser_slot_1(JSON.parse(user.slot_1)) 
             setUser_slot_2(JSON.parse(user.slot_2))
             setUser_slot_3(JSON.parse(user.slot_3))

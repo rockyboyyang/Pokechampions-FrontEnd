@@ -53,7 +53,7 @@ const App = props => {
       setUser_slot_6(JSON.parse(user.slot_6))
     }
     catch(e) {
-      console.log(e)
+
     }
   }
 
@@ -190,24 +190,8 @@ const App = props => {
 
       // return pokemonInfo
     }
-    // let i = 0;
-
-    // while(i < pokemonList.length) {
-    //   const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonList[i].name}`);
-    //   const results = await res.json()
-    //   if (pokemonList[i].name === 'nidoran-m') pokemonList[i].name = 'nidoranm'
-    //   if (pokemonList[i].name === 'mr-mime') pokemonList[i].name = 'mrmime'
-    //   if (pokemonList[i].name === 'nidoran-f') pokemonList[i].name = 'nidoranf'
-    //   // pokemonList[28].name = 'nidoranf'
-    //   // pokemonList[121].name = 'mrmime'
-    //   // const realSprites = results.sprites.versions['generation-vii']['ultra-sun-ultra-moon']
-    //   pokemonInfo[pokemonList[i].name] = results
-    //   console.log(results)
-    //   i++
-    // }
     mergeSort(pokemonList).then(setListOfPokemonDetails(pokemonInfo))
-    // console.log(mergeSort(pokemonList, pokemonInfo).then((res) => res))
-    // setListOfPokemonDetails(pokemonList)
+
   }
   
   // Adjusts name so we can grab sprites

@@ -283,15 +283,6 @@ const BattleTrainerView = () => {
             if(targetType1 + targetType2 >= 3) effective = 'Super Effective'
             else if(targetType1 + targetType2 < 2) effective = 'Not-Very Effective'
             if(targetType1 * targetType2 === 0) effective = 'No Effect'
-            
-            console.log({
-                'move':moveSelected.name,
-                'critical': critical,
-                'effective': effective,
-                'damage': totalDamage,
-                'targetType1': targetType1,
-                'targetType2': targetType2,
-            })
 
             return {
                 'move':moveSelected.name,
@@ -507,7 +498,6 @@ const BattleTrainerView = () => {
         // setBattleSequence(true)
         setTimeout(() => {
             setUserSequence(false)
-            console.log('got here')
             setOpponentSequence(false)
             setBattleSequence(false)
         }, 6000)
@@ -557,7 +547,6 @@ const BattleTrainerView = () => {
         let remainingPercentage = Math.floor((switchPokemon.remaininghp / (switchPokemon.pokemonStats[0].base_stat + 60)) * 100)
         let userHpbar = document.getElementById('user-hpbar')
         userHpbar.style.width = `${remainingPercentage}%`
-        // console.log(switchPokemon)
         if(userPokemonFaint) {
             setBattleSequence(true)
             setSwitchSequence(true)
@@ -597,7 +586,6 @@ const BattleTrainerView = () => {
     }
 
     const getTrainerImage = () => {
-        console.log(opponent.name)
         if(opponent.name === 'brock') {
             return brockFullbody
         }

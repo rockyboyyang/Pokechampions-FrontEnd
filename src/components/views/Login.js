@@ -29,7 +29,6 @@ const Login = () => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(body),
         })
-        console.log(res)
         if (res.ok) {
             const { access_token, user } = await res.json();
             setToken({ access_token });

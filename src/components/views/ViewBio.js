@@ -25,7 +25,6 @@ const ViewBio = () => {
         if(!opponent) history.push('../selectbio/gymleaders')
     }, [])
     const getTrainerImage = () => {
-        console.log(opponent.name)
         if (opponent.name === 'brock') {
             return brockFullbody
         }

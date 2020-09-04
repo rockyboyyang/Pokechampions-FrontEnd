@@ -32,7 +32,6 @@ const Signup = () => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(body),
         })
-        console.log(res)
         if (res.ok) {
             const { access_token, user, error } = await res.json();
             if(error) {
