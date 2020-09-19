@@ -73,9 +73,6 @@ const Login = () => {
                         <img src={ProfessorOak}></img>
                     </div>
                     <div className="dialogue-box">
-                        <audio autoPlay='true' loop='true'>
-                            <source src={OpeningTheme} type='audio/mpeg' />
-                        </audio>
                         <p id='oak-signup-typewriter'>
                             <h1>Hey future Champion! Long time no see!  I see that you're well rested.  Why don't you log in and continue your quest!</h1>
                         </p>

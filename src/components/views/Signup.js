@@ -77,9 +77,6 @@ const Signup = () => {
                         <img src={ProfessorOak}></img>
                     </div>
                     <div className="dialogue-box">
-                        <audio autoPlay='true' loop='true'>
-                            <source src={OpeningTheme} type='audio/mpeg'/>
-                        </audio>
                         <p id='oak-signup-typewriter'>
                            <h1>Welcome to the world of Pokemon.  I am Professor Oak.  If you are new to the Pokemon challenge, please sign up and register for the Pokemon League.</h1>
                         </p>
