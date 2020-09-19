@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom";
 import { AppContext } from '../../context/AppContext'
 import ProfessorOak from '../../assets/images/professoroak2.png'
-import OpeningTheme from '../../assets/music/pokemonopening.mp3'
+
 
 const Signup = () => {
     const [username, setUsername] = useState('')

@@ -4,12 +4,21 @@ import { AppContext } from '../../context/AppContext'
 import Navbar from '../Navbar'
 import Footer from '../Footer'
 import BadgeContainer from '../BadgeContainer';
+import Loading from './Loading'
 
 const Pokedex = () => {
-    const { setSelectedMove, pokemonList, capFirstLetter, spritesApi, adjustName } = useContext(AppContext)
+    const { setSelectedMove, pokemonList, capFirstLetter, spritesApi, adjustName, setPokemonLoaded, pokemonLoaded } = useContext(AppContext)
+
     let history = useHistory();
     useEffect(() => {
         setSelectedMove('')
+        setTimeout(() => {
+            let loading = document.querySelector('.loading-screen')
+            let body = document.querySelector('.view-body')
+
+            loading.style.display = 'none'
+            body.style.display = 'grid'
+        }, 3000)
     }, [])
 
     const routeToPokemonDetails = (e) => {
@@ -18,18 +27,21 @@ const Pokedex = () => {
     }
 
     return (
-        <div className="view-body">
-            <Navbar />
-            <div className="center-body">
-                <div className="left-box pokemon-list">{pokemonList.map((pokemon) => (
-                    <div id={pokemon.name} onClick={routeToPokemonDetails}><p>{capFirstLetter(pokemon.name)}</p> <img src={spritesApi + `${adjustName(pokemon.name)}.gif`} /></div>
-                ))}</div>
-                <div className="right-box">
-                    <BadgeContainer />
+        <>
+            <Loading />
+            <div className="view-body" style={{display:'none'}}>
+                <Navbar />
+                <div className="center-body">
+                    <div className="left-box pokemon-list">{pokemonList.map((pokemon) => (
+                        <div id={pokemon.name} onClick={routeToPokemonDetails}><p>{capFirstLetter(pokemon.name)}</p> <img src={spritesApi + `${adjustName(pokemon.name)}.gif`} /></div>
+                    ))}</div>
+                    <div className="right-box">
+                        <BadgeContainer />
+                    </div>
                 </div>
+                <Footer />
             </div>
-            <Footer />
-        </div>
+        </>
     )
 }
 

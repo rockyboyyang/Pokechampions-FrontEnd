@@ -1,0 +1,30 @@
+.loading-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.header-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+    width: 400px;
+    background-color: white;
+    border: rgba(0, 0, 0, 0.77) solid 4px;
+    
+}
+
+.loading-pokeball {
+    height: 100px;
+    width: 100px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

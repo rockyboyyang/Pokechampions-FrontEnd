@@ -39,6 +39,7 @@ const App = props => {
   const [selectedMove, setSelectedMove] = useState('')
   const [opponent, setOpponent] = useState('')
   const [battleSequence, setBattleSequence] = useState(false)
+  const [pokemonLoaded, setPokemonLoaded] = useState(false)
 
   let history = useHistory();
   const checkUserExist = () => {
@@ -405,7 +406,9 @@ const App = props => {
                                     shinySpritesApi,
                                     shinyBack_spritesApi,
                                     battleSequence,
-                                    setBattleSequence }
+                                    setBattleSequence,
+                                    setPokemonLoaded,
+                                    pokemonLoaded }
                                     }>
         <Switch>
           <Route exact path="/" render={(props) => <Redirect to='/home'/>}/>
