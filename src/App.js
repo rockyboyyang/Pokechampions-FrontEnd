@@ -243,7 +243,7 @@ const App = props => {
     }
   }, [])
 
-  // if(!user) return <h1>Loading</h1>
+  
 
   // Check to see if you can battle selected trainer
   const checkForAbilityToChallenge = (trainer) => {

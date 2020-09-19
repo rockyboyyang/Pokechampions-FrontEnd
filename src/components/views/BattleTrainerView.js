@@ -16,6 +16,7 @@ import brunoFullbody from '../../assets/images/bruno-fullbody.png'
 import agathaFullbody from '../../assets/images/agatha-fullbody.png'
 import lanceFullbody from '../../assets/images/lance-fullbody.png'
 import rockyFace from '../../assets/images/rocky-face.png'
+import Loading from './Loading'
 
 
 const BattleTrainerView = () => {
@@ -197,6 +198,13 @@ const BattleTrainerView = () => {
     useEffect(() => {
         setSelectedMove('')
         rerouteToSelect()
+        setTimeout(() => {
+            let loading = document.querySelector('.loading-screen')
+            let body = document.querySelector('.view-body')
+
+            loading.style.display = 'none'
+            body.style.display = 'grid'
+        }, 3000)
         // setCurrentHpBarForTeam()
     }, [])
 
@@ -688,311 +696,314 @@ const BattleTrainerView = () => {
 
     if(readyForBattle) {
         return (
-            <div className="view-body">
-                <Navbar />
-                <div className="center-body">
-                    <div className="left-box battle-box">
-                        <div className="battle-screen-container">
-                            <div className="battle-screen">
-                                <div className="user-current-pokemon battling-pokemon">
-                                    {userCurrentPokemon.isShiny ? (
-                                        <img src={`${shinyBack_spritesApi}${adjustName(userCurrentPokemon.pokemon)}.gif`}></img>
-                                    ) : (
-                                        <img src={`${back_spritesApi}${adjustName(userCurrentPokemon.pokemon)}.gif`}></img>
-                                    )}
-                                </div>
-                                <div className="opponent-current-pokemon battling-pokemon"><img src={`${spritesApi}${adjustName(opponentCurrentPokemon.pokemon)}.gif`}></img></div>
-                                <div className="user-pokemon-status-info status-info-container">
-                                    <div className="status-info-name"><p>{capFirstLetter(userCurrentPokemon.pokemon)}  Lv50</p></div>
-                                    <div className="status-info-hpbar">
-                                        <div className="user-hpbar-container hpbar-container">
-                                            <div className="hpbar" id="user-hpbar"></div>
-                                        </div>
-                                        <p className="userhp-percentage hp-percentage">{userPokemonStats.remaininghp}/{userPokemonStats.maxhp}</p>
+            <>
+                <Loading />
+                <div className="view-body" style={{ display: 'none' }}>
+                    <Navbar />
+                    <div className="center-body">
+                        <div className="left-box battle-box">
+                            <div className="battle-screen-container">
+                                <div className="battle-screen">
+                                    <div className="user-current-pokemon battling-pokemon">
+                                        {userCurrentPokemon.isShiny ? (
+                                            <img src={`${shinyBack_spritesApi}${adjustName(userCurrentPokemon.pokemon)}.gif`}></img>
+                                        ) : (
+                                            <img src={`${back_spritesApi}${adjustName(userCurrentPokemon.pokemon)}.gif`}></img>
+                                        )}
                                     </div>
-                                    <div className="status-info-effect"></div>
-                                </div>
-                                <div className="opponent-pokemon-status-info status-info-container">
-                                    <div className="status-info-name"><p>{capFirstLetter(opponentCurrentPokemon.pokemon)}  Lv50</p></div>
-                                    <div className="status-info-hpbar">
-                                        <div className="opponent-hpbar-container hpbar-container">
-                                            <div className="hpbar" id="opponent-hpbar"></div>
+                                    <div className="opponent-current-pokemon battling-pokemon"><img src={`${spritesApi}${adjustName(opponentCurrentPokemon.pokemon)}.gif`}></img></div>
+                                    <div className="user-pokemon-status-info status-info-container">
+                                        <div className="status-info-name"><p>{capFirstLetter(userCurrentPokemon.pokemon)}  Lv50</p></div>
+                                        <div className="status-info-hpbar">
+                                            <div className="user-hpbar-container hpbar-container">
+                                                <div className="hpbar" id="user-hpbar"></div>
+                                            </div>
+                                            <p className="userhp-percentage hp-percentage">{userPokemonStats.remaininghp}/{userPokemonStats.maxhp}</p>
                                         </div>
-                                        <p className="opponenthp-percentage hp-percentage">{opponentPokemonStats.remaininghp}/{opponentPokemonStats.maxhp}</p>
+                                        <div className="status-info-effect"></div>
                                     </div>
-                                    <div className="status-info-effect"></div>
+                                    <div className="opponent-pokemon-status-info status-info-container">
+                                        <div className="status-info-name"><p>{capFirstLetter(opponentCurrentPokemon.pokemon)}  Lv50</p></div>
+                                        <div className="status-info-hpbar">
+                                            <div className="opponent-hpbar-container hpbar-container">
+                                                <div className="hpbar" id="opponent-hpbar"></div>
+                                            </div>
+                                            <p className="opponenthp-percentage hp-percentage">{opponentPokemonStats.remaininghp}/{opponentPokemonStats.maxhp}</p>
+                                        </div>
+                                        <div className="status-info-effect"></div>
+                                    </div>
                                 </div>
                             </div>
+                            {!battleSequence ? (
+                                <div className="move-slots-container-battle">
+                                    {opponentSentOutPokemon || opponentPokemonFaint || victory || userPokemonFaint || userLost ? (
+                                        <>
+                                            {opponentPokemonFaint ? (
+                                                <div className='switch-sequence-container'>
+                                                    <h1 id='typewriter-text'>
+                                                        <p id="text_1">{capFirstLetter(opponent.name)}'s {capFirstLetter(opponentCurrentPokemon.pokemon)} fainted!</p>
+                                                    </h1>
+                                                </div>
+                                            ) : (
+                                                    <>
+                                                    </>
+                                            )}
+                                            {opponentSentOutPokemon ? (
+                                                <div className='switch-sequence-container'>
+                                                    <h1 id='typewriter-text'>
+                                                        <p id="text_1">{capFirstLetter(opponent.name)} sent out {capFirstLetter(opponentCurrentPokemon.pokemon)}!</p>
+                                                    </h1>
+                                                </div>
+                                            ) : (
+                                                    <>
+                                                    </>
+                                            )}
+                                            {victory ? (
+                                                <div className='switch-sequence-container victory-text'>
+                                                    <h1 id='typewriter-text'>
+                                                        <p id="text_1">You defeated {capFirstLetter(opponent.name)}!</p>
+                                                    </h1>
+                                                    <div id='end-battle' onClick={endBattle}>End Battle</div>
+                                                </div>
+                                            ) : (
+                                                    <>
+                                                    </>
+                                            )}
+                                            {userLost ? (
+                                                <div className='switch-sequence-container victory-text'>
+                                                    <h1 id='typewriter-text'>
+                                                        <p id="text_1">You were defeated by {capFirstLetter(opponent.name)}!</p>
+                                                    </h1>
+                                                    <div id='end-battle' onClick={returnHome}>End Battle</div>
+                                                </div>
+                                            ) : (
+                                                    <>
+                                                    </>
+                                            )}
+                                            {userPokemonFaint ? (
+                                                <div className='switch-sequence-container'>
+                                                    <h1 id='typewriter-text'>
+                                                        <p id="text_1">{capFirstLetter(user.username)}'s {capFirstLetter(userCurrentPokemon.pokemon)} fainted!</p>
+                                                        <p id="text_1">Please switch out your pokemon!</p>
+                                                    </h1>
+                                                </div>
+                                            ) : (
+                                                    <>
+                                                    </>
+                                            )}
+                                        </>
+                                    ) : (
+                                        <>
+                                            <button className="move-slot" id="slot_1" onClick={beginBattleSequence}>{capFirstLetter(userCurrentPokemon.moveSlot_1.name)}</button>
+                                            <button className="move-slot" id="slot_2" onClick={beginBattleSequence}>{capFirstLetter(userCurrentPokemon.moveSlot_2.name)}</button>
+                                            <button className="move-slot" id="slot_3" onClick={beginBattleSequence}>{capFirstLetter(userCurrentPokemon.moveSlot_3.name)}</button>
+                                            <button className="move-slot" id="slot_4" onClick={beginBattleSequence}>{capFirstLetter(userCurrentPokemon.moveSlot_4.name)}</button>
+                                        </>
+                                    )}
+                                </div>
+                                ) : (
+                                    <div className="battle-sequence">
+                                        {userSequence ? (
+                                            <div className="sequence-container">
+                                                <h1 id='typewriter-text'>
+                                                    <p id="text_1">{capFirstLetter(userCurrentPokemon.pokemon)} used {capFirstLetter(userMoveUsed)}!</p>
+                                                    {userEffective ? (
+                                                        <p id="text_1">It's {userEffective}!</p>
+                                                    ) : (
+                                                        <>
+                                                        </>
+                                                    )}
+                                                    {userCritical > 1 ? (
+                                                        <p id="text_1">It's a critical hit!</p>
+                                                    ) : (
+                                                        <>
+                                                        </>
+                                                    )}
+                                                </h1>
+                                            </div>
+                                        ) : (
+                                            <>
+                                            </>
+                                        )}
+                                        {opponentSequence ? (
+                                            <div className="sequence-container">
+                                                <h1 id='typewriter-text'>
+                                                    <p id="text_1">{capFirstLetter(opponentCurrentPokemon.pokemon)} used {capFirstLetter(opponentMoveUsed)}!</p>
+                                                    {opponentEffective ? (
+                                                        <p id="text_1">It's {opponentEffective}!</p>
+                                                    ) : (
+                                                        <>
+                                                        </>
+                                                    )}
+                                                    {opponentCritical > 1 ? (
+                                                        <p id="text_1">It's a critical hit!</p>
+                                                    ) : (
+                                                        <>
+                                                        </>
+                                                    )}
+                                                </h1>
+                                            </div>
+                                        ) : (
+                                            <>
+                                            </>
+                                        )}
+                                        {switchSequence ? (
+                                            <div className="sequence-container">
+                                                <h1 id='typewriter-text'>
+                                                    <p id="text_1">{capFirstLetter(user.username)} sent out {capFirstLetter(userCurrentPokemon.pokemon)}!</p>
+                                                </h1>
+                                            </div>
+                                        ) : (
+                                            <>
+                                            </>
+                                        )}
+                                    </div>
+                                )
+                            }
                         </div>
-                        {!battleSequence ? (
-                            <div className="move-slots-container-battle">
-                                {opponentSentOutPokemon || opponentPokemonFaint || victory || userPokemonFaint || userLost ? (
+                        <div className="right-box team-box">
+                            <div className="header">
+                                <h1>Pokemon Team</h1>
+                            </div>
+                            <div className="pokemon-team-container">
+                                {user.slot_1 !== null ? (
                                     <>
-                                        {opponentPokemonFaint ? (
-                                            <div className='switch-sequence-container'>
-                                                <h1 id='typewriter-text'>
-                                                    <p id="text_1">{capFirstLetter(opponent.name)}'s {capFirstLetter(opponentCurrentPokemon.pokemon)} fainted!</p>
-                                                </h1>
+                                        <div className="user-pokemon-slot_1" id={userSlot_1Pokemon.pokemon} onClick={switchOut} onMouseEnter={statsDiv} onMouseLeave={hideStatsDiv}>
+                                            {userSlot_1Pokemon.isShiny ? (
+                                                <img className="user-pokemon-slot_1" src={shinySpritesApi + `${JSON.parse(user.slot_1).pokemon}.gif`} />
+                                            ) : (
+                                                <img className="user-pokemon-slot_1" src={spritesApi + `${JSON.parse(user.slot_1).pokemon}.gif`} />
+                                            )}
+                                            <div className="pokemon-status" id="pokemon-status-slot_1" onMouseEnter={hideStatsDiv}>
+                                                <div className='team-hpbar' id='slot-1-hpbar'>HP: {userSlot_1Pokemon.remaininghp} / {userSlot_1Pokemon.pokemonStats[0].base_stat + 60}</div>
+                                                <div className="movesList">
+                                                    <li>{capFirstLetter(userSlot_1Pokemon.moveSlot_1.name)}</li>
+                                                    <li>{capFirstLetter(userSlot_1Pokemon.moveSlot_2.name)}</li>
+                                                    <li>{capFirstLetter(userSlot_1Pokemon.moveSlot_3.name)}</li>
+                                                    <li>{capFirstLetter(userSlot_1Pokemon.moveSlot_4.name)}</li>
+                                                </div>
                                             </div>
-                                        ) : (
-                                                <>
-                                                </>
-                                        )}
-                                        {opponentSentOutPokemon ? (
-                                            <div className='switch-sequence-container'>
-                                                <h1 id='typewriter-text'>
-                                                    <p id="text_1">{capFirstLetter(opponent.name)} sent out {capFirstLetter(opponentCurrentPokemon.pokemon)}!</p>
-                                                </h1>
-                                            </div>
-                                        ) : (
-                                                <>
-                                                </>
-                                        )}
-                                        {victory ? (
-                                            <div className='switch-sequence-container victory-text'>
-                                                <h1 id='typewriter-text'>
-                                                    <p id="text_1">You defeated {capFirstLetter(opponent.name)}!</p>
-                                                </h1>
-                                                <div id='end-battle' onClick={endBattle}>End Battle</div>
-                                            </div>
-                                        ) : (
-                                                <>
-                                                </>
-                                        )}
-                                        {userLost ? (
-                                            <div className='switch-sequence-container victory-text'>
-                                                <h1 id='typewriter-text'>
-                                                    <p id="text_1">You were defeated by {capFirstLetter(opponent.name)}!</p>
-                                                </h1>
-                                                <div id='end-battle' onClick={returnHome}>End Battle</div>
-                                            </div>
-                                        ) : (
-                                                <>
-                                                </>
-                                        )}
-                                        {userPokemonFaint ? (
-                                            <div className='switch-sequence-container'>
-                                                <h1 id='typewriter-text'>
-                                                    <p id="text_1">{capFirstLetter(user.username)}'s {capFirstLetter(userCurrentPokemon.pokemon)} fainted!</p>
-                                                    <p id="text_1">Please switch out your pokemon!</p>
-                                                </h1>
-                                            </div>
-                                        ) : (
-                                                <>
-                                                </>
-                                        )}
+                                        </div>
                                     </>
                                 ) : (
+                                        <div className="user-pokemon-slot_1"></div>
+                                    )}
+                                {user.slot_2 !== null ? (
                                     <>
-                                        <button className="move-slot" id="slot_1" onClick={beginBattleSequence}>{capFirstLetter(userCurrentPokemon.moveSlot_1.name)}</button>
-                                        <button className="move-slot" id="slot_2" onClick={beginBattleSequence}>{capFirstLetter(userCurrentPokemon.moveSlot_2.name)}</button>
-                                        <button className="move-slot" id="slot_3" onClick={beginBattleSequence}>{capFirstLetter(userCurrentPokemon.moveSlot_3.name)}</button>
-                                        <button className="move-slot" id="slot_4" onClick={beginBattleSequence}>{capFirstLetter(userCurrentPokemon.moveSlot_4.name)}</button>
+                                        <div className="user-pokemon-slot_2" id={userSlot_2Pokemon.pokemon} onClick={switchOut} onMouseEnter={statsDiv} onMouseLeave={hideStatsDiv}>
+                                            {userSlot_2Pokemon.isShiny ? (
+                                                <img className="user-pokemon-slot_2" src={shinySpritesApi + `${JSON.parse(user.slot_2).pokemon}.gif`} />
+                                            ) : (
+                                                    <img className="user-pokemon-slot_2" src={spritesApi + `${JSON.parse(user.slot_2).pokemon}.gif`} />
+                                                )}
+                                            <div className="pokemon-status" id="pokemon-status-slot_2" onMouseEnter={hideStatsDiv}>
+                                                <div className='team-hpbar' id='slot-2-hpbar'>HP: {userSlot_2Pokemon.remaininghp} / {userSlot_2Pokemon.pokemonStats[0].base_stat + 60}</div>
+                                                <div className="movesList">
+                                                    <li>{capFirstLetter(userSlot_2Pokemon.moveSlot_1.name)}</li>
+                                                    <li>{capFirstLetter(userSlot_2Pokemon.moveSlot_2.name)}</li>
+                                                    <li>{capFirstLetter(userSlot_2Pokemon.moveSlot_3.name)}</li>
+                                                    <li>{capFirstLetter(userSlot_2Pokemon.moveSlot_4.name)}</li>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </>
+                                ) : (
+                                        <div className="user-pokemon-slot_2"></div>
+                                    )}
+                                {user.slot_3 !== null ? (
+                                    <>
+                                        <div className="user-pokemon-slot_3" id={userSlot_3Pokemon.pokemon} onClick={switchOut} onMouseEnter={statsDiv} onMouseLeave={hideStatsDiv}>
+                                            {userSlot_3Pokemon.isShiny ? (
+                                                <img className="user-pokemon-slot_3" src={shinySpritesApi + `${JSON.parse(user.slot_3).pokemon}.gif`} />
+                                            ) : (
+                                                <img className="user-pokemon-slot_3" src={spritesApi + `${JSON.parse(user.slot_3).pokemon}.gif`} />
+                                            )}
+                                            <div className="pokemon-status" id="pokemon-status-slot_3" onMouseEnter={hideStatsDiv}>
+                                                <div className='team-hpbar' id='slot-3-hpbar'>HP: {userSlot_3Pokemon.remaininghp} / {userSlot_3Pokemon.pokemonStats[0].base_stat + 60}</div>
+                                                <div className="movesList">
+                                                    <li>{capFirstLetter(userSlot_3Pokemon.moveSlot_1.name)}</li>
+                                                    <li>{capFirstLetter(userSlot_3Pokemon.moveSlot_2.name)}</li>
+                                                    <li>{capFirstLetter(userSlot_3Pokemon.moveSlot_3.name)}</li>
+                                                    <li>{capFirstLetter(userSlot_3Pokemon.moveSlot_4.name)}</li>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </>
+                                ) : (
+                                        <div className="user-pokemon-slot_3"></div>
+                                    )}
+                                {user.slot_4 !== null ? (
+                                    <>
+                                        <div className="user-pokemon-slot_4" id={userSlot_4Pokemon.pokemon} onClick={switchOut} onMouseEnter={statsDiv} onMouseLeave={hideStatsDiv}>
+                                            {userSlot_4Pokemon.isShiny ? (
+                                                <img className="user-pokemon-slot_4" src={shinySpritesApi + `${JSON.parse(user.slot_4).pokemon}.gif`} />
+                                            ) : (
+                                                <img className="user-pokemon-slot_4" src={spritesApi + `${JSON.parse(user.slot_4).pokemon}.gif`} />
+                                            )}
+                                            <div className="pokemon-status" id="pokemon-status-slot_4" onMouseEnter={hideStatsDiv}>
+                                                <div className='team-hpbar' id='slot-4-hpbar'>HP: {userSlot_4Pokemon.remaininghp} / {userSlot_4Pokemon.pokemonStats[0].base_stat + 60}</div>
+                                                <div className="movesList">
+                                                    <li>{capFirstLetter(userSlot_4Pokemon.moveSlot_1.name)}</li>
+                                                    <li>{capFirstLetter(userSlot_4Pokemon.moveSlot_2.name)}</li>
+                                                    <li>{capFirstLetter(userSlot_4Pokemon.moveSlot_3.name)}</li>
+                                                    <li>{capFirstLetter(userSlot_4Pokemon.moveSlot_4.name)}</li>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </>
+                                ) : (
+                                        <div className="user-pokemon-slot_4"></div>
+                                    )}
+                                {user.slot_5 !== null ? (
+                                    <>
+                                        <div className="user-pokemon-slot_5" id={userSlot_5Pokemon.pokemon} onClick={switchOut} onMouseEnter={statsDiv} onMouseLeave={hideStatsDiv}>
+                                            {userSlot_5Pokemon.isShiny ? (
+                                                <img className="user-pokemon-slot_5" src={shinySpritesApi + `${JSON.parse(user.slot_5).pokemon}.gif`} />
+                                            ) : (
+                                                <img className="user-pokemon-slot_5" src={spritesApi + `${JSON.parse(user.slot_5).pokemon}.gif`} />
+                                            )}
+                                            <div className="pokemon-status" id="pokemon-status-slot_5" onMouseEnter={hideStatsDiv}>
+                                                <div className='team-hpbar' id='slot-5-hpbar'>HP: {userSlot_5Pokemon.remaininghp} / {userSlot_5Pokemon.pokemonStats[0].base_stat + 60}</div>
+                                                <div className="movesList">
+                                                    <li>{capFirstLetter(userSlot_5Pokemon.moveSlot_1.name)}</li>
+                                                    <li>{capFirstLetter(userSlot_5Pokemon.moveSlot_2.name)}</li>
+                                                    <li>{capFirstLetter(userSlot_5Pokemon.moveSlot_3.name)}</li>
+                                                    <li>{capFirstLetter(userSlot_5Pokemon.moveSlot_4.name)}</li>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </>
+                                ) : (
+                                        <div className="user-pokemon-slot_5"></div>
+                                    )}
+                                {user.slot_6 !== null ? (
+                                    <>
+                                        <div className={`user-pokemon-slot_6`} id={userSlot_6Pokemon.pokemon} onClick={switchOut} onMouseEnter={statsDiv} onMouseLeave={hideStatsDiv}>
+                                            {userSlot_6Pokemon.isShiny ? (
+                                                <img className="user-pokemon-slot_6" src={shinySpritesApi + `${JSON.parse(user.slot_6).pokemon}.gif`} />
+                                            ) : (
+                                                <img className="user-pokemon-slot_6" src={spritesApi + `${JSON.parse(user.slot_6).pokemon}.gif`} />
+                                            )}
+                                            <div className="pokemon-status" id="pokemon-status-slot_6" onMouseEnter={hideStatsDiv}>
+                                                <div className='team-hpbar' id='slot-6-hpbar'>HP: {userSlot_6Pokemon.remaininghp} / {userSlot_6Pokemon.pokemonStats[0].base_stat + 60}</div>
+                                                <div className="movesList">
+                                                    <li>{capFirstLetter(userSlot_6Pokemon.moveSlot_1.name)}</li>
+                                                    <li>{capFirstLetter(userSlot_6Pokemon.moveSlot_2.name)}</li>
+                                                    <li>{capFirstLetter(userSlot_6Pokemon.moveSlot_3.name)}</li>
+                                                    <li>{capFirstLetter(userSlot_6Pokemon.moveSlot_4.name)}</li>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <div className="user-pokemon-slot_6"></div>
                                 )}
                             </div>
-                            ) : (
-                                <div className="battle-sequence">
-                                    {userSequence ? (
-                                        <div className="sequence-container">
-                                            <h1 id='typewriter-text'>
-                                                <p id="text_1">{capFirstLetter(userCurrentPokemon.pokemon)} used {capFirstLetter(userMoveUsed)}!</p>
-                                                {userEffective ? (
-                                                    <p id="text_1">It's {userEffective}!</p>
-                                                ) : (
-                                                    <>
-                                                    </>
-                                                )}
-                                                {userCritical > 1 ? (
-                                                    <p id="text_1">It's a critical hit!</p>
-                                                ) : (
-                                                    <>
-                                                    </>
-                                                )}
-                                            </h1>
-                                        </div>
-                                    ) : (
-                                        <>
-                                        </>
-                                    )}
-                                    {opponentSequence ? (
-                                        <div className="sequence-container">
-                                            <h1 id='typewriter-text'>
-                                                <p id="text_1">{capFirstLetter(opponentCurrentPokemon.pokemon)} used {capFirstLetter(opponentMoveUsed)}!</p>
-                                                {opponentEffective ? (
-                                                    <p id="text_1">It's {opponentEffective}!</p>
-                                                ) : (
-                                                    <>
-                                                    </>
-                                                )}
-                                                {opponentCritical > 1 ? (
-                                                    <p id="text_1">It's a critical hit!</p>
-                                                ) : (
-                                                    <>
-                                                    </>
-                                                )}
-                                            </h1>
-                                        </div>
-                                    ) : (
-                                        <>
-                                        </>
-                                    )}
-                                    {switchSequence ? (
-                                        <div className="sequence-container">
-                                            <h1 id='typewriter-text'>
-                                                <p id="text_1">{capFirstLetter(user.username)} sent out {capFirstLetter(userCurrentPokemon.pokemon)}!</p>
-                                            </h1>
-                                        </div>
-                                    ) : (
-                                        <>
-                                        </>
-                                    )}
-                                </div>
-                            )
-                        }
-                    </div>
-                    <div className="right-box team-box">
-                        <div className="header">
-                            <h1>Pokemon Team</h1>
-                        </div>
-                        <div className="pokemon-team-container">
-                            {user.slot_1 !== null ? (
-                                <>
-                                    <div className="user-pokemon-slot_1" id={userSlot_1Pokemon.pokemon} onClick={switchOut} onMouseEnter={statsDiv} onMouseLeave={hideStatsDiv}>
-                                        {userSlot_1Pokemon.isShiny ? (
-                                            <img className="user-pokemon-slot_1" src={shinySpritesApi + `${JSON.parse(user.slot_1).pokemon}.gif`} />
-                                        ) : (
-                                            <img className="user-pokemon-slot_1" src={spritesApi + `${JSON.parse(user.slot_1).pokemon}.gif`} />
-                                        )}
-                                        <div className="pokemon-status" id="pokemon-status-slot_1" onMouseEnter={hideStatsDiv}>
-                                            <div className='team-hpbar' id='slot-1-hpbar'>HP: {userSlot_1Pokemon.remaininghp} / {userSlot_1Pokemon.pokemonStats[0].base_stat + 60}</div>
-                                            <div className="movesList">
-                                                <li>{capFirstLetter(userSlot_1Pokemon.moveSlot_1.name)}</li>
-                                                <li>{capFirstLetter(userSlot_1Pokemon.moveSlot_2.name)}</li>
-                                                <li>{capFirstLetter(userSlot_1Pokemon.moveSlot_3.name)}</li>
-                                                <li>{capFirstLetter(userSlot_1Pokemon.moveSlot_4.name)}</li>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </>
-                            ) : (
-                                    <div className="user-pokemon-slot_1"></div>
-                                )}
-                            {user.slot_2 !== null ? (
-                                <>
-                                    <div className="user-pokemon-slot_2" id={userSlot_2Pokemon.pokemon} onClick={switchOut} onMouseEnter={statsDiv} onMouseLeave={hideStatsDiv}>
-                                        {userSlot_2Pokemon.isShiny ? (
-                                            <img className="user-pokemon-slot_2" src={shinySpritesApi + `${JSON.parse(user.slot_2).pokemon}.gif`} />
-                                        ) : (
-                                                <img className="user-pokemon-slot_2" src={spritesApi + `${JSON.parse(user.slot_2).pokemon}.gif`} />
-                                            )}
-                                        <div className="pokemon-status" id="pokemon-status-slot_2" onMouseEnter={hideStatsDiv}>
-                                            <div className='team-hpbar' id='slot-2-hpbar'>HP: {userSlot_2Pokemon.remaininghp} / {userSlot_2Pokemon.pokemonStats[0].base_stat + 60}</div>
-                                            <div className="movesList">
-                                                <li>{capFirstLetter(userSlot_2Pokemon.moveSlot_1.name)}</li>
-                                                <li>{capFirstLetter(userSlot_2Pokemon.moveSlot_2.name)}</li>
-                                                <li>{capFirstLetter(userSlot_2Pokemon.moveSlot_3.name)}</li>
-                                                <li>{capFirstLetter(userSlot_2Pokemon.moveSlot_4.name)}</li>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </>
-                            ) : (
-                                    <div className="user-pokemon-slot_2"></div>
-                                )}
-                            {user.slot_3 !== null ? (
-                                <>
-                                    <div className="user-pokemon-slot_3" id={userSlot_3Pokemon.pokemon} onClick={switchOut} onMouseEnter={statsDiv} onMouseLeave={hideStatsDiv}>
-                                        {userSlot_3Pokemon.isShiny ? (
-                                            <img className="user-pokemon-slot_3" src={shinySpritesApi + `${JSON.parse(user.slot_3).pokemon}.gif`} />
-                                        ) : (
-                                            <img className="user-pokemon-slot_3" src={spritesApi + `${JSON.parse(user.slot_3).pokemon}.gif`} />
-                                        )}
-                                        <div className="pokemon-status" id="pokemon-status-slot_3" onMouseEnter={hideStatsDiv}>
-                                            <div className='team-hpbar' id='slot-3-hpbar'>HP: {userSlot_3Pokemon.remaininghp} / {userSlot_3Pokemon.pokemonStats[0].base_stat + 60}</div>
-                                            <div className="movesList">
-                                                <li>{capFirstLetter(userSlot_3Pokemon.moveSlot_1.name)}</li>
-                                                <li>{capFirstLetter(userSlot_3Pokemon.moveSlot_2.name)}</li>
-                                                <li>{capFirstLetter(userSlot_3Pokemon.moveSlot_3.name)}</li>
-                                                <li>{capFirstLetter(userSlot_3Pokemon.moveSlot_4.name)}</li>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </>
-                            ) : (
-                                    <div className="user-pokemon-slot_3"></div>
-                                )}
-                            {user.slot_4 !== null ? (
-                                <>
-                                    <div className="user-pokemon-slot_4" id={userSlot_4Pokemon.pokemon} onClick={switchOut} onMouseEnter={statsDiv} onMouseLeave={hideStatsDiv}>
-                                        {userSlot_4Pokemon.isShiny ? (
-                                            <img className="user-pokemon-slot_4" src={shinySpritesApi + `${JSON.parse(user.slot_4).pokemon}.gif`} />
-                                        ) : (
-                                            <img className="user-pokemon-slot_4" src={spritesApi + `${JSON.parse(user.slot_4).pokemon}.gif`} />
-                                        )}
-                                        <div className="pokemon-status" id="pokemon-status-slot_4" onMouseEnter={hideStatsDiv}>
-                                            <div className='team-hpbar' id='slot-4-hpbar'>HP: {userSlot_4Pokemon.remaininghp} / {userSlot_4Pokemon.pokemonStats[0].base_stat + 60}</div>
-                                            <div className="movesList">
-                                                <li>{capFirstLetter(userSlot_4Pokemon.moveSlot_1.name)}</li>
-                                                <li>{capFirstLetter(userSlot_4Pokemon.moveSlot_2.name)}</li>
-                                                <li>{capFirstLetter(userSlot_4Pokemon.moveSlot_3.name)}</li>
-                                                <li>{capFirstLetter(userSlot_4Pokemon.moveSlot_4.name)}</li>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </>
-                            ) : (
-                                    <div className="user-pokemon-slot_4"></div>
-                                )}
-                            {user.slot_5 !== null ? (
-                                <>
-                                    <div className="user-pokemon-slot_5" id={userSlot_5Pokemon.pokemon} onClick={switchOut} onMouseEnter={statsDiv} onMouseLeave={hideStatsDiv}>
-                                        {userSlot_5Pokemon.isShiny ? (
-                                            <img className="user-pokemon-slot_5" src={shinySpritesApi + `${JSON.parse(user.slot_5).pokemon}.gif`} />
-                                        ) : (
-                                            <img className="user-pokemon-slot_5" src={spritesApi + `${JSON.parse(user.slot_5).pokemon}.gif`} />
-                                        )}
-                                        <div className="pokemon-status" id="pokemon-status-slot_5" onMouseEnter={hideStatsDiv}>
-                                            <div className='team-hpbar' id='slot-5-hpbar'>HP: {userSlot_5Pokemon.remaininghp} / {userSlot_5Pokemon.pokemonStats[0].base_stat + 60}</div>
-                                            <div className="movesList">
-                                                <li>{capFirstLetter(userSlot_5Pokemon.moveSlot_1.name)}</li>
-                                                <li>{capFirstLetter(userSlot_5Pokemon.moveSlot_2.name)}</li>
-                                                <li>{capFirstLetter(userSlot_5Pokemon.moveSlot_3.name)}</li>
-                                                <li>{capFirstLetter(userSlot_5Pokemon.moveSlot_4.name)}</li>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </>
-                            ) : (
-                                    <div className="user-pokemon-slot_5"></div>
-                                )}
-                            {user.slot_6 !== null ? (
-                                <>
-                                    <div className={`user-pokemon-slot_6`} id={userSlot_6Pokemon.pokemon} onClick={switchOut} onMouseEnter={statsDiv} onMouseLeave={hideStatsDiv}>
-                                        {userSlot_6Pokemon.isShiny ? (
-                                            <img className="user-pokemon-slot_6" src={shinySpritesApi + `${JSON.parse(user.slot_6).pokemon}.gif`} />
-                                        ) : (
-                                            <img className="user-pokemon-slot_6" src={spritesApi + `${JSON.parse(user.slot_6).pokemon}.gif`} />
-                                        )}
-                                        <div className="pokemon-status" id="pokemon-status-slot_6" onMouseEnter={hideStatsDiv}>
-                                            <div className='team-hpbar' id='slot-6-hpbar'>HP: {userSlot_6Pokemon.remaininghp} / {userSlot_6Pokemon.pokemonStats[0].base_stat + 60}</div>
-                                            <div className="movesList">
-                                                <li>{capFirstLetter(userSlot_6Pokemon.moveSlot_1.name)}</li>
-                                                <li>{capFirstLetter(userSlot_6Pokemon.moveSlot_2.name)}</li>
-                                                <li>{capFirstLetter(userSlot_6Pokemon.moveSlot_3.name)}</li>
-                                                <li>{capFirstLetter(userSlot_6Pokemon.moveSlot_4.name)}</li>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </>
-                            ) : (
-                                <div className="user-pokemon-slot_6"></div>
-                            )}
                         </div>
                     </div>
+                    <Footer />
                 </div>
-                <Footer />
-            </div>
+            </>
         )
     } else {
         return (

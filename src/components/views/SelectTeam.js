@@ -6,7 +6,7 @@ import Footer from '../Footer'
 import Loading from './Loading'
 
 const SelectTeam = () => {
-    const { pokemonList, spritesApi, shinySpritesApi, user, setCurrentSlot, capFirstLetter, adjustName } = useContext(AppContext)
+    const { pokemonList, spritesApi, shinySpritesApi, user, setCurrentSlot, capFirstLetter, adjustName, listOfPokemonDetails, setListOfPokemonDetails } = useContext(AppContext)
     const history = useHistory();
 
     const routeToPokemonBattleDetails = (e) => {
@@ -26,9 +26,40 @@ const SelectTeam = () => {
 
             loading.style.display = 'none'
             body.style.display = 'grid'
-        }, 3000)
+        }, 5000)
+        grabAlolanFormStats()
     }, [])
     
+    // adds alolan stats from alolan forms
+    const grabAlolanFormStats = async () => {
+        let alolaArray = [
+            'rattata',
+            'raticate',
+            'raichu',
+            'sandshrew',
+            'sandslash',
+            'vulpix',
+            'ninetales',
+            'diglett',
+            'dugtrio',
+            'meowth',
+            'persian',
+            'geodude',
+            'graveler',
+            'golem',
+            'grimer',
+            'muk',
+            'exeggutor',
+            'marowak']
+
+        let tempDetails = listOfPokemonDetails
+        for (let i = 0; i < alolaArray.length; i++) {
+            let res = await fetch(`https://pokeapi.co/api/v2/pokemon/${alolaArray[i]}-alola`);
+            let result = await res.json()
+            tempDetails[`${alolaArray[i]}-alola`] = result
+        }
+        setListOfPokemonDetails(tempDetails)
+    }
 
     if(Object.keys(spritesApi).length) {
         return (

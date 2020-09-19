@@ -180,23 +180,30 @@ const EditPokemonInfo = ({ pokemonName }) => {
 
      useEffect(() => {
        editingExistingMember()
-       grabAlolanFormStats()
     }, [])
 
     const changeToAlolan = () => {
         if(pokemonName.includes('alola')) return
+        setSlot_1('-')
+        setSlot_2('-')
+        setSlot_3('-')
+        setSlot_4('-')
         history.push(`/select/${pokemonName}-alola`)
     }
 
     const changeToRegularForm = () => {
         if(pokemonName.includes('alola')) {
+            setSlot_1('-')
+            setSlot_2('-')
+            setSlot_3('-')
+            setSlot_4('-')
             history.push(`/select/${pokemonName.slice(0, pokemonName.length - 6)}`)
         }
     }
 
     const ifHaveAlolanForm = () => {
         if(
-            pokemonName.includes('ratata')  ||
+            pokemonName.includes('rattata')  ||
             pokemonName.includes('raticate') ||
             pokemonName.includes('raichu') ||
             pokemonName.includes('sandshrew') ||
@@ -218,16 +225,16 @@ const EditPokemonInfo = ({ pokemonName }) => {
         return false;
     }
 
-    const grabAlolanFormStats = async () => {
-        let tempDetails = listOfPokemonDetails
-        if(ifHaveAlolanForm() && !pokemonName.includes('alola')) {
-            let res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}-alola`);
-            let result = await res.json()
-            tempDetails[`${pokemonName}-alola`] = result
-        }
+    // const grabAlolanFormStats = async () => {
+    //     let tempDetails = listOfPokemonDetails
+    //     if(ifHaveAlolanForm() && !pokemonName.includes('alola')) {
+    //         let res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}-alola`);
+    //         let result = await res.json()
+    //         tempDetails[`${pokemonName}-alola`] = result
+    //     }
 
-        setListOfPokemonDetails(tempDetails)
-    }
+    //     setListOfPokemonDetails(tempDetails)
+    // }
 
     const changeToShiny = () => {
         if (!shiny) setShiny(true)

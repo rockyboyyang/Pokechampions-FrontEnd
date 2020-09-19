@@ -55,7 +55,6 @@ const EditExistingPokemonInfo = ({ pokemonName }) => {
 
     useEffect(() => {
         setSelectedMove('')
-        grabAlolanFormStats();
         if(!current_slot) history.push('/home')
 
     }, [])
@@ -111,6 +110,15 @@ const EditExistingPokemonInfo = ({ pokemonName }) => {
     const fetchPostToUserSlot = async (e) => {
         e.preventDefault()
         setSelectedMove('')
+        if (
+            slot_1.name === '-' &&
+            slot_2.name === '-' &&
+            slot_3.name === '-' &&
+            slot_4.name === '-'
+        ) {
+            alert('Your Pokemon must have at least ONE move!')
+            return;
+        }
         let pokemonInfo = {
             pokemon: pokemonName,
             pokemonType: listOfPokemonDetails[pokemonName].types,
@@ -143,7 +151,7 @@ const EditExistingPokemonInfo = ({ pokemonName }) => {
 
     const ifHaveAlolanForm = () => {
         if (
-            pokemonName.includes('ratata') ||
+            pokemonName.includes('rattata') ||
             pokemonName.includes('raticate') ||
             pokemonName.includes('raichu') ||
             pokemonName.includes('sandshrew') ||
@@ -167,28 +175,32 @@ const EditExistingPokemonInfo = ({ pokemonName }) => {
 
     const changeToAlolan = () => {
         if (pokemonName.includes('alola')) return
-        history.push(`/select/${pokemonName}-alola`)
+        setSlot_1('-')
+        setSlot_2('-')
+        setSlot_3('-')
+        setSlot_4('-')
+        history.push(`/select-existing/${pokemonName}-alola`)
     }
 
     const changeToRegularForm = () => {
         if (pokemonName.includes('alola')) {
-            history.push(`/select/${pokemonName.slice(0, pokemonName.length - 6)}`)
+            setSlot_1('-')
+            setSlot_2('-')
+            setSlot_3('-')
+            setSlot_4('-')
+            history.push(`/select-existing/${pokemonName.slice(0, pokemonName.length - 6)}`)
         }
     }
-    const grabAlolanFormStats = async () => {
-        let tempDetails = listOfPokemonDetails
-        if (ifHaveAlolanForm() && !pokemonName.includes('alola')) {
-            let res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}-alola`);
-            let result = await res.json()
-            tempDetails[`${pokemonName}-alola`] = result
-        }
 
-        setListOfPokemonDetails(tempDetails)
-    }
 
     const changeToShiny = () => {
         if (!shiny) setShiny(true)
         if (shiny) setShiny(false)
+    }
+
+    const sliceAlola = (name) => {
+        if(!name.includes('alola')) return name
+        else return name.slice(0, pokemonName.length - 6)
     }
 
     if (Object.keys(listOfPokemonDetails).length ) {

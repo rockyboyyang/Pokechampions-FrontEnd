@@ -18,7 +18,7 @@ const Pokedex = () => {
 
             loading.style.display = 'none'
             body.style.display = 'grid'
-        }, 3000)
+        }, 5000)
     }, [])
 
     const routeToPokemonDetails = (e) => {
