@@ -4,6 +4,7 @@ import { AppContext } from '../../context/AppContext'
 import Navbar from '../Navbar'
 import Footer from '../Footer'
 import BadgeContainer from '../BadgeContainer';
+import BadgeInfo from './BadgeInfo';
 
 
 
@@ -32,6 +33,7 @@ const Home = () => {
 
     return (
         <div className="view-body">
+            <BadgeInfo />
             <Navbar />
             <div className="center-body">
                 <div className="left-box home-left-box">

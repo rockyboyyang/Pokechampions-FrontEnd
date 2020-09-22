@@ -653,12 +653,12 @@ const BattleTrainerView = () => {
         e.preventDefault()
         let arrayOfPokemonTeam = [null ,null, null, null, null, null]
 
-        if (userSlot_1Pokemon) arrayOfPokemonTeam[0] = userSlot_1Pokemon.pokemon
-        if (userSlot_2Pokemon) arrayOfPokemonTeam[1] = userSlot_2Pokemon.pokemon
-        if (userSlot_3Pokemon) arrayOfPokemonTeam[2] = userSlot_3Pokemon.pokemon
-        if (userSlot_4Pokemon) arrayOfPokemonTeam[3] = userSlot_4Pokemon.pokemon
-        if (userSlot_5Pokemon) arrayOfPokemonTeam[4] = userSlot_5Pokemon.pokemon
-        if (userSlot_6Pokemon) arrayOfPokemonTeam[5] = userSlot_6Pokemon.pokemon
+        if (userSlot_1Pokemon) arrayOfPokemonTeam[0] = { name: userSlot_1Pokemon.pokemon, isShiny: userSlot_1Pokemon.isShiny }
+        if (userSlot_2Pokemon) arrayOfPokemonTeam[1] = { name: userSlot_2Pokemon.pokemon, isShiny: userSlot_2Pokemon.isShiny }
+        if (userSlot_3Pokemon) arrayOfPokemonTeam[2] = { name: userSlot_3Pokemon.pokemon, isShiny: userSlot_3Pokemon.isShiny }
+        if (userSlot_4Pokemon) arrayOfPokemonTeam[3] = { name: userSlot_4Pokemon.pokemon, isShiny: userSlot_4Pokemon.isShiny }
+        if (userSlot_5Pokemon) arrayOfPokemonTeam[4] = { name: userSlot_5Pokemon.pokemon, isShiny: userSlot_5Pokemon.isShiny }
+        if (userSlot_6Pokemon) arrayOfPokemonTeam[5] = { name: userSlot_6Pokemon.pokemon, isShiny: userSlot_6Pokemon.isShiny }
 
         let body = {
             opponent: opponent.name,

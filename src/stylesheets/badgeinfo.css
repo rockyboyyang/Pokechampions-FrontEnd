@@ -1,0 +1,21 @@
+.badge-modal {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(181, 181, 181, 0.757);
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.badge-info-container {
+    height: 50%;
+    width: 50%;
+    background-color: white;
+    border: black solid 5px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+
+/* .badge */
