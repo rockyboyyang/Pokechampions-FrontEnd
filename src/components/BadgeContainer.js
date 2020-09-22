@@ -11,23 +11,7 @@ import Volcanobadge from '../assets/images/volcanobadge.png'
 import Earthbadge from '../assets/images/earthbadge.png'
 
 const BadgeContainer = () => {
-    const { user, backendUrl } = useContext(AppContext)
-    
-    const grabBadgeInfo = async (e) => {
-        e.preventDefault();
-        e.stopPropagation()
-        let badge = e.target.className
-
-        const res = await fetch(backendUrl + `/api/session_user/${user.id}/badges/${badge}`)
-
-        if (res.ok) {
-            const { trainer, date, team } = await res.json();
-            console.log(trainer)
-            console.log(date)
-            console.log(team)
-
-        }
-    }
+    const { user, grabBadgeInfo } = useContext(AppContext)
 
     return (
         <div className="badge-container">

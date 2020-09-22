@@ -17,5 +17,50 @@
     grid-template-columns: 1fr 1fr;
 }
 
+.badge-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 20px;
+    height: 100%;
+    width: 100%;
+}
+
+.exit-modal {
+    position: absolute;
+    font-size: 30px;
+    font-weight: 800;
+    top: 170px;
+    left: 370px;
+}
+
+.exit-modal:hover {
+    cursor: pointer;
+    color: red;
+    transition: .3s;
+}
+.pokemon-team-container-modal {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pokemon-team {
+    height: 90%;
+    width: 90%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    background-color: #e9f3e4;
+}
+
+.pokemon-team > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0px 12px 0 rgba(255, 255, 255, 0.848);
+}
 
 /* .badge */

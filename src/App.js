@@ -40,6 +40,10 @@ const App = props => {
   const [opponent, setOpponent] = useState('')
   const [battleSequence, setBattleSequence] = useState(false)
   const [pokemonLoaded, setPokemonLoaded] = useState(false)
+  const [badgeInfoName, setBadgeInfoName] = useState('')
+  const [badgeInfoTrainer, setBadgeInfoTrainer] = useState('')
+  const [badgeInfoDate, setBadgeInfoDate] = useState('')
+  const [badgeInfoTeam, setBadgeInfoTeam] = useState([])
 
   let history = useHistory();
   const checkUserExist = () => {
@@ -368,6 +372,31 @@ const App = props => {
     return true
   }
 
+  const grabBadgeInfo = async (e) => {
+    e.preventDefault();
+    e.stopPropagation()
+    let modal = document.querySelector('.badge-modal')
+
+    if(e.target.className === 'exit-modal') {
+      modal.style.display = 'none'
+      return
+    }
+    
+    let badge = e.target.className
+
+    const res = await fetch(backendUrl + `/api/session_user/${user.id}/badges/${badge}`)
+
+    if (res.ok) {
+      const { trainer, date, team } = await res.json();
+      setBadgeInfoName(badge)
+      setBadgeInfoTrainer(trainer)
+      setBadgeInfoDate(date)
+      setBadgeInfoTeam(JSON.parse(team))
+    }
+
+    modal.style.display = 'flex'
+  }
+
   return (
     <BrowserRouter>
       <AppContext.Provider value={{ backendUrl,
@@ -408,7 +437,16 @@ const App = props => {
                                     battleSequence,
                                     setBattleSequence,
                                     setPokemonLoaded,
-                                    pokemonLoaded }
+                                    pokemonLoaded,
+                                    badgeInfoName,
+                                    badgeInfoDate,
+                                    badgeInfoTrainer,
+                                    badgeInfoTeam,
+                                    setBadgeInfoDate,
+                                    setBadgeInfoName,
+                                    setBadgeInfoTeam,
+                                    setBadgeInfoTrainer,
+                                    grabBadgeInfo, }
                                     }>
         <Switch>
           <Route exact path="/" render={(props) => <Redirect to='/home'/>}/>
