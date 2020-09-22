@@ -651,11 +651,23 @@ const BattleTrainerView = () => {
 
     const collectBadge = async (e) => {
         e.preventDefault()
+        let arrayOfPokemonTeam = [null ,null, null, null, null, null]
 
+        if (userSlot_1Pokemon) arrayOfPokemonTeam[0] = userSlot_1Pokemon.pokemon
+        if (userSlot_2Pokemon) arrayOfPokemonTeam[1] = userSlot_2Pokemon.pokemon
+        if (userSlot_3Pokemon) arrayOfPokemonTeam[2] = userSlot_3Pokemon.pokemon
+        if (userSlot_4Pokemon) arrayOfPokemonTeam[3] = userSlot_4Pokemon.pokemon
+        if (userSlot_5Pokemon) arrayOfPokemonTeam[4] = userSlot_5Pokemon.pokemon
+        if (userSlot_6Pokemon) arrayOfPokemonTeam[5] = userSlot_6Pokemon.pokemon
+
+        let body = {
+            opponent: opponent.name,
+            team: arrayOfPokemonTeam,
+        }
         const res = await fetch(backendUrl + `/api/session_user/${user.id}/badges`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(opponent.name),
+            body: JSON.stringify(body),
         })
         if (res.ok) {
             const { user } = await res.json();
