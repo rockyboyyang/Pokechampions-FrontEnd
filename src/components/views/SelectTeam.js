@@ -4,6 +4,7 @@ import { AppContext } from '../../context/AppContext'
 import Navbar from '../Navbar'
 import Footer from '../Footer'
 import Loading from './Loading'
+import SearchBar from './SearchBar'
 
 const SelectTeam = () => {
     const { pokemonList, setPokemonList, filteredPokemonList, setFilteredPokemonList, spritesApi, shinySpritesApi, user, setCurrentSlot, capFirstLetter, adjustName, listOfPokemonDetails, setListOfPokemonDetails } = useContext(AppContext)
@@ -27,67 +28,7 @@ const SelectTeam = () => {
             loading.style.display = 'none'
             body.style.display = 'grid'
         }, 5000)
-        // grabAlolanFormStats()
-        console.log(listOfPokemonDetails)
     }, [])
-    
-    // adds alolan stats from alolan forms
-    // const grabAlolanFormStats = async () => {
-    //     let alolaArray = [
-    //         'rattata',
-    //         'raticate',
-    //         'raichu',
-    //         'sandshrew',
-    //         'sandslash',
-    //         'vulpix',
-    //         'ninetales',
-    //         'diglett',
-    //         'dugtrio',
-    //         'meowth',
-    //         'persian',
-    //         'geodude',
-    //         'graveler',
-    //         'golem',
-    //         'grimer',
-    //         'muk',
-    //         'exeggutor',
-    //         'marowak']
-
-    //     let tempDetails = listOfPokemonDetails
-    //     for (let i = 0; i < alolaArray.length; i++) {
-    //         let res = await fetch(`https://pokeapi.co/api/v2/pokemon/${alolaArray[i]}-alola`);
-    //         let result = await res.json()
-    //         tempDetails[`${alolaArray[i]}-alola`] = result
-    //     }
-    //     setListOfPokemonDetails(tempDetails)
-    // }
-
-    const filterPokemonList = (e) => { 
-        let charactersInPokemon = e.target.value.toLowerCase()
-        document.querySelector('#pokemon-type-list').value = ''
-        setFilteredPokemonList(pokemonList)
-        let filteredPokemonList = pokemonList.filter((pokemon) => {
-            return pokemon.name.includes(charactersInPokemon)
-        })
-        setFilteredPokemonList(filteredPokemonList)
-    }
-
-    const filterByType = (e) => {
-        let pokemonType = e.target.value
-        document.querySelector('#search-value').value = ''
-        setFilteredPokemonList(pokemonList)
-        if(!e.target.value) return
-        let filteredPokemonList = pokemonList.filter((pokemon) => {
-            if(listOfPokemonDetails[pokemon.name].types.length === 2) {
-                if(listOfPokemonDetails[pokemon.name].types[0].type.name === pokemonType || listOfPokemonDetails[pokemon.name].types[1].type.name === pokemonType) {
-                    return pokemon
-                }
-            } else {
-                if (listOfPokemonDetails[pokemon.name].types[0].type.name === pokemonType) return pokemon
-            }
-        })
-        setFilteredPokemonList(filteredPokemonList)
-    }
 
     if(Object.keys(spritesApi).length) {
         return (
@@ -96,50 +37,21 @@ const SelectTeam = () => {
                 <div className="view-body" style={{ display: 'none' }}>
                     <Navbar />
                     <div className="center-body">
-                    <div className="left-box pokemon-list-container">
-                        <div className="search-info-container">
-                            <div className="search-bar-container">
-                                <input placeholder="Search Pokemon" onChange={filterPokemonList} id="search-value"></input>
-                            </div>
-                            <p id="or">OR</p>
-                            <div className="type-list-dropdown-container">
-                                <label>Select a Type</label>
-                                <select name="pokemon-type-list" id="pokemon-type-list" onChange={filterByType}>
-                                    <option value="">All</option>
-                                    <option value="fire">Fire</option>
-                                    <option value="normal">Normal</option>
-                                    <option value="fighting">Fighting</option>
-                                    <option value="water">Water</option>
-                                    <option value="flying">Flying</option>
-                                    <option value="grass">Grass</option>
-                                    <option value="poison">Poison</option>
-                                    <option value="electric">Electric</option>
-                                    <option value="ground">Ground</option>
-                                    <option value="psychic">Psychic</option>
-                                    <option value="rock">Rock</option>
-                                    <option value="ice">Ice</option>
-                                    <option value="bug">Bug</option>
-                                    <option value="dragon">Dragon</option>
-                                    <option value="ghost">Ghost</option>
-                                    <option value="dark">Dark</option>
-                                    <option value="steel">Steel</option>
-                                    <option value="fairy">Fairy</option>
-                                </select>
+                        <div className="left-box pokemon-list-container">
+                            <SearchBar />
+                            <div className='pokemon-list'>
+                                {filteredPokemonList ? (
+                                    <>
+                                        {filteredPokemonList.map((pokemon) => (
+                                        <div id={pokemon.name} onClick={routeToPokemonBattleDetails}><p>{capFirstLetter(pokemon.name)}</p> <img src={spritesApi + `${adjustName(pokemon.name)}.gif`} /></div>
+                                        ))}
+                                    </>
+                                ) : (
+                                    <>
+                                    </>
+                                )}
                             </div>
                         </div>
-                        <div className='pokemon-list'>
-                            {filteredPokemonList ? (
-                                <>
-                                    {filteredPokemonList.map((pokemon) => (
-                                    <div id={pokemon.name} onClick={routeToPokemonBattleDetails}><p>{capFirstLetter(pokemon.name)}</p> <img src={spritesApi + `${adjustName(pokemon.name)}.gif`} /></div>
-                                    ))}
-                                </>
-                            ) : (
-                                <>
-                                </>
-                            )}
-                        </div>
-                    </div>
                         <div className="right-box team-box">
                             <div className="header">
                                 <h1>Pokemon Team</h1>

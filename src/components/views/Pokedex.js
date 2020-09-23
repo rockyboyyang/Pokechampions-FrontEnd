@@ -6,9 +6,11 @@ import Footer from '../Footer'
 import BadgeContainer from '../BadgeContainer';
 import Loading from './Loading'
 import BadgeInfo from './BadgeInfo'
+import SearchBar from './SearchBar'
+
 
 const Pokedex = () => {
-    const { setSelectedMove, pokemonList, capFirstLetter, spritesApi, adjustName, setPokemonLoaded, pokemonLoaded } = useContext(AppContext)
+    const { setSelectedMove, filteredPokemonList, capFirstLetter, spritesApi, adjustName, setPokemonLoaded, pokemonLoaded } = useContext(AppContext)
 
     let history = useHistory();
     useEffect(() => {
@@ -34,9 +36,21 @@ const Pokedex = () => {
                 <BadgeInfo />
                 <Navbar />
                 <div className="center-body">
-                    <div className="left-box pokemon-list">{pokemonList.map((pokemon) => (
-                        <div id={pokemon.name} onClick={routeToPokemonDetails}><p>{capFirstLetter(pokemon.name)}</p> <img src={spritesApi + `${adjustName(pokemon.name)}.gif`} /></div>
-                    ))}</div>
+                    <div className="left-box pokemon-list-container">
+                        <SearchBar />
+                        <div className='pokemon-list'>
+                            {filteredPokemonList ? (
+                                <>
+                                    {filteredPokemonList.map((pokemon) => (
+                                        <div id={pokemon.name} onClick={routeToPokemonDetails}><p>{capFirstLetter(pokemon.name)}</p> <img src={spritesApi + `${adjustName(pokemon.name)}.gif`} /></div>
+                                    ))}
+                                </>
+                            ) : (
+                                    <>
+                                    </>
+                                )}
+                        </div>
+                    </div>
                     <div className="right-box">
                         <BadgeContainer />
                     </div>
