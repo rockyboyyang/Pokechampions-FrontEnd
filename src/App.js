@@ -44,6 +44,7 @@ const App = props => {
   const [badgeInfoTrainer, setBadgeInfoTrainer] = useState('')
   const [badgeInfoDate, setBadgeInfoDate] = useState('')
   const [badgeInfoTeam, setBadgeInfoTeam] = useState([])
+  const [filteredPokemonList, setFilteredPokemonList] = useState([])
 
   let history = useHistory();
   const checkUserExist = () => {
@@ -129,6 +130,7 @@ const App = props => {
     const { results } = await res.json();
     fetchPokemonSprites(results)
     setPokemonList(results)
+    setFilteredPokemonList(results)
   }
 
   // fix Effect Text
@@ -194,8 +196,39 @@ const App = props => {
 
       // return pokemonInfo
     }
-    mergeSort(pokemonList).then(setListOfPokemonDetails(pokemonInfo))
+    mergeSort(pokemonList)
+      .then(setListOfPokemonDetails(pokemonInfo))
+      .then(async () => {
+        let alolaArray = [
+          'rattata',
+          'raticate',
+          'raichu',
+          'sandshrew',
+          'sandslash',
+          'vulpix',
+          'ninetales',
+          'diglett',
+          'dugtrio',
+          'meowth',
+          'persian',
+          'geodude',
+          'graveler',
+          'golem',
+          'grimer',
+          'muk',
+          'exeggutor',
+          'marowak']
 
+        let tempDetails = pokemonInfo
+        for (let i = 0; i < alolaArray.length; i++) {
+          let res = await fetch(`https://pokeapi.co/api/v2/pokemon/${alolaArray[i]}-alola`);
+          let result = await res.json()
+          tempDetails[`${alolaArray[i]}-alola`] = result
+        }
+        setListOfPokemonDetails(tempDetails)
+      })
+
+    
   }
   
   // Adjusts name so we can grab sprites
@@ -405,6 +438,7 @@ const App = props => {
                                     setUser, 
                                     user, 
                                     pokemonList,
+                                    setPokemonList,
                                     spritesApi, 
                                     listOfPokemonDetails, 
                                     setListOfPokemonDetails,
@@ -446,7 +480,9 @@ const App = props => {
                                     setBadgeInfoName,
                                     setBadgeInfoTeam,
                                     setBadgeInfoTrainer,
-                                    grabBadgeInfo, }
+                                    grabBadgeInfo,
+                                    filteredPokemonList,
+                                    setFilteredPokemonList }
                                     }>
         <Switch>
           <Route exact path="/" render={(props) => <Redirect to='/home'/>}/>

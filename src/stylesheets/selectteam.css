@@ -1,3 +1,10 @@
+.pokemon-list-container {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-rows: 1fr 9fr;
+}
+
 .pokemon-list {
     overflow-y: scroll;
     display: grid;
