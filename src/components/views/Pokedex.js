@@ -5,6 +5,7 @@ import Navbar from '../Navbar'
 import Footer from '../Footer'
 import BadgeContainer from '../BadgeContainer';
 import Loading from './Loading'
+import BadgeInfo from './BadgeInfo'
 
 const Pokedex = () => {
     const { setSelectedMove, pokemonList, capFirstLetter, spritesApi, adjustName, setPokemonLoaded, pokemonLoaded } = useContext(AppContext)
@@ -30,6 +31,7 @@ const Pokedex = () => {
         <>
             <Loading />
             <div className="view-body" style={{display:'none'}}>
+                <BadgeInfo />
                 <Navbar />
                 <div className="center-body">
                     <div className="left-box pokemon-list">{pokemonList.map((pokemon) => (

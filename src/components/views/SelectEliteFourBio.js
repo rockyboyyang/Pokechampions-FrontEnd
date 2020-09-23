@@ -9,6 +9,7 @@ import agathaFace from '../../assets/images/agatha-face.png'
 import lanceFace from '../../assets/images/lance-face.png'
 import lock from '../../assets/images/lock.png'
 import BadgeContainer from '../BadgeContainer';
+import BadgeInfo from './BadgeInfo'
 
 const BattleSelectEliteFourView = ({ gymLeader }) => {
     const { user_slot1,
@@ -60,6 +61,7 @@ const BattleSelectEliteFourView = ({ gymLeader }) => {
     return (
         <Switch>
             <div className="view-body">
+                <BadgeInfo />
                 <Navbar />
                 <div className="center-body">
                     <div className="left-box select-battle-view">

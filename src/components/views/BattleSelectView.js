@@ -13,6 +13,7 @@ import blaineFace from '../../assets/images/blaine-face.png'
 import giovanniFace from '../../assets/images/giovanni-face.png'
 import lock from '../../assets/images/lock.png'
 import BadgeContainer from '../BadgeContainer';
+import BadgeInfo from './BadgeInfo'
 
 const BattleSelectView = ({  }) => {
     const { user_slot1,
@@ -69,6 +70,7 @@ const BattleSelectView = ({  }) => {
     return (
         <Switch>
             <div className="view-body">
+                <BadgeInfo />
                 <Navbar />
                 <div className="center-body">
                     <div className="left-box select-battle-view">

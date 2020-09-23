@@ -5,6 +5,7 @@ import Navbar from '../Navbar'
 import Footer from '../Footer'
 import BadgeContainer from '../BadgeContainer';
 import rockyFace from '../../assets/images/rocky-face.png'
+import BadgeInfo from './BadgeInfo'
 
 const BattleSelectChampionView = ({ }) => {
     const { user_slot1,
@@ -56,6 +57,7 @@ const BattleSelectChampionView = ({ }) => {
     return (
         <Switch>
             <div className="view-body">
+                <BadgeInfo />
                 <Navbar />
                 <div className="center-body">
                     <div className="left-box select-battle-view">
