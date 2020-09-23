@@ -28,6 +28,20 @@
     position: relative;
 }
 
+#dialogue-image-misty > img,
+#dialogue-image-agatha > img,
+#dialogue-image-giovanni > img {
+    width: 60%;
+}
+
+#dialogue-image-lorelei > img {
+    width: 65%;
+}
+
+#dialogue-image-bruno > img {
+    height: 70%;
+}
+
 .trainer-image-rocky {
     display: flex;
     justify-content: center;

@@ -60,8 +60,8 @@ const BattleSelectEliteFourView = ({ gymLeader }) => {
 
     return (
         <Switch>
-            <BadgeInfo />
             <div className="view-body">
+                <BadgeInfo /> 
                 <Navbar />
                 <div className="center-body">
                     <div className="left-box select-battle-view">

@@ -89,6 +89,14 @@ const BattleTrainerView = () => {
     const clickToBattle = (e) => {
         e.preventDefault()
         // let opponentSlot_1 = JSON.parse(opponent.slot_1)
+        let loading = document.querySelector('.loading-screen')
+        setTimeout(() => {
+            let loading = document.querySelector('.loading-screen')
+            let body = document.querySelector('.view-body')
+
+            loading.style.display = 'none'
+            body.style.display = 'grid'
+        }, 3000)
         let userSlot_1 = JSON.parse(user.slot_1)
         let userSlot_2 = JSON.parse(user.slot_2)
         let userSlot_3 = JSON.parse(user.slot_3)
@@ -198,13 +206,6 @@ const BattleTrainerView = () => {
     useEffect(() => {
         setSelectedMove('')
         rerouteToSelect()
-        setTimeout(() => {
-            let loading = document.querySelector('.loading-screen')
-            let body = document.querySelector('.view-body')
-
-            loading.style.display = 'none'
-            body.style.display = 'grid'
-        }, 3000)
         // setCurrentHpBarForTeam()
     }, [])
 
@@ -1028,7 +1029,7 @@ const BattleTrainerView = () => {
                                 <img src={getTrainerImage()}></img>
                             </div>
                         ) : (
-                            <div className="trainer-image">
+                            <div className="trainer-image" id={`dialogue-image-${opponent.name}`}>
                                 <img src={getTrainerImage()}></img>
                             </div>
                         )}
