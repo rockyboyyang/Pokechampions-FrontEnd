@@ -52,7 +52,7 @@ Gym Leaders, Elite Four, and the Pokemon Champion.
    ![shiny](src/assets/images/shiny.png)
 
 
-- Battling Pokemon
+- Battling Trainers
 ![select-battle](src/assets/images/select-battle.png)
 ![battle](src/assets/images/battle.png)
 
