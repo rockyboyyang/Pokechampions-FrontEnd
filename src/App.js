@@ -45,6 +45,8 @@ const App = props => {
   const [badgeInfoDate, setBadgeInfoDate] = useState('')
   const [badgeInfoTeam, setBadgeInfoTeam] = useState([])
   const [filteredPokemonList, setFilteredPokemonList] = useState([])
+  const [afterAddingAnimation, setAfterAddingAnimation] = useState('')
+  const [beforeAddingAnimation, setBeforeAddingAnimation] = useState('')
 
   let history = useHistory();
   const checkUserExist = () => {
@@ -482,7 +484,11 @@ const App = props => {
                                     setBadgeInfoTrainer,
                                     grabBadgeInfo,
                                     filteredPokemonList,
-                                    setFilteredPokemonList }
+                                    setFilteredPokemonList,
+                                    afterAddingAnimation,
+                                    setAfterAddingAnimation,
+                                    beforeAddingAnimation,
+                                    setBeforeAddingAnimation, }
                                     }>
         <Switch>
           <Route exact path="/" render={(props) => <Redirect to='/home'/>}/>

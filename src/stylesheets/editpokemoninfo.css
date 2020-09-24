@@ -54,6 +54,11 @@
     justify-self: center;
 }
 
+@keyframes addTeamBefore {
+  from {max-width: 340px; max-height: 340px}
+  to {max-width: 0px; max-height: 0px}
+}
+
 .change-form-buttons {
     display: flex;
 }

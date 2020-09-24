@@ -67,6 +67,12 @@
 .pokemon-team-container img {
     max-height: 65%;
     max-width: 65%;
+    /* animation: addTeam 1.5s infinite; */
+}
+
+@keyframes addTeamAfter {
+  from {max-width: 0%; max-height: 0%}
+  to {max-width: 65%; max-height: 65%}
 }
 
 .team-box{

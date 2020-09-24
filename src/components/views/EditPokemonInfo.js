@@ -31,6 +31,7 @@ const EditPokemonInfo = ({ pokemonName }) => {
             setCurrentSlot,
             setSelectedMove,
             adjustName,
+            setAfterAddingAnimation,
         } = useContext(AppContext)
         
     const [slot_1, setSlot_1] = useState({ name: '-' })
@@ -116,6 +117,18 @@ const EditPokemonInfo = ({ pokemonName }) => {
             alert('Your Pokemon must have at least ONE move!')
             return;
         }
+        
+        let slot = e.target.id
+
+        if (slot === 'slot_1') setAfterAddingAnimation(slot)
+        if (slot === 'slot_2') setAfterAddingAnimation(slot)
+        if (slot === 'slot_3') setAfterAddingAnimation(slot)
+        if (slot === 'slot_4') setAfterAddingAnimation(slot)
+        if (slot === 'slot_5') setAfterAddingAnimation(slot)
+        if (slot === 'slot_6') setAfterAddingAnimation(slot)
+
+        let pokemonAnimation = document.getElementById('animating-sprite')
+
         let pokemonInfo = {
             pokemon: pokemonName,
             pokemonType: listOfPokemonDetails[pokemonName].types,
@@ -142,7 +155,12 @@ const EditPokemonInfo = ({ pokemonName }) => {
             setUser_slot_4(JSON.parse(user.slot_4))
             setUser_slot_5(JSON.parse(user.slot_5))
             setUser_slot_6(JSON.parse(user.slot_6))
-            history.push("/selectteam");
+            pokemonAnimation.style.animation = 'addTeamBefore 2s'
+            pokemonAnimation.style.maxHeight = '0px'
+            pokemonAnimation.style.maxWidth = '0px'
+            setTimeout(() => {
+                history.push("/selectteam");
+            }, 2000)
         }
     }
 
@@ -295,9 +313,9 @@ const EditPokemonInfo = ({ pokemonName }) => {
                                     )}
                                 </div>
                                 {shiny ? (
-                                    <img src={`${shinySpritesApi}/${adjustName(pokemonName)}.gif`} alt={pokemonName}></img>
+                                    <img id='animating-sprite' src={`${shinySpritesApi}/${adjustName(pokemonName)}.gif`} alt={pokemonName}></img>
                                 ) : (
-                                        <img src={`${spritesApi}/${adjustName(pokemonName)}.gif`} alt={pokemonName}></img>
+                                    <img id='animating-sprite' src={`${spritesApi}/${adjustName(pokemonName)}.gif`} alt={pokemonName}></img>
                                 )}
                             </div>
                         ) : (
@@ -310,9 +328,9 @@ const EditPokemonInfo = ({ pokemonName }) => {
                                     )}
                                 </div>
                                 {shiny ? (
-                                    <img src={`${shinySpritesApi}/${adjustName(pokemonName)}.gif`} alt={pokemonName}></img>
+                                    <img id='animating-sprite' src={`${shinySpritesApi}/${adjustName(pokemonName)}.gif`} alt={pokemonName}></img>
                                 ) : (
-                                    <img src={`${spritesApi}/${adjustName(pokemonName)}.gif`} alt={pokemonName}></img>
+                                    <img id='animating-sprite' src={`${spritesApi}/${adjustName(pokemonName)}.gif`} alt={pokemonName}></img>
                                 )}
                             </div>
                         )}
