@@ -27,21 +27,21 @@ Gym Leaders, Elite Four, and the Pokemon Champion.
 - Landing Page
 ![home-page](src/assets/images/home.png)
 
--Create User Accounts
+- Create User Accounts
 ![signup](src/assets/images/signup.png)
 
--Editing your own Pokemon Team
+- Editing your own Pokemon Team
 ![edit-team](src/assets/images/select-team.png)
 ![edit-pokemon](src/assets/images/edit-pokemon.png)
 
--Search Feature that lets you find a Pokemon by its type or name
+- Search Feature that lets you find a Pokemon by its type or name
    -Search By Name/Characters
    ![edit-team](src/assets/images/by-name.png)
 
    -Search By Type
    ![edit-pokemon](src/assets/images/by-type.png)
 
--Able to select Shiny and Non-Shiny Pokemon
+- Able to select Shiny and Non-Shiny Pokemon
    - Non-Shiny
    ![non-shiny](src/assets/images/not-shiny.png)
 
@@ -49,13 +49,13 @@ Gym Leaders, Elite Four, and the Pokemon Champion.
    ![shiny](src/assets/images/shiny.png)
 
 
--Battling Pokemon
+- Battling Pokemon
 ![select-battle](src/assets/images/select-battle.png)
 ![battle](src/assets/images/battle.png)
 
--Collect Badges after defeating a Gym Leader
+- Collect Badges after defeating a Gym Leader
 
--Have a Pokedex that details all pokemon
+- Have a Pokedex that details all pokemon
 
 # Technical Challenges
 
