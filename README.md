@@ -44,7 +44,7 @@ Gym Leaders, Elite Four, and the Pokemon Champion.
    - Search By Type
    ![edit-pokemon](src/assets/images/by-type.png)
 
-- Able to select Shiny and Non-Shiny Pokemon
+- Able to select Shiny and Non-Shiny Pokemon (Only if you defeated the Champion)
    - Non-Shiny
    ![non-shiny](src/assets/images/not-shiny.png)
 
