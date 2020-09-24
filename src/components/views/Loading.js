@@ -7,7 +7,10 @@ import BadgeContainer from '../BadgeContainer';
 import loadingPokeball from '../../assets/images/pokeball-loading.png'
 
 const Loading = () => {
-
+    const { setFilteredPokemonList, pokemonList } = useContext(AppContext)
+    useEffect(() => {
+        setFilteredPokemonList(pokemonList)
+    }, [])
     return (
         <div className="loading-screen">
             <div className="header-container">
