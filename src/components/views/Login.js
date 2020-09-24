@@ -40,6 +40,7 @@ const Login = () => {
             setUser_slot_4(JSON.parse(user.slot_4))
             setUser_slot_5(JSON.parse(user.slot_5))
             setUser_slot_6(JSON.parse(user.slot_6))
+            alert('Successfully Logged In')
             history.push("/home");
         }
         if(!res.ok) {
