@@ -25,6 +25,9 @@ Gym Leaders, Elite Four, and the Pokemon Champion.
 
  # Features
 - Landing Page
+![landing-page](src/assets/images/splash.png)
+
+- Home Page
 ![home-page](src/assets/images/home.png)
 
 - Create User Accounts
@@ -35,10 +38,10 @@ Gym Leaders, Elite Four, and the Pokemon Champion.
 ![edit-pokemon](src/assets/images/edit-pokemon.png)
 
 - Search Feature that lets you find a Pokemon by its type or name
-   -Search By Name/Characters
+   - Search By Name/Characters
    ![edit-team](src/assets/images/by-name.png)
 
-   -Search By Type
+   - Search By Type
    ![edit-pokemon](src/assets/images/by-type.png)
 
 - Able to select Shiny and Non-Shiny Pokemon
